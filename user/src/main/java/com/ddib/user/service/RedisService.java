@@ -23,7 +23,7 @@ public class RedisService {
         values.set(key, data, refreshExpireMs , TimeUnit.MILLISECONDS);
     }
 
-
+//레디스 셋팅
     public void setValuesToList(String key, String data, Long refreshExpireMs ) {
         ListOperations<String, Object> listOper = redisTemplate.opsForList();
         listOper.rightPush(key, data);
