@@ -13,8 +13,8 @@ spring:
     password: 1234
 
   jpa:
-    hibernate:
-      ddl-auto: update
+#    hibernate:
+#      ddl-auto: update
     generate-ddl: true
     show-sql: true
 
