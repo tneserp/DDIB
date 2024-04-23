@@ -1,7 +1,7 @@
 package com.ddib.user.setting.config;
 
 
-import com.ddib.user.oauth2.CustomSuccessHandler;
+import com.ddib.user.oauth2.* ;
 import com.ddib.user.service.CustomOAuth2UserService;
 import com.ddib.user.setting.jwt.JWTFilter;
 import com.ddib.user.setting.jwt.JWTUtil;
@@ -23,6 +23,8 @@ import java.util.Collections;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    
+    //
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
     private final JWTUtil jwtUtil;
