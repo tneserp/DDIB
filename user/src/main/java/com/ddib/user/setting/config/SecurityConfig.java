@@ -23,7 +23,7 @@ import java.util.Collections;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    
+
     //
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
