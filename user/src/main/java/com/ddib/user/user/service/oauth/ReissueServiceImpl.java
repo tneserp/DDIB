@@ -1,4 +1,4 @@
-package com.ddib.user.user.service;
+package com.ddib.user.user.service.oauth;
 
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;

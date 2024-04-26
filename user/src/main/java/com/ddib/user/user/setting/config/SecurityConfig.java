@@ -2,7 +2,7 @@ package com.ddib.user.user.setting.config;
 
 
 import com.ddib.user.user.handler.CustomSuccessHandler;
-import com.ddib.user.user.service.CustomOAuth2UserService;
+import com.ddib.user.user.service.oauth.CustomOAuth2UserService;
 import com.ddib.user.user.setting.jwt.JWTFilter;
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;

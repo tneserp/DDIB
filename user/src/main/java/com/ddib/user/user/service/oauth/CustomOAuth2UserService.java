@@ -1,4 +1,4 @@
-package com.ddib.user.user.service;
+package com.ddib.user.user.service.oauth;
 
 import com.ddib.user.user.dto.resposne.KakaoResponseDto;
 import com.ddib.user.user.dto.resposne.OAuth2ResponseDto;

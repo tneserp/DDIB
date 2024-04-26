@@ -1,7 +1,8 @@
-package com.ddib.user.user.service;
+package com.ddib.user.user.service.user;
 
 
 import com.ddib.user.user.domain.User;
+import com.ddib.user.user.dto.request.SellerRequestDto;
 import com.ddib.user.user.dto.request.UserModifyRequestDto;
 import com.ddib.user.user.dto.resposne.UserInfoDto;
 import jakarta.transaction.Transactional;

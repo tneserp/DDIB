@@ -1,4 +1,4 @@
-package com.ddib.user.user.service;
+package com.ddib.user.user.service.oauth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

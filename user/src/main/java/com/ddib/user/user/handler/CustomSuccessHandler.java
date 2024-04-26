@@ -2,7 +2,7 @@ package com.ddib.user.user.handler;
 
 
 import com.ddib.user.user.dto.resposne.CustomOAuth2User;
-import com.ddib.user.user.service.RedisService;
+import com.ddib.user.user.service.oauth.RedisService;
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

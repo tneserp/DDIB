@@ -1,4 +1,4 @@
-package com.ddib.user.user.service;
+package com.ddib.user.user.service.oauth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

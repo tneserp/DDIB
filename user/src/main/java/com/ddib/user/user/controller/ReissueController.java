@@ -1,7 +1,7 @@
 package com.ddib.user.user.controller;
 
 
-import com.ddib.user.user.service.ReissueService;
+import com.ddib.user.user.service.oauth.ReissueService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
