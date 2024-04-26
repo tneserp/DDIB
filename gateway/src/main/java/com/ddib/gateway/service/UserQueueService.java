@@ -101,7 +101,7 @@ public class UserQueueService {
 
         log.info("called scheduling..."); // 스케줄링이 호출됨을 로그로 기록
 
-        Long maxAllowUserCount = 50L; // 허용할 최대 사용자 수
+        Long maxAllowUserCount = 1L; // 허용할 최대 사용자 수
 
         // 대기열 키를 기반으로 대기열 스캔을 수행하고, 각 대기열에서 사용자를 허용하는 코드
         reactiveRedisTemplate.scan(ScanOptions.scanOptions()
