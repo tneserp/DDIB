@@ -1,12 +1,17 @@
 package com.ddib.user.user.service;
 
 
-import com.ddib.user.user.dto.UserInfoDto;
+import com.ddib.user.user.domain.User;
+import com.ddib.user.user.dto.request.UserModifyRequestDto;
+import com.ddib.user.user.dto.resposne.UserInfoDto;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 public interface UserService {
-    UserInfoDto findUser(String email);
+    User findUser(String email);
 
-    void modifyUserInfo(UserInfoDto userInfoEntity);
+    void modifyUserInfo(UserModifyRequestDto requestDto, Principal principal);
 }

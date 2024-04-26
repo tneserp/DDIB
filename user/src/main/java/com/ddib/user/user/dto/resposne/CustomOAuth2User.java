@@ -1,4 +1,4 @@
-package com.ddib.user.user.dto;
+package com.ddib.user.user.dto.resposne;
 
 import com.ddib.user.user.dto.resposne.UserResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +11,10 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
-
     private final UserResponseDto userResponseDto;
 
     @Override
     public Map<String, Object> getAttributes() {
-
         return null;
     }
 

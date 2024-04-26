@@ -1,6 +1,5 @@
 package com.ddib.user.user.service;
 
-
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class ReissueServiceImpl implements ReissueService {
-
     @Value("${access.token.expiration.time}")
     private Long accessExpireMs;
 
@@ -29,7 +27,6 @@ public class ReissueServiceImpl implements ReissueService {
         this.jwtUtil = jwtUtil;
         this.redisService = redisService;
     }
-
 
     @Override
     public ResponseEntity<?> reissueRefreshToken(HttpServletRequest request, HttpServletResponse response) {
@@ -95,7 +92,6 @@ public class ReissueServiceImpl implements ReissueService {
     }
 
     private Cookie createCookie(String key, String value) {
-
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge(60 * 60 * 60 * 60);
         cookie.setPath("/");
@@ -103,5 +99,4 @@ public class ReissueServiceImpl implements ReissueService {
 
         return cookie;
     }
-
 }

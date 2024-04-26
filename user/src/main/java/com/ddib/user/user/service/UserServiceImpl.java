@@ -1,27 +1,29 @@
 package com.ddib.user.user.service;
 
-import com.ddib.user.user.dto.UserInfoDto;
-import com.ddib.user.user.repository.UserInfoRepository;
+import com.ddib.user.user.domain.User;
+import com.ddib.user.user.dto.request.UserModifyRequestDto;
+import com.ddib.user.user.dto.resposne.UserInfoDto;
+import com.ddib.user.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserInfoRepository userInfoRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public UserInfoDto findUser(String email) {
-        return userInfoRepository.findByEmail(email);
+    public User findUser(String email) {
+        return userRepository.findByEmail(email);
     }
 
+    @Transactional
     @Override
-    public void modifyUserInfo(UserInfoDto userInfoDto) {
-//        String email = userInfoDto.getEmail();
-//
-//        if (userInfoRepository.existsByEmail(email)) {
-//            userInfoDto.setUserInfoId(userInfoRepository.findByEmail(email).getUserInfoId());
-//        }
-//        userInfoRepository.save(userInfoDto);
+    public void modifyUserInfo(UserModifyRequestDto requestDto, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        user.updateInfo(requestDto);
     }
 }
