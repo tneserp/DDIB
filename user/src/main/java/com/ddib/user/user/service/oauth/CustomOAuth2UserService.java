@@ -37,7 +37,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String email = oAuth2Response.getEmail();
         User existData = userRepository.findByEmail(email);
-
         System.out.println(existData);
 
         if (existData == null) {
@@ -59,7 +58,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .name(existData.getName())
                     .email(existData.getEmail())
                     .build();
-
             return new CustomOAuth2User(responseDto);
         }
     }

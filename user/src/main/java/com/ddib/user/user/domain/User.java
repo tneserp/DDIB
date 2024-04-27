@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
+@ToString
+
 @Schema(description = "일반회원")
 public class User {
     @Id
