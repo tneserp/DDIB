@@ -54,4 +54,21 @@ public class UserController {
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping
+    @Operation(summary = "일반회원 탈퇴 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "일반회원 탈퇴 성공"),
+            @ApiResponse(responseCode = "400", description = "일반회원 탈퇴 실패")
+    })
+    public ResponseEntity<?> userDelete(Principal principal) {
+        try {
+            userService.deleteUser(principal);
+//            userService.deleteUser(principal);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -12,4 +12,5 @@ public interface UserService {
     UserInfoDto findUser(Principal principal);
 
     void modifyUserInfo(UserModifyRequestDto requestDto, Principal principal);
+    void deleteUser(Principal principal);
 }

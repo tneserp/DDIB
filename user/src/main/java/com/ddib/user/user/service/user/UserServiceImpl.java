@@ -33,4 +33,10 @@ public class UserServiceImpl implements UserService {
     public void modifyUserInfo(UserModifyRequestDto requestDto, Principal principal) {
         userRepository.findByEmail(principal.getName()).updateInfo(requestDto);
     }
+
+    @Transactional
+    @Override
+    public void deleteUser(Principal principal) {
+        userRepository.deleteByEmail(principal.getName());
+    }
 }
