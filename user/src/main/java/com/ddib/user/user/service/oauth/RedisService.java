@@ -1,4 +1,4 @@
-package com.ddib.user.user.service;
+package com.ddib.user.user.service.oauth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class RedisService {
     private final RedisTemplate<String, Object> redisTemplate;
+
     public void setValues(String key, String data,Long refreshExpireMs ) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
         values.set(key, data, refreshExpireMs , TimeUnit.MILLISECONDS);
@@ -29,8 +30,6 @@ public class RedisService {
         listOper.rightPush(key, data);
         redisTemplate.expire(key, refreshExpireMs, TimeUnit.MILLISECONDS);
     }
-
-
 
     @Transactional(readOnly = true)
     public String getValues(String key) {
@@ -46,7 +45,6 @@ public class RedisService {
         ListOperations<String, Object> listOperations = redisTemplate.opsForList();
         return listOperations.range(key, 0, -1); // -1은 모든 요소를 가져오기 위한 인덱스입니다.
     }
-
 
     public void deleteValues(String key) {
         redisTemplate.delete(key);

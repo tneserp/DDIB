@@ -16,34 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `user_notifications`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `user_notifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
-  `detail_address` varchar(255) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `fcm_token` varchar(255) DEFAULT NULL,
-  `is_subscribed` tinyint(1) DEFAULT '0',
-  `name` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `road_address` varchar(255) DEFAULT NULL,
-  `zipcode` int NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `user_notifications` (
+  `user_user_id` int NOT NULL,
+  `notifications_notification_id` int NOT NULL,
+  UNIQUE KEY `UK_o7eeve06eshxjnx9vcmo7l6oe` (`notifications_notification_id`),
+  KEY `FKpjo6xghkyiwof7d7xyqrp08gk` (`user_user_id`),
+  CONSTRAINT `FK3hyjook8l3sqr0rvwpm94duf2` FOREIGN KEY (`notifications_notification_id`) REFERENCES `notification` (`notification_id`),
+  CONSTRAINT `FKpjo6xghkyiwof7d7xyqrp08gk` FOREIGN KEY (`user_user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `user_notifications`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (6,NULL,'kn9012@naver.com',NULL,0,'유나',NULL,NULL,0);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `user_notifications` WRITE;
+/*!40000 ALTER TABLE `user_notifications` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

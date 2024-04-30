@@ -1,7 +1,7 @@
 package com.ddib.user.user.controller;
 
 
-import com.ddib.user.user.service.ReissueService;
+import com.ddib.user.user.service.oauth.ReissueService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +24,9 @@ public class ReissueController {
         log.info("토큰 재발행 실행");
         try {
             return reissueService.reissueRefreshToken(request, response);
-        }
-        catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
         }
-
-
     }
 }

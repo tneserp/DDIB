@@ -2,7 +2,7 @@ package com.ddib.user.user.setting.jwt;
 
 
 import com.ddib.user.user.domain.User;
-import com.ddib.user.user.dto.CustomUserDetails;
+import com.ddib.user.user.dto.resposne.CustomUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -46,8 +46,7 @@ public class JWTFilter extends OncePerRequestFilter {
         // Bearer 부분 제거 후 순수 토큰만 획득
         String token = Authorization.split(" ")[1];
 
-        //토큰
-
+        // 토큰
         try {
             jwtUtil.isExpired(token);
         } catch (ExpiredJwtException exception) {

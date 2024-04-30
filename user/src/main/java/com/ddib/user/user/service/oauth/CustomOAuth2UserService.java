@@ -1,12 +1,12 @@
-package com.ddib.user.user.service;
+package com.ddib.user.user.service.oauth;
 
-
-import com.ddib.user.user.dto.resposne.KakaoResponse;
-import com.ddib.user.user.dto.resposne.OAuth2Response;
+import com.ddib.user.user.dto.resposne.KakaoResponseDto;
+import com.ddib.user.user.dto.resposne.OAuth2ResponseDto;
 import com.ddib.user.user.domain.User;
 import com.ddib.user.user.repository.UserRepository;
-import com.ddib.user.user.dto.CustomOAuth2User;
+import com.ddib.user.user.dto.resposne.CustomOAuth2User;
 import com.ddib.user.user.dto.resposne.UserResponseDto;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -23,23 +23,25 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
-        OAuth2Response oAuth2Response = null;
+        OAuth2ResponseDto oAuth2Response;
 
         if (registrationId.equals("kakao")){
-            oAuth2Response = new KakaoResponse(oAuth2User.getAttributes());
+            oAuth2Response = new KakaoResponseDto(oAuth2User.getAttributes());
         } else { return null; }
 
         String email = oAuth2Response.getEmail();
         User existData = userRepository.findByEmail(email);
+        System.out.println(existData);
 
         if (existData == null) {
             User user = User.builder()
-                    .name(oAuth2Response.getName())
+                    .name(oAuth2Response.getNickName())
                     .email(oAuth2Response.getEmail())
                     .build();
 
@@ -52,18 +54,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             return new CustomOAuth2User(responseDto);
         } else {
-            existData = User.builder()
-                    .name(oAuth2Response.getName())
-                    .email(oAuth2Response.getEmail())
-                    .build();
-
-            userRepository.save(existData);
-
             UserResponseDto responseDto = UserResponseDto.builder()
                     .name(existData.getName())
                     .email(existData.getEmail())
                     .build();
-
             return new CustomOAuth2User(responseDto);
         }
     }

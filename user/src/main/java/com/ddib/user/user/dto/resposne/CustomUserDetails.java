@@ -1,19 +1,16 @@
-package com.ddib.user.user.dto;
+package com.ddib.user.user.dto.resposne;
 
 import com.ddib.user.user.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
-
     private final User user;
-
-    public CustomUserDetails(User user) {
-        this.user = user;
-    }
 
     // 권환을 확인하는 메서드 (role)
     @Override

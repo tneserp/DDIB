@@ -2,7 +2,7 @@ package com.ddib.user.user.setting.config;
 
 
 import com.ddib.user.user.handler.CustomSuccessHandler;
-import com.ddib.user.user.service.CustomOAuth2UserService;
+import com.ddib.user.user.service.oauth.CustomOAuth2UserService;
 import com.ddib.user.user.setting.jwt.JWTFilter;
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,15 +22,11 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-
-    //
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
     private final JWTUtil jwtUtil;
-
-
     private final String releaseHostName;
+
     //swagger 설정
     private static final String[] AUTH_WHITELIST = {
             "/", "/api/**", "/graphiql", "/graphql",
@@ -39,7 +35,6 @@ public class SecurityConfig {
     };
 
     public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, CustomSuccessHandler customSuccessHandler, JWTUtil jwtUtil, @Value("${releaseHostName}") String releaseHostName) {
-
         this.customOAuth2UserService = customOAuth2UserService;
         this.customSuccessHandler = customSuccessHandler;
         this.jwtUtil = jwtUtil;
