@@ -1,3 +1,11 @@
+export interface User {
+  name: string;
+  phone: string;
+  zipCode: string;
+  roadAddress: string;
+  detailAddress: string;
+}
+
 export interface Product {
   productId: number;
   name: string;
@@ -27,6 +35,7 @@ export interface OrderProduct {
   totalAmount: number;
   price: number;
   salePrice: number;
+  status: number;
 }
 
 export interface OrderAddressInfo {

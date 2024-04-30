@@ -7,7 +7,6 @@ import product from "../../../../../../public/product.webp";
 import { orderStore, orderAddressStore } from "@/app/_store/product";
 
 export default function OrderComplete() {
-  // 여기서 주문정보랑 배송지정보 가져와서 등록해버리기
   const { setOrderInfo } = orderStore();
   const [productInfo, setProductInfo] = useState<OrderProduct>({
     productId: 3,
@@ -17,6 +16,7 @@ export default function OrderComplete() {
     totalAmount: 3,
     price: 10000,
     salePrice: 9000,
+    status: 0,
   });
 
   const { setOrderAddressInfo } = orderAddressStore();

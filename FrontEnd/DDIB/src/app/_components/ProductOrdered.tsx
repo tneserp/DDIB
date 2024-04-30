@@ -2,36 +2,34 @@
 
 import styles from "./productOrdered.module.scss";
 import Image from "next/image";
-import { orderStore } from "@/app/_store/product";
-import { AiFillShop } from "react-icons/ai";
+import { OrderProduct } from "@/app/_types/types";
+import { BiSolidBusiness } from "react-icons/bi";
 
-export default function ProductOrdered() {
-  const { orderInfo } = orderStore();
-
+export default function ProductOrdered({ productId, thumbnailImage, companyName, name, totalAmount, price, salePrice, status }: OrderProduct) {
   return (
-    <div className={styles.main}>
+    <div className={status === 0 ? styles.mainPink : styles.mainGray}>
       <div className={styles.orderedItem}>
         <div>
           <div className={styles.thumbnail}>
-            <Image src={orderInfo.thumbnailImage} alt="상품썸네일"></Image>
+            <Image src={thumbnailImage} alt="상품썸네일"></Image>
           </div>
         </div>
         <div>
           <div className={styles.companyMini}>
             <div>
-              <AiFillShop />
+              <BiSolidBusiness />
             </div>
-            <div>{orderInfo.companyName}</div>
+            <div>{companyName}</div>
           </div>
-          <div>{orderInfo.name}</div>
+          <div>{name}</div>
         </div>
       </div>
-      <div className={styles.totalAmount}>{orderInfo.totalAmount}</div>
+      <div className={styles.totalAmount}>{totalAmount}</div>
       <div className={styles.price}>
-        <div>{orderInfo.price.toLocaleString("ko-KR")}</div>
-        <div>{orderInfo.salePrice.toLocaleString("ko-KR")}</div>
+        <div>{price.toLocaleString("ko-KR")}</div>
+        <div>{salePrice.toLocaleString("ko-KR")}</div>
       </div>
-      <div className={styles.totalPrice}>{(orderInfo.salePrice * orderInfo.totalAmount).toLocaleString("ko-KR")}</div>
+      <div className={styles.totalPrice}>{(salePrice * totalAmount).toLocaleString("ko-KR")}</div>
     </div>
   );
 }

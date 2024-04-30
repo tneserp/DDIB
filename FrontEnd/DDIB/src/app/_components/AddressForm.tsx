@@ -1,24 +1,29 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import styles from "./addressForm.module.scss";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { orderAddressStore } from "@/app/_store/product";
+import { userStore } from "@/app/_store/user";
 
 interface Props {
   type: string;
 }
 
 export default function AddressForm({ type }: Props) {
-  const [useMyAddress, setUseMyAddress] = useState(false);
+  const [myAddress, setMyAddress] = useState(false);
+  const [name, setName] = useState("");
+  const [num, setNum] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
   const { addressInfo } = orderAddressStore();
+  const { user } = userStore();
 
-  const scriptUrl = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+  const scriptUrl =
+    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   const open = useDaumPostcodePopup(scriptUrl);
 
   const toggleHandler = () => {
@@ -35,14 +40,52 @@ export default function AddressForm({ type }: Props) {
     setAddressDetail(e.target.value);
   };
 
+  const inputName = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const inputNum = (e: ChangeEvent<HTMLInputElement>) => {
+    setNum(e.target.value);
+  };
+
+  const getMyAddress = () => {
+    setMyAddress((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (type === "mypage") {
+      setMyAddress(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (myAddress) {
+      setName(user.name);
+      setNum(user.phone);
+      setZipCode(user.zipCode);
+      setAddress(user.roadAddress);
+      setAddressDetail(user.detailAddress);
+    } else {
+      setName("");
+      setNum("");
+      setZipCode("");
+      setAddress("");
+      setAddressDetail("");
+    }
+  }, [myAddress]);
+
   return (
     <div className={styles.main}>
       {type === "order" && (
         <>
           <div className={styles.addressItem}>
             <div>배송지 선택</div>
-            <div className={styles.addressCheck} onClick={() => setUseMyAddress((prev) => !prev)}>
-              {useMyAddress ? <FaCheckCircle /> : <FaRegCheckCircle color="gray" />}
+            <div className={styles.addressCheck} onClick={getMyAddress}>
+              {myAddress ? (
+                <FaCheckCircle />
+              ) : (
+                <FaRegCheckCircle color="gray" />
+              )}
               <div>기본배송지로 설정</div>
             </div>
           </div>
@@ -51,18 +94,32 @@ export default function AddressForm({ type }: Props) {
       )}
 
       <div className={styles.addressItem}>
-        <div>받으시는 분</div>
-        <div>{type === "order" ? <input type="text" className={styles.input}></input> : <div>{addressInfo.receiverName}</div>}</div>
+        <div>{type === "mypage" ? "이름" : "받으시는 분"}</div>
+        <div>
+          {type === "order" || type === "mypage" ? (
+            <input
+              type="text"
+              className={styles.input}
+              value={name}
+              onChange={inputNum}
+            ></input>
+          ) : (
+            <div>{addressInfo.receiverName}</div>
+          )}
+        </div>
       </div>
       <div className={styles.line}></div>
       <div className={styles.addressItem}>
         <div>휴대폰 번호</div>
         <div>
-          {type === "order" ? (
+          {type === "order" || type === "mypage" ? (
             <>
-              <input type="number" className={styles.inputNum}></input>
-              <input type="number" className={styles.inputNum}></input>
-              <input type="number" className={styles.inputNum}></input>
+              <input
+                type="text"
+                className={styles.inputNum}
+                value={num}
+                onChange={inputNum}
+              ></input>
             </>
           ) : (
             <div>{addressInfo.receiverPhone}</div>
@@ -73,15 +130,30 @@ export default function AddressForm({ type }: Props) {
       <div className={styles.addressItem}>
         <div>주소</div>
         <div className={styles.addressArea}>
-          {type === "order" ? (
+          {type === "order" || type === "mypage" ? (
             <>
               <div>
-                <input type="text" className={styles.input} value={zipCode} readOnly></input>
+                <input
+                  type="text"
+                  className={styles.input}
+                  value={zipCode}
+                  readOnly
+                ></input>
                 <div onClick={toggleHandler}>우편번호찾기</div>
               </div>
               <div>
-                <input type="text" className={styles.inputAddress} value={address} readOnly></input>
-                <input type="text" className={styles.inputAddress} value={addressDetail} onChange={inputAddress}></input>
+                <input
+                  type="text"
+                  className={styles.inputAddress}
+                  value={address}
+                  readOnly
+                ></input>
+                <input
+                  type="text"
+                  className={styles.inputAddress}
+                  value={addressDetail}
+                  onChange={inputAddress}
+                ></input>
               </div>
             </>
           ) : (
