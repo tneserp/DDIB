@@ -57,6 +57,7 @@ export default function ProductDetail() {
       totalAmount: amount,
       price: productInfo.price,
       salePrice: salePrice,
+      status: 0,
     };
     setOrderInfo(sendInfo);
     router.push(`/products/${productInfo.productId}/wait`);
@@ -70,7 +71,9 @@ export default function ProductDetail() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.category}>TimeDeal &gt; {productInfo.category}</div>
+      <div className={styles.category}>
+        TimeDeal &gt; {productInfo.category}
+      </div>
       <div className={styles.info}>
         <div className={styles.sectionOne}>
           <div className={styles.thumbnail}>
@@ -124,7 +127,11 @@ export default function ProductDetail() {
       </div>
       <div className={styles.detailArea}>
         <div className={styles.detailTitle}>Details</div>
-        <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
+        <div
+          className={
+            viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`
+          }
+        >
           {productInfo.details.map((image, index) => (
             <div key={index}>
               <Image src={image} alt="상품썸네일"></Image>

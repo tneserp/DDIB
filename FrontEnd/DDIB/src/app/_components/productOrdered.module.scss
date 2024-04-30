@@ -1,8 +1,8 @@
-.main {
+.mainPink,
+.mainGray {
   display: flex;
-  margin: 2vh;
   padding: 2vh;
-  background-color: #fff5f5;
+
   align-items: center;
   text-align: center;
 
@@ -20,6 +20,14 @@
   }
 }
 
+.mainPink {
+  background-color: #fff5f5;
+}
+
+.mainGray {
+  background-color: #eaeaea;
+}
+
 .orderedItem {
   display: flex;
   align-items: flex-start;
@@ -34,12 +42,12 @@
 .companyMini {
   display: flex;
   gap: 0.5vh;
-  margin: 1vh 0 0.5vh;
+  margin: 1vh 0 0.3vh;
   & div:nth-child(1) {
-    font-size: 1.7vh;
+    font-size: 1vw;
   }
   & div:nth-child(2) {
-    font-size: 1.5vh;
+    font-size: 0.8vw;
     font-weight: bold;
   }
 }
@@ -61,6 +69,7 @@
 
 .price {
   & > div:nth-child(1) {
+    font-size: 1vw;
     color: gray;
     text-decoration: line-through;
   }
