@@ -1,6 +1,6 @@
-package com.ddib.gateway.controller;
+package com.ddib.waiting.controller;
 
-import com.ddib.gateway.service.UserQueueService;
+import com.ddib.waiting.service.UserQueueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpCookie;
 import org.springframework.stereotype.Controller;

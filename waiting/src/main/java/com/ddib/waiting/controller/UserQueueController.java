@@ -1,9 +1,9 @@
-package com.ddib.gateway.controller; // 패키지 선언: com.ticket.flow.controller 패키지
+package com.ddib.waiting.controller; // 패키지 선언: com.ticket.flow.controller 패키지
 
-import com.ddib.gateway.dto.AllowedUserResponse;
-import com.ddib.gateway.dto.RankNumberResponse;
-import com.ddib.gateway.dto.RegisterUserResponse;
-import com.ddib.gateway.service.UserQueueService;
+import com.ddib.waiting.dto.AllowedUserResponse;
+import com.ddib.waiting.dto.RankNumberResponse;
+import com.ddib.waiting.dto.RegisterUserResponse;
+import com.ddib.waiting.service.UserQueueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.*;
