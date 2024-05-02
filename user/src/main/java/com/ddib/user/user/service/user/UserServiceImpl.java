@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
     public UserInfoDto findUser(Principal principal) {
         User user = userRepository.findByEmail(principal.getName());
         UserInfoDto userInfoDto = UserInfoDto.builder()
+                .userId(user.getUserId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .zipcode(user.getZipcode())
