@@ -13,6 +13,7 @@ spring:
           kakao:
             client-id: 3bdd477e0baccd07c4369a4cf8c31ed4
             client-secret: 5qAnQWrFYkaO5inuXcDrvQbW5t6lejlR
+#            redirect-uri: http://k10c102.p.ssafy.io:8081/login/oauth2/ddib
             redirect-uri: http://localhost:8081/login/oauth2/ddib
             authorization-grant-type: authorization_code
             client-name: Kakao
