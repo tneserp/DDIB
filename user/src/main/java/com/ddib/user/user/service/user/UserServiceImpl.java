@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoDto findUser(Principal principal) {
         User user = userRepository.findByEmail(principal.getName());
-        UserInfoDto userInfoDto = UserInfoDto.builder()
+        return UserInfoDto.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
                 .email(user.getEmail())
@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
                 .roadAddress(user.getRoadAddress())
                 .detailAddress(user.getDetailAddress())
                 .build();
-        return userInfoDto;
     }
 
     @Transactional
