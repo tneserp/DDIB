@@ -21,7 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 
 @Slf4j
-public class JWTFilter extends OncePerRequestFilter {
+public class
+JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
 
