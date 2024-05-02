@@ -61,7 +61,7 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: host.docker.internal:8081
+releaseHostName: ddib-user-service.default.svc.cluster.local:8081
 
 # -- Eureka client
 #eureka:
