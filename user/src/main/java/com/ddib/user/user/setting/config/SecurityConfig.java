@@ -94,6 +94,8 @@ public class SecurityConfig {
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
+                                .authorizationEndpoint(redirection -> redirection
+                                        .baseUri("/oauth2/ddib"))
                         .successHandler(customSuccessHandler)
                 );
 
@@ -114,6 +116,7 @@ public class SecurityConfig {
 //                .requiresChannel()
 //                .requestMatchers(r -> r.getRequestURI().startsWith("/secure"))
 //                .requiresSecure();
+
         return http.build();
     }
 }

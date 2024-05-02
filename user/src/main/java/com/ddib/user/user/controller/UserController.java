@@ -96,9 +96,5 @@ public class UserController {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
-
-
-
-
     }
 }
