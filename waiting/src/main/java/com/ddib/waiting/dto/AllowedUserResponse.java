@@ -1,4 +1,4 @@
-package com.ddib.gateway.dto;
+package com.ddib.waiting.dto;
 
 public record AllowedUserResponse(Boolean allowed) {
 }

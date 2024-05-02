@@ -1,4 +1,4 @@
-package com.ddib.gateway.service; // 패키지 선언: com.ticket.flow.service 패키지
+package com.ddib.waiting.service; // 패키지 선언: com.ticket.flow.service 패키지
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
