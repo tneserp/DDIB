@@ -76,15 +76,15 @@ public class ReissueServiceImpl implements ReissueService {
 
         String email = jwtUtil.getEmail(refresh);
 
-        //make new JWT
+        // make new JWT
         String newAccess = jwtUtil.createJwt("access", email, accessExpireMs);
         String newRefresh = jwtUtil.createJwt("refresh", email, refreshExpireMs);
 
-        //Refresh 토큰 저장 DB에 기존의 Refresh 토큰 삭제 후 새 Refresh 토큰 저장
+        // Refresh 토큰 저장 DB에 기존의 Refresh 토큰 삭제 후 새 Refresh 토큰 저장
         redisService.deleteValues(refresh);
         redisService.setValues(email, newRefresh, refreshExpireMs);
 
-        //response
+        // response
         response.setHeader("Authorization", "Bearer " + newAccess);
         response.addCookie(createCookie("refresh", newRefresh));
 

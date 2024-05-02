@@ -12,6 +12,10 @@ import lombok.*;
 @Schema(description = "일반회원 정보 DTO")
 public class UserInfoDto {
     @NotNull
+    @Schema(description = "일반회원 식별키")
+    private Integer userId;
+
+    @NotNull
     @Schema(description = "이름")
     private String name;
 
