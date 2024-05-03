@@ -11,17 +11,19 @@ import { GoBell } from "react-icons/go";
 import { GoBellFill } from "react-icons/go";
 import { GoPerson } from "react-icons/go";
 import { GoPersonFill } from "react-icons/go";
+import Alarm from "./Alarm";
 
 export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
   console.log(segment);
 
-  const me = {
-    // 임시로 내 정보 있는것처럼
-    id: "dd",
-  };
+  const me = {};
 
   const [bellOn, setBellOn] = useState(false);
+
+  const kakaoLogin = () => {
+    window.location.href = "http://localhost:8000/login/oauth2/code/ddib";
+  };
 
   return (
     <>
@@ -69,27 +71,39 @@ export default function NavMenu() {
         </li>
         {me?.id && (
           <li>
-            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
+            <div
+              className={styles.alarm}
+              onClick={() => setBellOn((prev) => !prev)}
+            >
+              {bellOn ? (
+                <GoBellFill className={styles.icons} />
+              ) : (
+                <GoBell className={styles.icons} />
+              )}
             </div>
+            {bellOn && (
+              <div className={styles.alarmModal}>
+                <Alarm />
+              </div>
+            )}
           </li>
         )}
         <li>
-          <Link href="/mypage">
-            {segment === "mypage" ? (
-              <>
+          {me?.id && segment === "mypage" ? (
+            <>
+              <Link href="/mypage">
                 <div>
                   <GoPersonFill className={styles.icons} />
                 </div>
-              </>
-            ) : (
-              <>
-                <div>
-                  <GoPerson className={styles.icons} />
-                </div>
-              </>
-            )}
-          </Link>
+              </Link>
+            </>
+          ) : (
+            <>
+              <div onClick={kakaoLogin}>
+                <GoPerson className={styles.icons} />
+              </div>
+            </>
+          )}
         </li>
       </div>
     </>

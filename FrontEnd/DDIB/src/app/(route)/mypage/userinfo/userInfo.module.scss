@@ -1,6 +1,18 @@
 .container {
+  padding: 0 10%;
+}
+
+.title {
   text-align: center;
   font-size: 2vw;
   margin-top: 5vh;
-  margin-bottom: 15vh;
+  margin-bottom: 10vh;
+}
+
+.modifyUser {
+  margin-top: 4vw;
+  text-align: center;
+  background-color: var(--scarlet);
+  color: white;
+  padding: 1vh;
 }

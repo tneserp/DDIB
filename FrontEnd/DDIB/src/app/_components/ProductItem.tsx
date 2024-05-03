@@ -18,7 +18,17 @@ interface Props {
   discount: number;
 }
 
-export default function ProductItem({ thumbnailImage, companyName, name, eventStartTime, eventEndTime, price, totalStock, stock, discount }: Props) {
+export default function ProductItem({
+  thumbnailImage,
+  companyName,
+  name,
+  eventStartTime,
+  eventEndTime,
+  price,
+  totalStock,
+  stock,
+  discount,
+}: Props) {
   const [salePrice, setSalePrice] = useState(0);
 
   useEffect(() => {
@@ -30,7 +40,7 @@ export default function ProductItem({ thumbnailImage, companyName, name, eventSt
   return (
     <div className={styles.containers}>
       <div className={styles.wrapper}>
-        <Image src={thumbnailImage} alt="상품썸네일"></Image>
+        <Image src={thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
       </div>
       <div className={styles.companyMini}>
         <div>
