@@ -64,7 +64,6 @@ public class UserController {
     public ResponseEntity<?> userDelete(Principal principal) {
         try {
             userService.deleteUser(principal);
-//            userService.deleteUser(principal);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
