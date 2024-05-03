@@ -20,7 +20,6 @@ ext {
 }
 
 dependencies {
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // webflux + redis (대기열)
