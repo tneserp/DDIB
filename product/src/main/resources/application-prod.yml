@@ -10,8 +10,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&characterEncoding=UTF-8
-    username: root
-    password: 1234
+    username: ssafy
+    password: ssafy
   jpa:
 #    hibernate:
 #      ddl-auto: update
