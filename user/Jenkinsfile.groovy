@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_user'
-        DOCKERFILE_PATH = './seller/Dockerfile'
+        DOCKERFILE_PATH = './user/Dockerfile'
         CONTAINER_NAME = 'ddib_user'
         REGISTRY_CREDENTIAL = 'dockerhub_IdPwd'
         DOCKER_IMAGE = ''
