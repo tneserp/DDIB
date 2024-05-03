@@ -22,14 +22,7 @@ public class JWTUtil {
 
     //    사용자 이름 반환
     public String getUsername(String token) {
-
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
-    }
-
-    //    사용자 역할 반환
-    public String getRole(String token) {
-
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
     }
 
     public String getEmail(String token) {

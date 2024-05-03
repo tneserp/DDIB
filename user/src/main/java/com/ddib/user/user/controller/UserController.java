@@ -1,8 +1,6 @@
 package com.ddib.user.user.controller;
 
-import com.ddib.user.user.domain.User;
 import com.ddib.user.user.dto.request.UserModifyRequestDto;
-import com.ddib.user.user.dto.resposne.UserInfoDto;
 import com.ddib.user.user.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
