@@ -45,8 +45,6 @@ spring:
   jwt:
     secret: adkafjlsdjgldkfjskdlakjdjkfljdkjkdkkkksjakslfejfghlajsdflaksjdgljadk
 
-  profiles:
-    include: oauth
 
 access:
   token:
