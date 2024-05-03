@@ -22,7 +22,7 @@ export default function OrderList() {
     },
     {
       orderDate: "2024-04-24 18:00:00",
-      productId: 3,
+      productId: 4,
       thumbnailImage: product,
       companyName: "joonseoung",
       name: "맥 레트로 매트 립스틱2",

@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  height: 60vh;
+
+  & > div:nth-child(2) {
+    flex: 2;
+  }
+}
+
+.wrapper {
+  z-index: 1;
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+  }
+}
+
+.itemArea {
+  display: flex;
+  width: 70%;
+  height: 100%;
+}
+
+.swiperItem {
+  width: 90%;
+  height: 40vh;
+  padding: 3vh;
+  display: flex;
+  align-content: center;
+}
+
+.item {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 40vh;
+  margin-right: 10vh;
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+  }
+}

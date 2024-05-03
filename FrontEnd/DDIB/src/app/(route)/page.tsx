@@ -4,7 +4,9 @@ import styles from "./page.module.scss";
 export default function Home() {
   return (
     <>
-      <main className={styles.main}>메인!!!</main>
+      <main className={styles.main}>
+        <div>메인</div>
+      </main>
     </>
   );
 }

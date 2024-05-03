@@ -16,6 +16,7 @@ export default function AddressForm({ type }: Props) {
   const [myAddress, setMyAddress] = useState(false);
   const [name, setName] = useState("");
   const [num, setNum] = useState("");
+  const [email, setEmail] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
@@ -48,6 +49,10 @@ export default function AddressForm({ type }: Props) {
     setNum(e.target.value);
   };
 
+  const inputEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
   const getMyAddress = () => {
     setMyAddress((prev) => !prev);
   };
@@ -62,12 +67,14 @@ export default function AddressForm({ type }: Props) {
     if (myAddress) {
       setName(user.name);
       setNum(user.phone);
+      setEmail(user.email);
       setZipCode(user.zipCode);
       setAddress(user.roadAddress);
       setAddressDetail(user.detailAddress);
     } else {
       setName("");
       setNum("");
+      setEmail("");
       setZipCode("");
       setAddress("");
       setAddressDetail("");
@@ -101,7 +108,7 @@ export default function AddressForm({ type }: Props) {
               type="text"
               className={styles.input}
               value={name}
-              onChange={inputNum}
+              onChange={inputName}
             ></input>
           ) : (
             <div>{addressInfo.receiverName}</div>
@@ -127,6 +134,22 @@ export default function AddressForm({ type }: Props) {
         </div>
       </div>
       <div className={styles.line}></div>
+      {type === "mypage" && (
+        <>
+          <div className={styles.addressItem}>
+            <div>이메일</div>
+            <div>
+              <input
+                type="text"
+                className={styles.inputNum}
+                value={email}
+                onChange={inputEmail}
+              ></input>
+            </div>
+          </div>
+          <div className={styles.line}></div>
+        </>
+      )}
       <div className={styles.addressItem}>
         <div>주소</div>
         <div className={styles.addressArea}>

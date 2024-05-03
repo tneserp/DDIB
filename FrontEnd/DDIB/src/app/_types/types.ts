@@ -1,6 +1,8 @@
 export interface User {
+  userPk: number;
   name: string;
   phone: string;
+  email: string;
   zipCode: string;
   roadAddress: string;
   detailAddress: string;
