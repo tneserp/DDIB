@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle 8.5'
-    }
+
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_user'
         DOCKERFILE_PATH = './seller/Dockerfile'
@@ -14,19 +12,10 @@ pipeline {
     stages {
         stage('GitLab Clone') {
             steps {
-                git branch : 'dev-user', credentialsId: 'gitlab_access_token', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
+                git branch : 'dev-user', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
-        stage('Add Env') {
-            steps {
-                dir('./user') {
-                    withCredentials([file(credentialsId: 'key', variable: 'key')]) {
-                        sh 'chmod -R a=rwx src/main/resources'
-                        sh 'cp ${key} src/main/resources/application-key.yml'
-                    }
-                }
-            }
-        }
+
         stage('Gradle Build') {
             steps {
                 echo 'Building..'
