@@ -1,8 +1,6 @@
 package com.ddib.user.user.controller;
 
-import com.ddib.user.user.domain.User;
 import com.ddib.user.user.dto.request.UserModifyRequestDto;
-import com.ddib.user.user.dto.resposne.UserInfoDto;
 import com.ddib.user.user.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -66,7 +64,6 @@ public class UserController {
     public ResponseEntity<?> userDelete(Principal principal) {
         try {
             userService.deleteUser(principal);
-//            userService.deleteUser(principal);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
