@@ -47,3 +47,20 @@ export interface OrderAddressInfo {
   orderRoadAddress: string;
   orderDetailAddress: string;
 }
+
+export interface Que {
+  rank: number;
+}
+
+export interface OrderInfo {
+  productId: number;
+  itemName: string;
+  quantity: number;
+  totalAmount: number;
+  taxFreeAmount: number;
+  receiverName: string;
+  receiverPhone: string;
+  orderRoadAddress: string;
+  orderDetailAddress: string;
+  orderZipcode: string;
+}

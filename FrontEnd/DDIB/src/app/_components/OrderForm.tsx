@@ -11,6 +11,9 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import kakao from "../../../public/kakaopay.svg";
 import { OrderProduct } from "@/app/_types/types";
+import { useMutation } from "@tanstack/react-query";
+import { postReady } from "../_api/pay";
+import { OrderInfo } from "@/app/_types/types";
 
 interface Props {
   type: string;
@@ -22,8 +25,34 @@ export default function OrderForm({ type }: Props) {
   const [checkPay, setCheckPay] = useState(false);
   const [orderProduct, setOrderProduct] = useState<OrderProduct>();
 
+  const sendOrder = useMutation({
+    mutationFn: async (data: OrderInfo) => {
+      return postReady(data);
+    },
+    async onSuccess(response) {
+      const url = response.next_redirect_pc_url;
+      console.log(url);
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+
   const buyItem = () => {
-    router.push(`/order/complete/${orderInfo.productId}`);
+    const sendInfo = {
+      productId: orderInfo.productId,
+      itemName: orderInfo.name,
+      quantity: orderInfo.totalAmount,
+      totalAmount: orderInfo.totalAmount * orderInfo.salePrice,
+      taxFreeAmount: 0,
+      receiverName: "유세진",
+      receiverPhone: "01066041442",
+      orderRoadAddress: "서울특별시 관악구 은천로 93",
+      orderDetailAddress: "102동 705호",
+      orderZipcode: "08715",
+    };
+    sendOrder.mutate(sendInfo);
+    //router.push(`/order/complete/${orderInfo.productId}`);
   };
 
   return (
@@ -69,11 +98,7 @@ export default function OrderForm({ type }: Props) {
         <div className={styles.priceArea}>
           <div className={styles.priceItem}>
             <div>상품금액</div>
-            <div>
-              {(orderInfo.price * orderInfo.totalAmount).toLocaleString(
-                "ko-KR"
-              )}
-            </div>
+            <div>{(orderInfo.price * orderInfo.totalAmount).toLocaleString("ko-KR")}</div>
           </div>
           <div className={styles.priceItem}>
             <div>배송비</div>
@@ -81,20 +106,11 @@ export default function OrderForm({ type }: Props) {
           </div>
           <div className={styles.priceItem}>
             <div>할인금액</div>
-            <div>
-              {(
-                (orderInfo.price - orderInfo.salePrice) *
-                orderInfo.totalAmount
-              ).toLocaleString("ko-KR")}
-            </div>
+            <div>{((orderInfo.price - orderInfo.salePrice) * orderInfo.totalAmount).toLocaleString("ko-KR")}</div>
           </div>
           <div className={styles.priceItem}>
             <div>총 상품 금액</div>
-            <div>
-              {(orderInfo.salePrice * orderInfo.totalAmount).toLocaleString(
-                "ko-KR"
-              )}
-            </div>
+            <div>{(orderInfo.salePrice * orderInfo.totalAmount).toLocaleString("ko-KR")}</div>
           </div>
         </div>
         <div className={styles.lineTwo}></div>
@@ -103,17 +119,8 @@ export default function OrderForm({ type }: Props) {
         <div className={styles.subTitle}>결제방식</div>
         <div className={styles.lineTwo}></div>
         {type === "order" ? (
-          <div
-            className={styles.payBtn}
-            onClick={() => setCheckPay((prev) => !prev)}
-          >
-            <div>
-              {checkPay ? (
-                <FaDotCircle color="#ff5454" />
-              ) : (
-                <FaRegDotCircle color="gray" />
-              )}
-            </div>
+          <div className={styles.payBtn} onClick={() => setCheckPay((prev) => !prev)}>
+            <div>{checkPay ? <FaDotCircle color="#ff5454" /> : <FaRegDotCircle color="gray" />}</div>
             <Image className={styles.kakaologo} src={kakao} alt="kakao"></Image>
             <div>
               kakao<span style={{ fontWeight: "bold" }}>pay</span>

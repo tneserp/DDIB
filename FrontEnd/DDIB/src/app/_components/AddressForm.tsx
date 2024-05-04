@@ -23,8 +23,7 @@ export default function AddressForm({ type }: Props) {
   const { addressInfo } = orderAddressStore();
   const { user } = userStore();
 
-  const scriptUrl =
-    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+  const scriptUrl = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   const open = useDaumPostcodePopup(scriptUrl);
 
   const toggleHandler = () => {
@@ -63,6 +62,8 @@ export default function AddressForm({ type }: Props) {
     }
   }, []);
 
+  useEffect(() => console.log("렌더링된다"));
+
   useEffect(() => {
     if (myAddress) {
       setName(user.name);
@@ -88,11 +89,7 @@ export default function AddressForm({ type }: Props) {
           <div className={styles.addressItem}>
             <div>배송지 선택</div>
             <div className={styles.addressCheck} onClick={getMyAddress}>
-              {myAddress ? (
-                <FaCheckCircle />
-              ) : (
-                <FaRegCheckCircle color="gray" />
-              )}
+              {myAddress ? <FaCheckCircle /> : <FaRegCheckCircle color="gray" />}
               <div>기본배송지로 설정</div>
             </div>
           </div>
@@ -102,18 +99,7 @@ export default function AddressForm({ type }: Props) {
 
       <div className={styles.addressItem}>
         <div>{type === "mypage" ? "이름" : "받으시는 분"}</div>
-        <div>
-          {type === "order" || type === "mypage" ? (
-            <input
-              type="text"
-              className={styles.input}
-              value={name}
-              onChange={inputName}
-            ></input>
-          ) : (
-            <div>{addressInfo.receiverName}</div>
-          )}
-        </div>
+        <div>{type === "order" || type === "mypage" ? <input type="text" className={styles.input} value={name} onChange={inputName}></input> : <div>{addressInfo.receiverName}</div>}</div>
       </div>
       <div className={styles.line}></div>
       <div className={styles.addressItem}>
@@ -121,12 +107,7 @@ export default function AddressForm({ type }: Props) {
         <div>
           {type === "order" || type === "mypage" ? (
             <>
-              <input
-                type="text"
-                className={styles.inputNum}
-                value={num}
-                onChange={inputNum}
-              ></input>
+              <input type="text" className={styles.inputNum} value={num} onChange={inputNum}></input>
             </>
           ) : (
             <div>{addressInfo.receiverPhone}</div>
@@ -139,12 +120,7 @@ export default function AddressForm({ type }: Props) {
           <div className={styles.addressItem}>
             <div>이메일</div>
             <div>
-              <input
-                type="text"
-                className={styles.inputNum}
-                value={email}
-                onChange={inputEmail}
-              ></input>
+              <input type="text" className={styles.inputNum} value={email} onChange={inputEmail}></input>
             </div>
           </div>
           <div className={styles.line}></div>
@@ -156,27 +132,12 @@ export default function AddressForm({ type }: Props) {
           {type === "order" || type === "mypage" ? (
             <>
               <div>
-                <input
-                  type="text"
-                  className={styles.input}
-                  value={zipCode}
-                  readOnly
-                ></input>
+                <input type="text" className={styles.input} value={zipCode} readOnly></input>
                 <div onClick={toggleHandler}>우편번호찾기</div>
               </div>
               <div>
-                <input
-                  type="text"
-                  className={styles.inputAddress}
-                  value={address}
-                  readOnly
-                ></input>
-                <input
-                  type="text"
-                  className={styles.inputAddress}
-                  value={addressDetail}
-                  onChange={inputAddress}
-                ></input>
+                <input type="text" className={styles.inputAddress} value={address} readOnly></input>
+                <input type="text" className={styles.inputAddress} value={addressDetail} onChange={inputAddress}></input>
               </div>
             </>
           ) : (

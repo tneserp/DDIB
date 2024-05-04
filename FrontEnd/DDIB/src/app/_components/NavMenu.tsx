@@ -22,7 +22,7 @@ export default function NavMenu() {
   const [bellOn, setBellOn] = useState(false);
 
   const kakaoLogin = () => {
-    window.location.href = "http://localhost:8000/login/oauth2/code/ddib";
+    window.location.href = "http://61.80.142.239:8081/api/oauth2/ddib/kakao";
   };
 
   return (
@@ -50,9 +50,9 @@ export default function NavMenu() {
           <Link href="https://www.naver.com">
             <div className={styles.subTitle} style={{ paddingRight: "1.5vw" }}>
               <div>BIDD</div>
-              <div className={styles.goIcon}>
+              {/* <div className={styles.goIcon}>
                 <HiArrowTopRightOnSquare />
-              </div>
+              </div> */}
             </div>
           </Link>
         </li>

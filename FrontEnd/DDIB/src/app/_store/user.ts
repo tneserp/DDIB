@@ -9,7 +9,7 @@ interface UserInfo {
 
 export const userStore = create(
   persist<UserInfo>(
-    (set, get) => ({
+    (set) => ({
       user: {
         userPk: 1,
         name: "김싸피",

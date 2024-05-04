@@ -2,14 +2,16 @@
 
 import styles from "./waitingModal.module.scss";
 import { useEffect } from "react";
-import { orderStore } from "@/app/_store/product";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getWaitingList } from "../_api/waiting";
+import { userStore } from "@/app/_store/user";
+import { Que } from "@/app/_types/types";
+import Cookies from "js-cookie";
 
 export default function WaitingModal() {
-  const { orderInfo } = orderStore();
   const router = useRouter();
+  const { user } = userStore();
 
   useEffect(() => {
     document.body.style.cssText = `
@@ -24,28 +26,29 @@ export default function WaitingModal() {
     };
   }, []);
 
-  const { data: number } = useQuery<Object>({
-    queryKey: ["waiting"],
-    queryFn: getWaitingList,
-    staleTime: 3000,
+  const { data } = useQuery<Que>({
+    queryKey: ["waiting", 1],
+    queryFn: () => getWaitingList(1),
+    refetchInterval: 3000,
   });
 
   useEffect(() => {
-    if (number && number.rank < 0) {
-      const id = orderInfo.productId;
-      console.log(id);
-      router.replace(`/order/${id}`);
+    if (data && data.rank <= 0) {
+      console.log("change");
+      var expiresAt = new Date();
+      console.log(expiresAt);
+      expiresAt.setMinutes(expiresAt.getMinutes() + 5);
+      Cookies.set("state", "true", { expires: expiresAt });
+      router.replace(`/order`);
     }
-  }, [number]);
-
-  const goOrder = () => {};
+  }, [data]);
 
   return (
     <>
       <div className={styles.modalBackground}>
         <div className={styles.modalInfo}>
           <div>나의 대기순서</div>
-          <div>{number.rank}</div>
+          <div>{data?.rank && data.rank < 0 ? "0" : data?.rank}</div>
           <div>현재 접속량이 많아 대기 중입니다.</div>
           <div>잠시만 기다려 주시면 결제 페이지로 연결됩니다.</div>
           <div>

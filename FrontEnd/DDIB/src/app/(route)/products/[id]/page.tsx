@@ -18,11 +18,15 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 import TimeCount from "@/app/_components/TimeCount";
 import AmountBtn from "@/app/_components/AmountBtn";
 import { amountStore, orderStore } from "@/app/_store/product";
+import { userStore } from "@/app/_store/user";
+import { listIn } from "@/app/_api/waiting";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ProductDetail() {
   const router = useRouter();
   const { amount } = amountStore();
   const { setOrderInfo } = orderStore();
+  const { user } = userStore();
 
   const [productInfo, setProductInfo] = useState<Product>({
     productId: 1,
@@ -60,7 +64,13 @@ export default function ProductDetail() {
       status: 0,
     };
     setOrderInfo(sendInfo);
-    router.push(`/products/${productInfo.productId}/wait`);
+    listIn(1)
+      .then(() => {
+        router.push("/order");
+      })
+      .catch((error) => {
+        console.error("listIn 함수 호출 중 오류 발생:", error);
+      });
   };
 
   useEffect(() => {
@@ -71,9 +81,7 @@ export default function ProductDetail() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.category}>
-        TimeDeal &gt; {productInfo.category}
-      </div>
+      <div className={styles.category}>TimeDeal &gt; {productInfo.category}</div>
       <div className={styles.info}>
         <div className={styles.sectionOne}>
           <div className={styles.thumbnail}>
@@ -127,11 +135,7 @@ export default function ProductDetail() {
       </div>
       <div className={styles.detailArea}>
         <div className={styles.detailTitle}>Details</div>
-        <div
-          className={
-            viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`
-          }
-        >
+        <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
           {productInfo.details.map((image, index) => (
             <div key={index}>
               <Image src={image} alt="상품썸네일"></Image>
