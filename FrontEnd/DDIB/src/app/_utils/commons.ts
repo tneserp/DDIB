@@ -16,7 +16,7 @@ const ClientAxiosApi = () => {
   });
 
   const token = "";
-  instance.defaults.headers.common["Authorization"] = token;
+  //instance.defaults.headers.common["Authorization"] = token;
 
   return instance;
 };
