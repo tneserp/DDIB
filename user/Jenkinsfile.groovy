@@ -49,12 +49,12 @@ pipeline {
                     // 컨테이너가 실행중이 아니거나 중지되어 있는 경우 아무런 동작하지 않고 넘어가도록
                     sh "docker stop ${CONTAINER_NAME} || true"
 
-//                    def exitedContainers = sh(script: "docker ps --filter status=exited -q", returnStdout: true).trim()
-//                    if (exitedContainers) {
-//                        sh "docker rm ${exitedContainers}"
-//                    } else {
-//                        echo "No exited containers to remove."
-//                    }
+                   def exitedContainers = sh(script: "docker ps --filter status=exited -q", returnStdout: true).trim()
+                   if (exitedContainers) {
+                       sh "docker rm ${exitedContainers}"
+                   } else {
+                       echo "No exited containers to remove."
+                   }
                 }
             }
         }
