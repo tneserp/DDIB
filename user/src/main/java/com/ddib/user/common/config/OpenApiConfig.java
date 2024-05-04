@@ -1,4 +1,4 @@
-package com.ddib.user.user.setting.config;
+package com.ddib.user.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
