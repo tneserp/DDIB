@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle 8.5'
-    }
+
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_eureka'
         DOCKERFILE_PATH = './eureka/Dockerfile'
@@ -14,7 +12,7 @@ pipeline {
     stages {
         stage('GitLab Clone') {
             steps {
-                git branch : 'dev-eureka', credentialsId: 'gitlab_access_token', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
+                git branch : 'dev-eureka', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
         stage('Gradle Build') {
