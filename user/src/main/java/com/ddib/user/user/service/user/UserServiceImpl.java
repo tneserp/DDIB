@@ -8,16 +8,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserInfoDto findUser(Principal principal) {
-        User user = userRepository.findByEmail(principal.getName());
+    public UserInfoDto findUser(String email) {
+        User user = userRepository.findByEmail(email);
         return UserInfoDto.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
@@ -30,13 +28,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void modifyUserInfo(UserModifyRequestDto requestDto, Principal principal) {
-        userRepository.findByEmail(principal.getName()).updateInfo(requestDto);
+    public void modifyUserInfo(UserModifyRequestDto requestDto, String email) {
+        userRepository.findByEmail(email).updateInfo(requestDto);
     }
 
     @Transactional
     @Override
-    public void deleteUser(Principal principal) {
-        userRepository.deleteByEmail(principal.getName());
+    public void deleteUser(String email) {
+        userRepository.deleteByEmail(email);
     }
 }

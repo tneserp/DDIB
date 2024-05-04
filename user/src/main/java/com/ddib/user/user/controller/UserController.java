@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -24,30 +22,30 @@ import java.security.Principal;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/{email}")
     @Operation(summary = "일반회원 정보 조회 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "일반회원 정보 조회 성공"),
             @ApiResponse(responseCode = "400", description = "일반회원 정보 조회 실패")
     })
-    public ResponseEntity<?> userDetails(Principal principal) {
+    public ResponseEntity<?> userDetails(@PathVariable String email) {
         try {
-            return new ResponseEntity<>(userService.findUser(principal), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findUser(email), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping
+    @PutMapping("/{email}")
     @Operation(summary = "일반회원 정보 수정 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "일반회원 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "일반회원 정보 수정 실패")
     })
-    public ResponseEntity<?> userInfoModify(@RequestBody UserModifyRequestDto requestDto, Principal principal) {
+    public ResponseEntity<?> userInfoModify(@RequestBody UserModifyRequestDto requestDto, @PathVariable String email) {
         try {
-            userService.modifyUserInfo(requestDto, principal);
+            userService.modifyUserInfo(requestDto, email);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,15 +53,15 @@ public class UserController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{email}")
     @Operation(summary = "일반회원 탈퇴 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "일반회원 탈퇴 성공"),
             @ApiResponse(responseCode = "400", description = "일반회원 탈퇴 실패")
     })
-    public ResponseEntity<?> userDelete(Principal principal) {
+    public ResponseEntity<?> userDelete(@PathVariable String email) {
         try {
-            userService.deleteUser(principal);
+            userService.deleteUser(email);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
