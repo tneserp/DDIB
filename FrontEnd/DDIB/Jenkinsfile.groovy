@@ -15,7 +15,7 @@ pipeline {
         //프로젝트 클론
         stage('GitLab Clone') {
             steps {
-                git branch : 'develop-fe', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-ai-image-sub2/S10P22C201.git'
+                git branch : 'dev-front', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
 
