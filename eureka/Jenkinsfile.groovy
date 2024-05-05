@@ -79,7 +79,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -d --name ${CONTAINER_NAME} -p 8082:8082 ${DOCKER_IMAGE_NAME}'
+                    sh 'docker run -d --name ${CONTAINER_NAME} -p 8761:8761 ${DOCKER_IMAGE_NAME}'
                 }
             }
         }
