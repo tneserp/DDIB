@@ -27,5 +27,5 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   data:
     redis:
-      host: localhost
+      host: k10c102.p.ssafy.io
       port: 6379
