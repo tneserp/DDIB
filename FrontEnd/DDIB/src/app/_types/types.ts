@@ -13,20 +13,31 @@ export interface Product {
   name: string;
   totalStock: number;
   stock: number;
+  eventStartDate: string;
+  eventEndDate: string;
   eventStartTime: string;
   eventEndTime: string;
   price: number;
   discount: number;
   thumbnailImage: string;
   category: string;
-  details: Array<string>;
+  details: Array<DetailImage>;
   likeCount: number;
-  like: boolean;
   sellerId: number;
   companyName: string;
   businessNumber: number;
   companyPhone: number;
   companyEmail: string;
+  over: boolean;
+}
+
+export interface ProductDetail extends Product {
+  liked: boolean;
+}
+
+export interface DetailImage {
+  productDetailId: number;
+  imageUrl: string;
 }
 
 export interface OrderProduct {
@@ -52,15 +63,23 @@ export interface Que {
   rank: number;
 }
 
-export interface OrderInfo {
+export interface OrderInfo extends OrderAddressInfo {
   productId: number;
   itemName: string;
   quantity: number;
   totalAmount: number;
   taxFreeAmount: number;
-  receiverName: string;
-  receiverPhone: string;
-  orderRoadAddress: string;
-  orderDetailAddress: string;
-  orderZipcode: string;
+}
+
+export interface OrderDetail extends OrderAddressInfo {
+  orderId: string;
+  orderDate: string;
+  status: number;
+  companyName: string;
+  thumbnailImage: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  totalAmount: number;
+  paymentMethod: string;
 }

@@ -1,0 +1,29 @@
+import { ClientAxiosApi } from "@/app/_utils/commons";
+
+const api = ClientAxiosApi();
+
+async function getProductWeek() {
+  console.log("week");
+  const { data } = await api.get("/api/product/all");
+  console.log(data);
+  return data;
+}
+
+async function getProductSearch(keyword: string, category: string) {
+  const { data } = await api.get(`/api/product/search?keyword=${keyword}&category=${category}`);
+  return data;
+}
+
+async function getProductDetail(productId: string, userPk: number) {
+  const { data } = await api.get(`/api/product/${productId}/${userPk}`);
+  return data;
+}
+
+async function getWishList(userPk: number) {
+  console.log("wishlist");
+  const { data } = await api.get(`/api/product/like/user/${userPk}`);
+  console.log(data);
+  return data;
+}
+
+export { getProductWeek, getProductSearch, getProductDetail, getWishList };

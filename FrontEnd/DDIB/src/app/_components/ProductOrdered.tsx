@@ -11,7 +11,7 @@ export default function ProductOrdered({ productId, thumbnailImage, companyName,
       <div className={styles.orderedItem}>
         <div>
           <div className={styles.thumbnail}>
-            <Image src={thumbnailImage} alt="상품썸네일"></Image>
+            <Image src={thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
           </div>
         </div>
         <div>

@@ -2,35 +2,54 @@
 
 import OrderForm from "@/app/_components/OrderForm";
 import { useEffect, useState } from "react";
-import { OrderProduct, OrderAddressInfo } from "@/app/_types/types";
-import product from "../../../../../../public/product.webp";
+import { OrderDetail } from "@/app/_types/types";
 import { orderStore, orderAddressStore } from "@/app/_store/product";
+import { useQuery } from "@tanstack/react-query";
+import { getOrderDetail } from "@/app/_api/order";
 
 export default function OrderComplete() {
   const { setOrderInfo } = orderStore();
-  const [productInfo, setProductInfo] = useState<OrderProduct>({
-    productId: 3,
-    thumbnailImage: product,
-    companyName: "joonseoung",
-    name: "맥 레트로 매트 립스틱2",
-    totalAmount: 3,
-    price: 10000,
-    salePrice: 9000,
-    status: 0,
-  });
-
   const { setOrderAddressInfo } = orderAddressStore();
-  const [addressInfo, setAddressInfo] = useState<OrderAddressInfo>({
-    receiverName: "김싸피",
-    receiverPhone: "01022223333",
-    orderZipcode: "12322",
-    orderRoadAddress: "광주 하남산로 45번길",
-    orderDetailAddress: "2-2 6층",
+  const [isDone, setIsDone] = useState(true);
+
+  const { data } = useQuery<OrderDetail>({
+    queryKey: ["orderDetail", "1"],
+    queryFn: () => getOrderDetail("1"),
   });
 
   useEffect(() => {
-    setOrderInfo(productInfo);
-    setOrderAddressInfo(addressInfo);
+    if (data) {
+      const productInfo = {
+        productId: 0,
+        thumbnailImage: data.thumbnailImage,
+        companyName: data.companyName,
+        name: data.productName,
+        totalAmount: data.quantity,
+        price: data.price,
+        salePrice: data.totalAmount / data.quantity,
+        status: data.status,
+      };
+
+      const addressInfo = {
+        receiverName: data.receiverName,
+        receiverPhone: data.receiverPhone,
+        orderZipcode: data.orderZipcode,
+        orderRoadAddress: data.orderRoadAddress,
+        orderDetailAddress: data.orderDetailAddress,
+      };
+      setOrderInfo(productInfo);
+      setOrderAddressInfo(addressInfo);
+      setIsDone(true);
+    }
   }, []);
-  return <OrderForm type="complete" />;
+
+  return (
+    <>
+      {isDone && (
+        <>
+          <OrderForm type="complete" orderId={data?.orderId} orderDate={data?.orderDate} paymentMethod={data?.paymentMethod} />
+        </>
+      )}
+    </>
+  );
 }

@@ -11,15 +11,23 @@
 
 .thumbnail {
   height: 60vh;
+  position: relative;
 
   img {
-    width: 90%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
     height: 100%;
+    object-fit: cover;
+    margin: auto;
   }
 }
 
 .info {
   display: flex;
+  gap: 2vw;
 }
 
 .sectionOne {
@@ -151,11 +159,17 @@
 .detailPhoto,
 .detailPhotoView {
   position: relative;
-  margin-top: 10vh;
   width: 100%;
 
   img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
   }
 }
 
