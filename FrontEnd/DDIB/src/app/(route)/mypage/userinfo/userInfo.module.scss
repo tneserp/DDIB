@@ -9,10 +9,24 @@
   margin-bottom: 10vh;
 }
 
-.modifyUser {
-  margin-top: 4vw;
+.btnArea {
+  margin-top: 5vh;
+  display: flex;
+  gap: 2vw;
+}
+
+.modifyBtn {
+  flex: 1;
+  padding: 1vh;
   text-align: center;
   background-color: var(--scarlet);
   color: white;
+}
+
+.quitBtn {
+  flex: 1;
   padding: 1vh;
+  text-align: center;
+  color: var(--scarlet);
+  border: 1px solid var(--scarlet);
 }

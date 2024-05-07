@@ -9,4 +9,8 @@ async function postReady(orderData: OrderInfo) {
   return data;
 }
 
-export { postReady };
+async function putCancelPay(orderId: string) {
+  await api.put(`/api/payment/refund/${orderId}`);
+}
+
+export { postReady, putCancelPay };

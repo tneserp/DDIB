@@ -2,28 +2,31 @@
 
 import ProductOrdered from "@/app/_components/ProductOrdered";
 import styles from "./orderForm.module.scss";
-import AddressForm from "./AddressForm";
-import { orderStore } from "@/app/_store/product";
+import AddressForm, { RefProps } from "./AddressForm";
+import { orderStore, orderAddressStore } from "@/app/_store/product";
 import { FaDotCircle } from "react-icons/fa";
 import { FaRegDotCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import kakao from "../../../public/kakaopay.svg";
-import { OrderProduct } from "@/app/_types/types";
 import { useMutation } from "@tanstack/react-query";
-import { postReady } from "../_api/pay";
+import { postReady, putCancelPay } from "../_api/pay";
 import { OrderInfo } from "@/app/_types/types";
 
 interface Props {
   type: string;
+  orderId: string;
+  orderDate: string | undefined;
+  paymentMethod: string | undefined;
 }
 
-export default function OrderForm({ type }: Props) {
+export default function OrderForm({ type, orderId, orderDate, paymentMethod }: Props) {
+  const saveRef = useRef<RefProps>(null);
   const { orderInfo } = orderStore();
+  const { addressInfo } = orderAddressStore();
   const router = useRouter();
   const [checkPay, setCheckPay] = useState(false);
-  const [orderProduct, setOrderProduct] = useState<OrderProduct>();
 
   const sendOrder = useMutation({
     mutationFn: async (data: OrderInfo) => {
@@ -38,28 +41,62 @@ export default function OrderForm({ type }: Props) {
     },
   });
 
-  const buyItem = () => {
-    const sendInfo = {
-      productId: orderInfo.productId,
-      itemName: orderInfo.name,
-      quantity: orderInfo.totalAmount,
-      totalAmount: orderInfo.totalAmount * orderInfo.salePrice,
-      taxFreeAmount: 0,
-      receiverName: "유세진",
-      receiverPhone: "01066041442",
-      orderRoadAddress: "서울특별시 관악구 은천로 93",
-      orderDetailAddress: "102동 705호",
-      orderZipcode: "08715",
-    };
-    sendOrder.mutate(sendInfo);
-    //router.push(`/order/complete/${orderInfo.productId}`);
+  const cancelOrder = useMutation({
+    mutationFn: async (orderId: string) => {
+      return putCancelPay(orderId);
+    },
+    async onSuccess(response) {
+      console.log("취소성공");
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+
+  const buyItem = (type: string) => {
+    if (type === "order") {
+      const check = saveRef?.current?.saveAddress();
+      if (check) {
+        const sendInfo = {
+          productId: orderInfo.productId,
+          itemName: orderInfo.name,
+          quantity: orderInfo.totalAmount,
+          totalAmount: orderInfo.totalAmount * orderInfo.salePrice,
+          taxFreeAmount: 0,
+          receiverName: addressInfo.receiverName,
+          receiverPhone: addressInfo.receiverPhone,
+          orderRoadAddress: addressInfo.orderRoadAddress,
+          orderDetailAddress: addressInfo.orderDetailAddress,
+          orderZipcode: addressInfo.orderZipcode,
+        };
+        console.log(sendInfo);
+        // sendOrder.mutate(sendInfo);
+        router.push(`/order/complete/${orderInfo.productId}`);
+      } else {
+        alert("주소에 비어있는 칸이 있어요ㅠ");
+      }
+    } else if (type === "complete") {
+      router.push("/");
+    } else {
+      router.back();
+    }
+  };
+
+  const cancelItem = () => {
+    cancelOrder.mutate(orderId);
   };
 
   return (
     <div className={styles.main}>
       {type === "order" && <div className={styles.title}>주문/결제</div>}
       {type === "complete" && <div className={styles.title}>결제완료</div>}
-      {type === "orderView" && <div className={styles.title}>주문내역상세</div>}
+      {type === "orderView" && (
+        <>
+          <div className={styles.title}>주문내역상세</div>
+          <div>{orderId}</div>
+          <div>{orderDate}</div>
+        </>
+      )}
       <div className={styles.section}>
         <div className={styles.subTitle}>주문상품</div>
         <div className={styles.lineTwo}></div>
@@ -89,7 +126,7 @@ export default function OrderForm({ type }: Props) {
       <div className={styles.section}>
         <div className={styles.subTitle}>배송주소</div>
         <div className={styles.lineTwo}></div>
-        <AddressForm type={type} />
+        <AddressForm type={type} ref={saveRef} />
         <div className={styles.lineTwo}></div>
       </div>
       <div className={styles.section}>
@@ -132,14 +169,22 @@ export default function OrderForm({ type }: Props) {
             <div>
               kakao<span style={{ fontWeight: "bold" }}>pay</span>
             </div>
+            {type != "order" && <div>{paymentMethod}</div>}
           </div>
         )}
       </div>
-      {type === "order" && (
-        <div className={styles.buyBtn} onClick={buyItem}>
-          결제하기
+      <div className={styles.btnArea}>
+        <div className={styles.buyBtn} onClick={() => buyItem(type)}>
+          {type === "order" ? "결제하기" : "확인"}
         </div>
-      )}
+        {type === "orderView" && orderInfo.status === 0 && (
+          <>
+            <div className={styles.cancelBtn} onClick={() => cancelItem}>
+              취소하기
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

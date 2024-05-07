@@ -93,12 +93,27 @@
   height: 100%;
 }
 
+.btnArea {
+  display: flex;
+  gap: 2vw;
+}
+
 .buyBtn {
   cursor: pointer;
-  width: 100%;
+  flex: 1;
   padding: 2vh;
   text-align: center;
   background-color: var(--scarlet);
   color: white;
   font-size: 2vw;
+}
+
+.cancelBtn {
+  cursor: pointer;
+  flex: 1;
+  padding: 2vh;
+  text-align: center;
+  color: var(--scarlet);
+  font-size: 2vw;
+  border: 1px solid var(--scarlet);
 }

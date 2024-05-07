@@ -17,12 +17,14 @@ export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
   console.log(segment);
 
-  const me = {};
+  const me = {
+    id: "mk",
+  };
 
   const [bellOn, setBellOn] = useState(false);
 
   const kakaoLogin = () => {
-    window.location.href = "http://61.80.142.239:8081/api/oauth2/ddib/kakao";
+    //window.location.href = "http://61.80.142.239:8081/api/oauth2/ddib/kakao";
   };
 
   return (
@@ -69,17 +71,11 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
+
         {me?.id && (
           <li>
-            <div
-              className={styles.alarm}
-              onClick={() => setBellOn((prev) => !prev)}
-            >
-              {bellOn ? (
-                <GoBellFill className={styles.icons} />
-              ) : (
-                <GoBell className={styles.icons} />
-              )}
+            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
             </div>
             {bellOn && (
               <div className={styles.alarmModal}>
@@ -99,9 +95,14 @@ export default function NavMenu() {
             </>
           ) : (
             <>
-              <div onClick={kakaoLogin}>
+              <Link href="/mypage">
+                <div>
+                  <GoPerson className={styles.icons} />
+                </div>
+              </Link>
+              {/* <div onClick={kakaoLogin}>
                 <GoPerson className={styles.icons} />
-              </div>
+              </div> */}
             </>
           )}
         </li>

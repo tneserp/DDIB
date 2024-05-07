@@ -1,18 +1,32 @@
+"use client";
+
 import ProductItem from "@/app/_components/ProductItem";
 import styles from "./category.module.scss";
 import weekJson from "./weekList.json";
-import product from "../../../../../public/product.webp";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { Product } from "@/app/_types/types";
+import { getProductSearch } from "@/app/_api/product";
+import { useEffect } from "react";
 
-export default function Category() {
+interface Props {
+  category: string;
+}
+
+export default function Category({ category }: Props) {
+  // const { data } = useQuery<Product[]>({
+  //   queryKey: ["category", , ],
+  //   queryFn: () => getProductSearch(),
+  // });
+
+  useEffect(() => {
+    console.log(category);
+  }, [category]);
+
   return (
     <div className={styles.itemArea}>
       {weekJson.weeklyData.map((item, index) => (
-        <Link
-          href={`/products/${item.productId}`}
-          className={styles.item}
-          key={index}
-        >
+        <Link href={`/products/${item.productId}`} className={styles.item} key={index}>
           <ProductItem
             thumbnailImage={item.thumbnailImage}
             companyName={item.companyName}
