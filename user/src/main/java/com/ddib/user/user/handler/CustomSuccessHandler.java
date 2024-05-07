@@ -42,7 +42,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String email = customUserDetails.getEmail();
 
-        Integer userId  = userRepository.findUserIdByEmail(email);
+        Integer userId  = userRepository.findUserIdByEmail(email).getUserId();
 
         // 권한을 찾아서 권한 설정해줌
         // authentication.getAuthorities()를 호출하여
