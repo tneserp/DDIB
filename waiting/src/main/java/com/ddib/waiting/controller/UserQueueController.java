@@ -5,12 +5,9 @@ import com.ddib.waiting.dto.RankNumberResponse;
 import com.ddib.waiting.service.UserQueueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpCookie;
-import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
 
 @RequiredArgsConstructor
 @RestController
@@ -58,21 +55,4 @@ public class UserQueueController { // UserQueueController 클래스 선언
                 .map(RankNumberResponse::new); // 순위 응답으로 매핑
     }
 
-    @GetMapping("/touch")
-        // GET 요청 매핑
-    Mono<?> touch(@RequestParam(name = "queue", defaultValue = "default") String queue, // 대기열 이름 받아옴 (기본값: default)
-                  @RequestParam(name = "user_id") Long userId, // 사용자 ID 받아옴
-                  ServerWebExchange exchange) { // ServerWebExchange 객체 받아옴
-        // SeverWebExchange -> HttpServletRequest와 HttpServletResponse를 대체하는 역할
-        return Mono.defer(() -> userQueueService.generateToken(queue, userId)) // 토큰 생성
-                .map(token -> {
-                    exchange.getResponse().addCookie( // 쿠키 생성 및 응답에 추가
-                            ResponseCookie.from("user-queue-%s-token".formatted(queue), token) // 쿠키 이름 및 값 설정
-                                    .maxAge(Duration.ofSeconds(300)) // 쿠키 유효 기간 설정
-                                    .path("/") // 쿠키 경로 설정
-                                    .build());
-
-                    return token; // 생성된 토큰 반환
-                });
-    }
 }

@@ -1,4 +1,4 @@
-package com.ddib.waiting.service; // 패키지 선언: com.ticket.flow.service 패키지
+package com.ddib.waiting.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,13 +50,6 @@ public class UserQueueService {
                 .count(); // 허용된 사용자 수 반환
     }
 
-    // 사용자 진입 가능 여부 확인
-    public Mono<Boolean> isAllowed(final String queue, final Long userId) {
-        return reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_PROCEED_KEY.formatted(queue), userId.toString()) // 랭크 조회
-                .defaultIfEmpty(-1L) // 기본값 설정
-                .map(rank -> rank >= 0); // 사용자 허용 여부 반환
-    }
-
     // 토큰을 통한 사용자 진입 가능 여부 확인
     public Mono<Boolean> isAllowedByToken(final String queue, final Long userId, final String token) {
         return this.generateToken(queue, userId) // 토큰 생성
@@ -92,7 +85,7 @@ public class UserQueueService {
         }
     }
 
-    @Scheduled(initialDelay = 5000, fixedDelay = 10000) // 주기적으로 메서드 실행을 스케줄링, 서버 시작 후 5초 지연 후 10초마다 실행
+    @Scheduled(initialDelay = 5000, fixedDelay = 3000) // 주기적으로 메서드 실행을 스케줄링, 서버 시작 후 5초 지연 후 10초마다 실행
     public void scheduleAllowUser() { // 사용자 허용을 스케줄링하는 메서드 정의
         if (!scheduling) { // 스케줄링이 비활성화된 경우
             log.info("passed scheduling"); // 로그 출력
