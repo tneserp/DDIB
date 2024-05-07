@@ -9,23 +9,23 @@ export default function CategoryArea() {
 
   const CategoryItem = [
     { title: "All", value: "" },
-    { title: "Fashion", value: "Fashion" },
-    { title: "Beauty", value: "Beauty" },
-    { title: "Food", value: "Food" },
-    { title: "Appliance", value: "Appliance" },
-    { title: "Sports", value: "Sports" },
-    { title: "Living", value: "Living" },
-    { title: "Pet", value: "Pet" },
-    { title: "Travel", value: "Travel" },
+    { title: "Fashion", value: "fashion" },
+    { title: "Beauty", value: "beauty" },
+    { title: "Food", value: "food" },
+    { title: "Appliance", value: "appliance" },
+    { title: "Sports", value: "sports" },
+    { title: "Living", value: "living" },
+    { title: "Pet", value: "pet" },
+    { title: "Travel", value: "travel" },
   ];
 
   return (
     <>
       <div className={styles.category}>
-        {CategoryItem.map((item) => (
-          <>
-            <div onClick={() => setCategory(item.value)}>{item.title}</div>
-          </>
+        {CategoryItem.map((item, index) => (
+          <div onClick={() => setCategory(item.value)} key={index}>
+            {item.title}
+          </div>
         ))}
       </div>
       <Category category={category}></Category>
