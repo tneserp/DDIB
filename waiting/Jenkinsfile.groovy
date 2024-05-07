@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'kimyusan/ddib_wating'
-        DOCKERFILE_PATH = './wating/Dockerfile'
+        DOCKER_IMAGE_NAME = 'kimyusan/ddib_waiting'
+        DOCKERFILE_PATH = './waiting/Dockerfile'
         CONTAINER_NAME = 'ddib_wating'
         REGISTRY_CREDENTIAL = 'dockerhub_IdPwd'
         DOCKER_IMAGE = ''
@@ -19,7 +19,7 @@ pipeline {
         stage('Gradle Build') {
             steps {
                 echo 'Building..'
-                dir('./wating') {
+                dir('./waiting') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean bootjar'
                 }
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Docker Build Image') {
             steps {
-                dir('./wating') {
+                dir('./waiting') {
                     script {
                         DOCKER_IMAGE = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "-f Dockerfile .")
                     }
