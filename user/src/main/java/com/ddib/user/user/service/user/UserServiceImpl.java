@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserInfoDto findUser(String email) {
-        User user = userRepository.findByEmail(email);
+    public UserInfoDto findUser(Integer userId) {
+        User user = userRepository.findByUserId(userId);
         return UserInfoDto.builder()
                 .userId(user.getUserId())
                 .name(user.getName())
@@ -29,34 +29,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void modifyUserInfo(UserModifyRequestDto requestDto, String email) {
-        userRepository.findByEmail(email).updateInfo(requestDto);
+    public void modifyUserInfo(UserModifyRequestDto requestDto, Integer userId) {
+        userRepository.findByUserId(userId).updateInfo(requestDto);
     }
 
     @Transactional
     @Override
-    public void deleteUser(String email) {
-        userRepository.deleteByEmail(email);
-    }
-
-    @Transactional
-    @Override
-    public void logout(String accessToken, String refreshToken) {
-        // 1. Access Token 검증
-        if (!tokenProvider.validateToken(accessToken)) {
-            throw new ApiException(BasicResponseMessage.UNAUTHORIZED);
-        }
-
-        // 2. Access Token 에서 authentication 을 가져옵니다.
-        Authentication authentication = tokenProvider.getAuthentication(accessToken);
-
-        // 3. DB에 저장된 Refresh Token 제거
-        Long userId = Long.parseLong(authentication.getName());
-        refreshTokenRepository.deleteById(userId);
-
-        // 4. Access Token blacklist에 등록하여 만료시키기
-        // 해당 엑세스 토큰의 남은 유효시간을 얻음
-        Long expiration = tokenProvider.getExpiration(accessToken);
-        redisUtil.setBlackList(accessToken, "access_token", expiration);
+    public void deleteUser(Integer userId) {
+        userRepository.deleteByUserId(userId);
     }
 }
