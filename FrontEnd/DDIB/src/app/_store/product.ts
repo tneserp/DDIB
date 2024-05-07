@@ -24,7 +24,16 @@ interface OrderProducts {
 export const orderStore = create(
   persist<OrderProducts>(
     (set, get) => ({
-      orderInfo: {},
+      orderInfo: {
+        productId: 0,
+        thumbnailImage: "",
+        companyName: "",
+        name: "",
+        totalAmount: 0,
+        price: 0,
+        salePrice: 0,
+        status: 0,
+      },
       setOrderInfo: (info) => set(() => ({ orderInfo: info })),
     }),
     {
@@ -41,7 +50,13 @@ interface OrderAddress {
 export const orderAddressStore = create(
   persist<OrderAddress>(
     (set, get) => ({
-      addressInfo: {},
+      addressInfo: {
+        receiverName: "",
+        receiverPhone: "",
+        orderZipcode: "",
+        orderRoadAddress: "",
+        orderDetailAddress: "",
+      },
       setOrderAddressInfo: (info) => set(() => ({ addressInfo: info })),
     }),
     {

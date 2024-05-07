@@ -15,7 +15,7 @@ export default function AmountBtn({ stock }: Props) {
     setAmount(1);
   }, []);
 
-  const handleChangeInput = (e) => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value);
 
     if (isNaN(newValue) || newValue < 1) {
@@ -25,7 +25,7 @@ export default function AmountBtn({ stock }: Props) {
     }
   };
 
-  const handleBlurInput = (e) => {
+  const handleBlurInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = parseInt(e.target.value);
 
     if (stock < newValue) {

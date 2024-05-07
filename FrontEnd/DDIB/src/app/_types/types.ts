@@ -31,7 +31,7 @@ export interface Product {
   over: boolean;
 }
 
-export interface ProductDetail extends Product {
+export interface ProductInfo extends Product {
   liked: boolean;
 }
 

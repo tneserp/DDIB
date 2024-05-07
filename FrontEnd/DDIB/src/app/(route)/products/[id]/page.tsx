@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import product from "../../../../../public/product.webp";
 import detail1 from "../../../../../public/detail1.jpg";
 import detail2 from "../../../../../public/detail2.jpg";
-import { ProductDetail } from "@/app/_types/types";
+import { ProductInfo } from "@/app/_types/types";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
 import { TfiArrowCircleDown } from "react-icons/tfi";
@@ -31,8 +31,8 @@ export default function ProductDetail() {
   const { setOrderInfo } = orderStore();
   const { user } = userStore();
 
-  const { data } = useQuery<ProductDetail>({
-    queryKey: ["productDetail", productId, user.userPk],
+  const { data } = useQuery<ProductInfo>({
+    queryKey: ["productInfo", productId, user.userPk],
     queryFn: () => getProductDetail(productId, user.userPk),
   });
 
@@ -53,13 +53,13 @@ export default function ProductDetail() {
       };
       setOrderInfo(sendInfo);
       router.push("/order");
-      // listIn(1)
-      //   .then(() => {
-      //     router.push("/order");
-      //   })
-      //   .catch((error) => {
-      //     console.error("listIn 함수 호출 중 오류 발생:", error);
-      //   });
+      listIn(1)
+        .then(() => {
+          router.push("/order");
+        })
+        .catch((error) => {
+          console.error("listIn 함수 호출 중 오류 발생:", error);
+        });
     }
   };
 
@@ -80,7 +80,12 @@ export default function ProductDetail() {
             <div className={styles.info}>
               <div className={styles.sectionOne}>
                 <div className={styles.thumbnail}>
-                  <Image src={data.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
+                  <Image
+                    src={data.thumbnailImage}
+                    alt="상품썸네일"
+                    fill
+                    sizes="auto"
+                  ></Image>
                 </div>
               </div>
               <div className={styles.sectionTwo}>
@@ -130,9 +135,21 @@ export default function ProductDetail() {
             </div>
             <div className={styles.detailArea}>
               <div className={styles.detailTitle}>Details</div>
-              <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
+              <div
+                className={
+                  viewMore
+                    ? `${styles.detailPhotoView}`
+                    : `${styles.detailPhoto}`
+                }
+              >
                 {data.details.map((image, index) => (
-                  <Image key={index} src={image.imageUrl} alt="상품썸네일" fill sizes="auto"></Image>
+                  <Image
+                    key={index}
+                    src={image.imageUrl}
+                    alt="상품썸네일"
+                    fill
+                    sizes="auto"
+                  ></Image>
                 ))}
               </div>
               <div
