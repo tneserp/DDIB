@@ -32,8 +32,8 @@ export default function ProductDetail() {
   const { user } = userStore();
 
   const { data } = useQuery<ProductInfo>({
-    queryKey: ["productInfo", productId, user.userPk],
-    queryFn: () => getProductDetail(productId, user.userPk),
+    queryKey: ["productInfo", productId, 2],
+    queryFn: () => getProductDetail(productId, 2),
   });
 
   const [salePrice, setSalePrice] = useState(0);

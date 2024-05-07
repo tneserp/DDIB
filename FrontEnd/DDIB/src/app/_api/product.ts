@@ -9,8 +9,14 @@ async function getProductWeek() {
   return data;
 }
 
-async function getProductSearch(keyword: string, category: string) {
-  const { data } = await api.get(`/api/product/search?keyword=${keyword}&category=${category}`);
+async function getProductSearch(
+  keyword: string | null,
+  category: string | null
+) {
+  const { data } = await api.get(
+    `/api/product/search?keyword=${keyword}&category=${category}`
+  );
+
   return data;
 }
 

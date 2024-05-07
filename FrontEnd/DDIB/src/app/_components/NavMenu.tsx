@@ -4,7 +4,6 @@ import styles from "./navMenu.module.scss";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Link from "next/link";
 import React, { useState } from "react";
-import { HiArrowTopRightOnSquare } from "react-icons/hi2";
 import { IoSearch } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
@@ -24,7 +23,7 @@ export default function NavMenu() {
   const [bellOn, setBellOn] = useState(false);
 
   const kakaoLogin = () => {
-    //window.location.href = "http://61.80.142.239:8081/api/oauth2/ddib/kakao";
+    window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
   };
 
   return (
@@ -48,7 +47,7 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
-        <li className={styles.goshop}>
+        <li>
           <Link href="https://www.naver.com">
             <div className={styles.subTitle} style={{ paddingRight: "1.5vw" }}>
               <div>BIDD</div>
@@ -74,8 +73,15 @@ export default function NavMenu() {
 
         {me?.id && (
           <li>
-            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
+            <div
+              className={styles.alarm}
+              onClick={() => setBellOn((prev) => !prev)}
+            >
+              {bellOn ? (
+                <GoBellFill className={styles.icons} />
+              ) : (
+                <GoBell className={styles.icons} />
+              )}
             </div>
             {bellOn && (
               <div className={styles.alarmModal}>
@@ -96,13 +102,10 @@ export default function NavMenu() {
           ) : (
             <>
               <Link href="/mypage">
-                <div>
+                <div onClick={kakaoLogin}>
                   <GoPerson className={styles.icons} />
                 </div>
               </Link>
-              {/* <div onClick={kakaoLogin}>
-                <GoPerson className={styles.icons} />
-              </div> */}
             </>
           )}
         </li>
