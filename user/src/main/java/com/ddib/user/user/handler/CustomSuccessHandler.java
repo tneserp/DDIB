@@ -1,7 +1,5 @@
 package com.ddib.user.user.handler;
 
-
-import com.ddib.user.user.domain.User;
 import com.ddib.user.user.dto.resposne.CustomOAuth2User;
 import com.ddib.user.user.repository.UserRepository;
 import com.ddib.user.user.service.oauth.RedisService;
