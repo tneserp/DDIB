@@ -10,4 +10,5 @@ public interface UserService {
     UserInfoDto findUser(String email);
     void modifyUserInfo(UserModifyRequestDto requestDto, String email);
     void deleteUser(String email);
+    void logout(String accessToken, String refreshToken);
 }

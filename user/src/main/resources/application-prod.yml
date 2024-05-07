@@ -55,7 +55,7 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: ddib-user-service.default.svc.cluster.local:8081
+releaseHostName: k10c102.p.ssafy.io:8081
 
 eureka:
   client:
