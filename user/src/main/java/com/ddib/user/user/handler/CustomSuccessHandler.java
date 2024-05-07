@@ -1,7 +1,9 @@
 package com.ddib.user.user.handler;
 
 
+import com.ddib.user.user.domain.User;
 import com.ddib.user.user.dto.resposne.CustomOAuth2User;
+import com.ddib.user.user.repository.UserRepository;
 import com.ddib.user.user.service.oauth.RedisService;
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import jakarta.servlet.ServletException;
@@ -33,6 +35,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Value("${refresh.token.expiration.time}")
     private Long refreshExpireMs;
 
+    private final UserRepository userRepository;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //OAuth2User
@@ -40,15 +44,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String email = customUserDetails.getEmail();
 
-        log.info("success핸들러 " + email);
+        Integer userId  = userRepository.findUserIdByEmail(email);
 
         // 권한을 찾아서 권한 설정해줌
         // authentication.getAuthorities()를 호출하여
         // 현재 사용자에게 부여된 권한을 나타내는 GrantedAuthority 객체의 컬렉션을 얻습니다.
         // 이 컬렉션에는 사용자가 가진 모든 권한이 포함되어 있습니다.
-//        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-//        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-//        GrantedAuthority auth = iterator.next();
 
         String access = jwtUtil.createJwt("access", email, accessExpireMs);
         String refresh = jwtUtil.createJwt("refresh", email, refreshExpireMs);
@@ -61,6 +62,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addCookie(createCookie("refresh", refresh));
         response.addCookie(createCookie("Authorization", access));
+        response.addCookie(createCookie("num", String.valueOf(userId)));
 
         response.addHeader("Authorization", "Bearer " + access);
         log.info("response " + response.getHeader("Authorization"));

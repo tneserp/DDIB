@@ -1,5 +1,6 @@
 package com.ddib.user.user.service.oauth;
 
+import com.ddib.user.user.repository.UserRepository;
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
@@ -22,10 +23,12 @@ public class ReissueServiceImpl implements ReissueService {
 
     private final JWTUtil jwtUtil;
     private final RedisService redisService;
+    private final UserRepository userRepository;
 
-    public ReissueServiceImpl(JWTUtil jwtUtil, RedisService redisService) {
+    public ReissueServiceImpl(JWTUtil jwtUtil, RedisService redisService, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
         this.redisService = redisService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -75,6 +78,7 @@ public class ReissueServiceImpl implements ReissueService {
 
 
         String email = jwtUtil.getEmail(refresh);
+        Integer userId = userRepository.findUserIdByEmail(email);
 
         // make new JWT
         String newAccess = jwtUtil.createJwt("access", email, accessExpireMs);
@@ -87,6 +91,7 @@ public class ReissueServiceImpl implements ReissueService {
         // response
         response.setHeader("Authorization", "Bearer " + newAccess);
         response.addCookie(createCookie("refresh", newRefresh));
+        response.addCookie(createCookie("num", String.valueOf(userId)));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
