@@ -22,30 +22,30 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/{email}")
+    @GetMapping("/{userId}")
     @Operation(summary = "일반회원 정보 조회 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "일반회원 정보 조회 성공"),
             @ApiResponse(responseCode = "400", description = "일반회원 정보 조회 실패")
     })
-    public ResponseEntity<?> userDetails(@PathVariable String email) {
+    public ResponseEntity<?> userDetails(@PathVariable Integer userId) {
         try {
-            return new ResponseEntity<>(userService.findUser(email), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findUser(userId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("/{email}")
+    @PutMapping("/{userId}")
     @Operation(summary = "일반회원 정보 수정 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "일반회원 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "일반회원 정보 수정 실패")
     })
-    public ResponseEntity<?> userInfoModify(@RequestBody UserModifyRequestDto requestDto, @PathVariable String email) {
+    public ResponseEntity<?> userInfoModify(@RequestBody UserModifyRequestDto requestDto, @PathVariable Integer userId) {
         try {
-            userService.modifyUserInfo(requestDto, email);
+            userService.modifyUserInfo(requestDto, userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,15 +53,15 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{email}")
+    @DeleteMapping("/{userId}")
     @Operation(summary = "일반회원 탈퇴 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "일반회원 탈퇴 성공"),
             @ApiResponse(responseCode = "400", description = "일반회원 탈퇴 실패")
     })
-    public ResponseEntity<?> userDelete(@PathVariable String email) {
+    public ResponseEntity<?> userDelete(@PathVariable Integer userId) {
         try {
-            userService.deleteUser(email);
+            userService.deleteUser(userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,12 +79,15 @@ public class UserController {
         try {
             Cookie refresh = new Cookie("refresh", null);
             Cookie access = new Cookie("Authorization", null);
+            Cookie num = new Cookie("num", null);
 
             refresh.setMaxAge(0);
             access.setMaxAge(0);
+            num.setMaxAge(0);
 
             response.addCookie(refresh);
             response.addCookie(access);
+            response.addCookie(num);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

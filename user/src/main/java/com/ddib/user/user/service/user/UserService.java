@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-    UserInfoDto findUser(String email);
-    void modifyUserInfo(UserModifyRequestDto requestDto, String email);
-    void deleteUser(String email);
-    void logout(String accessToken, String refreshToken);
+    UserInfoDto findUser(Integer userId);
+    void modifyUserInfo(UserModifyRequestDto requestDto, Integer userId);
+    void deleteUser(Integer userId);
 }
