@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { listIn } from "@/app/_api/waiting";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {

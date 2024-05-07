@@ -49,8 +49,16 @@ export default function OrderDetailView() {
 
   return (
     <>
-      <OrderForm type="orderView" orderId={data?.orderId} orderDate={data?.orderDate} paymentMethod={data?.paymentMethod} />
-      {isDone && <></>}
+      {isDone && data && (
+        <>
+          <OrderForm
+            type="orderView"
+            orderId={data.orderId}
+            orderDate={data.orderDate}
+            paymentMethod={data.paymentMethod}
+          />
+        </>
+      )}
     </>
   );
 }

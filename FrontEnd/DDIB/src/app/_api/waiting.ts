@@ -10,6 +10,9 @@ async function getWaitingList(pk: number) {
 
 async function listIn(pk: number) {
   console.log("aaaa");
+  await api.get(`/api/v1/queue?user_id=2`);
+  await api.get(`/api/v1/queue?user_id=3`);
+  await api.get(`/api/v1/queue?user_id=4`);
   await api.get(`/api/v1/queue?user_id=${pk}`);
 }
 

@@ -45,9 +45,14 @@ export default function OrderComplete() {
 
   return (
     <>
-      {isDone && (
+      {isDone && data && (
         <>
-          <OrderForm type="complete" orderId={data?.orderId} orderDate={data?.orderDate} paymentMethod={data?.paymentMethod} />
+          <OrderForm
+            type="complete"
+            orderId={data.orderId}
+            orderDate={data.orderDate}
+            paymentMethod={data.paymentMethod}
+          />
         </>
       )}
     </>
