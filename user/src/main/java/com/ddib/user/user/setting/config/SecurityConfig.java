@@ -93,11 +93,9 @@ public class SecurityConfig {
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
-                        .authorizationEndpoint(redirection -> redirection
-                                .baseUri("/api/oauth2/ddib"))
                         .successHandler(customSuccessHandler)
-//                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
-//                                .baseUri("/"))
+                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
+                                .baseUri("/"))
                 );
 
         //경로별 인가 작업

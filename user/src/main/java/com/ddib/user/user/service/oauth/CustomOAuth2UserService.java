@@ -55,7 +55,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return new CustomOAuth2User(responseDto);
         } else {
             UserResponseDto responseDto = UserResponseDto.builder()
-                    .name(existData.getName())
+                    .name(existData.getName(    ))
                     .email(existData.getEmail())
                     .build();
             return new CustomOAuth2User(responseDto);
