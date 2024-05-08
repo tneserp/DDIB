@@ -20,6 +20,7 @@ import { userStore } from "@/app/_store/user";
 import { listIn, test } from "@/app/_api/waiting";
 import { useQuery } from "@tanstack/react-query";
 import { getProductDetail } from "@/app/_api/product";
+import EventBtn from "@/app/(route)/products/_components/EventBtn";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -38,9 +39,9 @@ export default function ProductDetail() {
   const [salePrice, setSalePrice] = useState(0);
   const [viewMore, setViewMore] = useState(false);
 
-  const testSend = () => {
-    test();
-  };
+  // const testSend = () => {
+  //   test();
+  // };
 
   const joinBuy = () => {
     if (data) {
@@ -121,20 +122,9 @@ export default function ProductDetail() {
                   <div>{(amount * salePrice).toLocaleString("ko-KR")}</div>
                 </div>
                 <div className={styles.btnArea}>
-                  <div
-                    onClick={() => {
-                      testSend();
-                    }}
-                  >
-                    dd
-                  </div>
+                  <div>dd</div>
                   <div>
-                    <div
-                      className={styles.joinBuy}
-                      onClick={() => {
-                        joinBuy();
-                      }}
-                    ></div>
+                    <EventBtn joinBuy={joinBuy} />
                   </div>
                 </div>
               </div>

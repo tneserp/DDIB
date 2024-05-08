@@ -1,14 +1,20 @@
 "use client";
 
-export default function EventBtn() {
+import styles from "./eventBtm.module.scss";
+
+interface Props {
+  joinBuy: () => void;
+}
+
+export default function EventBtn({ joinBuy }: Props) {
   return (
     <>
-      {/* <div
+      <div
         className={styles.joinBuy}
         onClick={() => {
           joinBuy();
         }}
-      ></div> */}
+      ></div>
     </>
   );
 }
