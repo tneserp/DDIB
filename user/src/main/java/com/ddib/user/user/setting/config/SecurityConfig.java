@@ -91,7 +91,7 @@ public class SecurityConfig {
                         .authorizationEndpoint(redirection -> redirection
                                 .baseUri("/api/oauth2/ddib"))
                         .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
-                                .baseUri(""))
+                                .baseUri("/"))
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler)
