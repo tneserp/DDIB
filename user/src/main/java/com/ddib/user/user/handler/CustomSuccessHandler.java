@@ -24,9 +24,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JWTUtil jwtUtil;
     private final RedisService redisService;
 
-    @Value("${releaseHostName}")
-    private String releaseHostName;
-
     @Value("${access.token.expiration.time}")
     private Long accessExpireMs;
 
