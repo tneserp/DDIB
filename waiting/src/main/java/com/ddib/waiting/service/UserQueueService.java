@@ -51,9 +51,8 @@ public class UserQueueService {
     }
 
     // 토큰을 통한 사용자 진입 가능 여부 확인
-    public Mono<Boolean> isAllowedByToken(final String queue, final Long userId, final String token) {
+    public Mono<Boolean> isAllowedByToken(final String queue, final Long userId) {
         return this.generateToken(queue, userId) // 토큰 생성
-                .filter(gen -> gen.equalsIgnoreCase(token)) // 토큰 검증
                 .map(i -> true) // 허용 여부 반환
                 .defaultIfEmpty(false); // 기본값 설정
     }
