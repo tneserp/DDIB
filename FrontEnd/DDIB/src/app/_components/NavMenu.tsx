@@ -4,6 +4,7 @@ import styles from "./navMenu.module.scss";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Link from "next/link";
 import React, { useState } from "react";
+import { userStore } from "../_store/user";
 import { IoSearch } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
@@ -16,9 +17,7 @@ export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
   console.log(segment);
 
-  const me = {
-    id: "mk",
-  };
+  const { jwt } = userStore();
 
   const [bellOn, setBellOn] = useState(false);
 
@@ -71,17 +70,10 @@ export default function NavMenu() {
           </Link>
         </li>
 
-        {me?.id && (
+        {jwt.length != 0 && (
           <li>
-            <div
-              className={styles.alarm}
-              onClick={() => setBellOn((prev) => !prev)}
-            >
-              {bellOn ? (
-                <GoBellFill className={styles.icons} />
-              ) : (
-                <GoBell className={styles.icons} />
-              )}
+            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
             </div>
             {bellOn && (
               <div className={styles.alarmModal}>
@@ -91,7 +83,7 @@ export default function NavMenu() {
           </li>
         )}
         <li>
-          {me?.id && segment === "mypage" ? (
+          {jwt.length != 0 && segment === "mypage" ? (
             <>
               <Link href="/mypage">
                 <div>

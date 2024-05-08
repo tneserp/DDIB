@@ -1,8 +1,11 @@
 .category {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-top: 5vh;
-  div {
-    width: 25%;
-  }
+  justify-content: space-between;
+}
+
+.categoryItem {
+  flex: 1;
+  text-align: center;
 }

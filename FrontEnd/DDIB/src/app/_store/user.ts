@@ -3,23 +3,30 @@ import { persist } from "zustand/middleware";
 import { User } from "@/app/_types/types";
 
 interface UserInfo {
+  jwt: string;
+  userPk: number;
   user: User;
-  setUser: (info: User) => void;
+  setJwt: (token: string) => void;
+  setUserPk: (pk: number) => void;
+  setUserInfo: (info: User) => void;
 }
 
 export const userStore = create(
   persist<UserInfo>(
     (set) => ({
+      jwt: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTA3MjQ3MSwiZXhwIjoxNzE1MDc2MDcxfQ.JKq1KrUusRgpg1FHL7uW7F6ce9qoUSXdxXy0eVuwxf8",
+      userPk: 0,
       user: {
-        userPk: 1,
-        name: "김싸피",
-        phone: "010-2222-8888",
-        email: "dddd@naver.com",
-        zipCode: "22222",
-        roadAddress: "주소임당",
-        detailAddress: "상세주소임당",
+        name: "",
+        phone: "",
+        email: "",
+        zipCode: "",
+        roadAddress: "",
+        detailAddress: "",
       },
-      setUser: (info) => set(() => ({ user: info })),
+      setJwt: (token) => set(() => ({ jwt: token })),
+      setUserPk: (pk) => set(() => ({ userPk: pk })),
+      setUserInfo: (info) => set(() => ({ user: info })),
     }),
     {
       name: "UserStorage",

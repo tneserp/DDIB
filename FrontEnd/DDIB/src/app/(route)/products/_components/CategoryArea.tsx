@@ -23,7 +23,7 @@ export default function CategoryArea() {
     <>
       <div className={styles.category}>
         {CategoryItem.map((item, index) => (
-          <div onClick={() => setCategory(item.value)} key={index}>
+          <div onClick={() => setCategory(item.value)} key={index} className={styles.categoryItem}>
             {item.title}
           </div>
         ))}

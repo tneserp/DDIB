@@ -1,5 +1,4 @@
 export interface User {
-  userPk: number;
   name: string;
   phone: string;
   email: string;
