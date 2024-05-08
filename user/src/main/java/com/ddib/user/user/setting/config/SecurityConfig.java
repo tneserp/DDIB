@@ -1,11 +1,9 @@
 package com.ddib.user.user.setting.config;
 
-
 import com.ddib.user.user.handler.CustomSuccessHandler;
 import com.ddib.user.user.service.oauth.CustomOAuth2UserService;
 import com.ddib.user.user.setting.jwt.JWTFilter;
 import com.ddib.user.user.setting.jwt.JWTUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
 
@@ -94,8 +91,8 @@ public class SecurityConfig {
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler)
-//                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
-//                                .baseUri("/"))
+                                .authorizationEndpoint(redirection -> redirection
+                                        .baseUri("/api/oauth2/ddib"))
                 );
 
         //경로별 인가 작업
