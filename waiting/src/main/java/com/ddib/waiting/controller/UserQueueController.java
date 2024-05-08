@@ -27,14 +27,14 @@ public class UserQueueController { // UserQueueController 클래스 선언
         log.info("=====================");
 
         // 쿠키 키 생성
-        String key = "user-queue-%s-token".formatted(queue);
+//        String key = "user-queue-%s-token".formatted(queue);
         // 요청에서 해당 키의 쿠키값 가져오기
-        HttpCookie cookieValue = exchange.getRequest().getCookies().getFirst(key);
+//        HttpCookie cookieValue = exchange.getRequest().getCookies().getFirst(key);
         // 쿠키값이 존재하지 않으면 빈 문자열로 초기화
-        String token = cookieValue == null ? "" : cookieValue.getValue();
+//        String token = cookieValue == null ? "" : cookieValue.getValue();
 
         // 입장이 허용되어 페이지 리다이렉트 가능한지 확인
-        return userQueueService.isAllowedByToken(queue, userId, token).filter(allowed -> allowed) // 허용되었다면
+        return userQueueService.isAllowedByToken(queue, userId).filter(allowed -> allowed) // 허용되었다면
                 .flatMap(allowed -> Mono.empty()) // 렌더링 없이 빈 Mono 반환
                 .switchIfEmpty(
                         // 대기열 등록. 이미 대기열에 있으면서 오류가 발생할 경우, 해당 큐에서의 사용자 랭크 가져오기
@@ -47,7 +47,7 @@ public class UserQueueController { // UserQueueController 클래스 선언
     public Mono<AllowedUserResponse> isAllowedUser(@RequestParam(name = "queue", defaultValue = "default") String queue, // 대기열 이름 받아옴 (기본값: default)
                                                    @RequestParam(name = "user_id") Long userId, // 사용자 ID 받아옴
                                                    @RequestParam(name = "token") String token) { // 토큰 받아옴
-        return userQueueService.isAllowedByToken(queue, userId, token) // 토큰으로 사용자 허용 여부 확인
+        return userQueueService.isAllowedByToken(queue, userId) // 토큰으로 사용자 허용 여부 확인
                 .map(AllowedUserResponse::new); // 사용자 허용 응답으로 매핑
     }
 
