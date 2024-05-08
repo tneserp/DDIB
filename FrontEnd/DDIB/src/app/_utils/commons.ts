@@ -3,7 +3,8 @@ import { userStore } from "../_store/user";
 import Cookies from "js-cookie";
 
 // const BASE_URL = "http://localhost:9090";
-const BASE_URL = "https://k10c102.p.ssafy.io";
+const BASE_URL = "http://ddib.kro.kr";
+//const BASE_URL = "https://k10c102.p.ssafy.io";
 
 const PublicAxiosApi = () => {
   const instance = axios.create({

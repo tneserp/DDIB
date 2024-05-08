@@ -1,0 +1,13 @@
+server:
+  port: 9010
+
+scheduler:
+  enabled: true
+
+# -- Default spring configuration
+
+  data:
+    redis:
+      host: k10c102.p.ssafy.io
+      port: 6379
+
