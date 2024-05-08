@@ -94,8 +94,8 @@ public class SecurityConfig {
                         .authorizationEndpoint(redirection -> redirection
                                 .baseUri("/api/oauth2/ddib"))
                         .successHandler(customSuccessHandler)
-                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
-                                .baseUri("/"))
+//                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
+//                                .baseUri("/"))
                 );
 
         //경로별 인가 작업
