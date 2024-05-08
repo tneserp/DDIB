@@ -4,6 +4,7 @@ import com.ddib.waiting.dto.AllowedUserResponse;
 import com.ddib.waiting.dto.RankNumberResponse;
 import com.ddib.waiting.service.UserQueueService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpCookie;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
@@ -12,7 +13,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/queue")
-
+@Slf4j
 public class UserQueueController { // UserQueueController 클래스 선언
 
     private final UserQueueService userQueueService; // UserQueueService 주입
@@ -20,7 +21,10 @@ public class UserQueueController { // UserQueueController 클래스 선언
     @GetMapping("")
     public Mono<?> waitingRoomPage(@RequestParam(name = "queue", defaultValue = "default") String queue,
                                    @RequestParam(name = "user_id") Long userId, ServerWebExchange exchange) {
-        System.out.println("waitingRoomPage");
+
+        log.info("========ADD=======");
+        log.info(String.valueOf(userId));
+        log.info("=====================");
 
         // 쿠키 키 생성
         String key = "user-queue-%s-token".formatted(queue);
@@ -50,7 +54,10 @@ public class UserQueueController { // UserQueueController 클래스 선언
     @GetMapping("/rank") // GET 요청 매핑
     public Mono<RankNumberResponse> getRankUser(@RequestParam(name = "queue", defaultValue = "default") String queue, // 대기열 이름 받아옴 (기본값: default)
                                                 @RequestParam(name = "user_id") Long userId) { // 사용자 ID 받아옴
-        System.out.println("rank");
+        log.info("=========RANK========");
+        log.info(String.valueOf(userId));
+        log.info("=====================");
+
         return userQueueService.getRank(queue, userId) // 사용자의 순위 조회
                 .map(RankNumberResponse::new); // 순위 응답으로 매핑
     }
