@@ -32,4 +32,10 @@ async function getWishList(userPk: number) {
   return data;
 }
 
+async function postLike() {}
+
+async function deleteLike(productId: string, userPk: number) {
+  await api.delete(`/api/product/${productId}/${userPk}`);
+}
+
 export { getProductWeek, getProductSearch, getProductDetail, getWishList };

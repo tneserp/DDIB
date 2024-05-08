@@ -44,7 +44,14 @@ export default function WeekItem({ checkDay }: Props) {
                   </>
                 ) : (
                   <>
-                    <Image src={weekData[0].thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
+                    <Link href={`/products/${weekData[0].productId}`}>
+                      <Image
+                        src={weekData[0].thumbnailImage}
+                        alt="상품썸네일"
+                        fill
+                        sizes="auto"
+                      ></Image>
+                    </Link>
                   </>
                 )}
               </div>

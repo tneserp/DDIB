@@ -14,6 +14,7 @@ export default function WaitingModal() {
   const { user } = userStore();
 
   useEffect(() => {
+    console.log("대기페이지에용");
     document.body.style.cssText = `
     position : fixed;
     top: -${window.scrollY}px;
@@ -39,7 +40,9 @@ export default function WaitingModal() {
       console.log(expiresAt);
       expiresAt.setMinutes(expiresAt.getMinutes() + 5);
       Cookies.set("state", "true", { expires: expiresAt });
-      router.replace(`/order`);
+      setTimeout(() => {
+        router.replace(`/order`);
+      }, 0);
     }
   }, [data]);
 

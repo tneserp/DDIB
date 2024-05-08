@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function TimeCount({ startTime }: Props) {
-  const [targetTime] = useState<Date>(new Date("2024-04-24T17:56:00"));
+  const [targetTime] = useState<Date>(new Date(startTime));
   const [timeLeft, setTimeLeft] = useState<number>(
     targetTime.getTime() - new Date().getTime()
   );
