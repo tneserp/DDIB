@@ -94,8 +94,8 @@ public class SecurityConfig {
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler)
-                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
-                                .baseUri("/"))
+//                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig
+//                                .baseUri("/"))
                 );
 
         //경로별 인가 작업
