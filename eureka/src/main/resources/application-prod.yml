@@ -13,7 +13,5 @@ eureka:
   instance:
     hostname: k10c102.p.ssafy.io
   client:
-    serviceUrl:
-      defaultZone: http://k10c102.p.ssafy.io:8761/eureka
     register-with-eureka: false
     fetch-registry: false
