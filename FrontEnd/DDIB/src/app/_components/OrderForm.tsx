@@ -88,6 +88,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
   };
 
   const cancelItem = () => {
+    console.log("취소");
     cancelOrder.mutate(orderId);
   };
 
@@ -184,7 +185,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
         </div>
         {type === "orderView" && orderInfo.status === 0 && (
           <>
-            <div className={styles.cancelBtn} onClick={() => cancelItem}>
+            <div className={styles.cancelBtn} onClick={cancelItem}>
               취소하기
             </div>
           </>
