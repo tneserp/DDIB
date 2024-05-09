@@ -72,8 +72,15 @@ export default function NavMenu() {
 
         {jwt.length != 0 && (
           <li>
-            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
+            <div
+              className={styles.alarm}
+              onClick={() => setBellOn((prev) => !prev)}
+            >
+              {bellOn ? (
+                <GoBellFill className={styles.icons} />
+              ) : (
+                <GoBell className={styles.icons} />
+              )}
             </div>
             {bellOn && (
               <div className={styles.alarmModal}>
@@ -83,7 +90,13 @@ export default function NavMenu() {
           </li>
         )}
         <li>
-          {jwt.length != 0 && segment === "mypage" ? (
+          {jwt.length == 0 ? (
+            <>
+              <div onClick={kakaoLogin}>
+                <GoPerson className={styles.icons} />
+              </div>
+            </>
+          ) : segment === "mypage" ? (
             <>
               <Link href="/mypage">
                 <div>
@@ -92,13 +105,11 @@ export default function NavMenu() {
               </Link>
             </>
           ) : (
-            <>
-              <Link href="/mypage">
-                <div onClick={kakaoLogin}>
-                  <GoPerson className={styles.icons} />
-                </div>
-              </Link>
-            </>
+            <Link href="/mypage">
+              <div onClick={kakaoLogin}>
+                <GoPerson className={styles.icons} />
+              </div>
+            </Link>
           )}
         </li>
       </div>

@@ -14,15 +14,15 @@ interface UserInfo {
 export const userStore = create(
   persist<UserInfo>(
     (set) => ({
-      jwt: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTA3MjQ3MSwiZXhwIjoxNzE1MDc2MDcxfQ.JKq1KrUusRgpg1FHL7uW7F6ce9qoUSXdxXy0eVuwxf8",
-      userPk: 3,
+      jwt: "",
+      userPk: 0,
       user: {
-        name: "나성",
-        phone: "010-4747-4949",
+        name: "",
+        phone: "",
         email: "",
-        zipCode: "62011",
-        roadAddress: "광주 서구 화개중앙로 87번길",
-        detailAddress: "16-1",
+        zipCode: "",
+        roadAddress: "",
+        detailAddress: "",
       },
       setJwt: (token) => set(() => ({ jwt: token })),
       setUserPk: (pk) => set(() => ({ userPk: pk })),

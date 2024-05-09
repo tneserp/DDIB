@@ -36,8 +36,8 @@ export default function OrderForm({
   const [checkPay, setCheckPay] = useState(false);
 
   const sendOrder = useMutation({
-    mutationFn: async (data: OrderInfo, userPk: number) => {
-      return postReady(data, 1);
+    mutationFn: async (data: OrderInfo) => {
+      return postReady(data, userPk);
     },
     async onSuccess(response) {
       const url = response.next_redirect_pc_url;

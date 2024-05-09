@@ -111,7 +111,9 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
     }
 
     const displayPhone = formattedPhone.length > 0 ? formattedPhone : "";
-    numRef.current.value = displayPhone;
+    if (numRef.current) {
+      numRef.current.value = displayPhone;
+    }
   };
 
   useEffect(() => {

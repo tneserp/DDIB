@@ -17,6 +17,7 @@ export default function CheckToken() {
         alert("로그인 성공");
       }
     }
+    console.log(jwt);
   };
 
   useEffect(() => {
