@@ -22,7 +22,6 @@ export default function OrderDetailView() {
   });
 
   useEffect(() => {
-    console.log(id);
     if (data) {
       const productInfo = {
         productId: 0,
@@ -42,7 +41,6 @@ export default function OrderDetailView() {
         orderRoadAddress: data.orderRoadAddress,
         orderDetailAddress: data.orderDetailAddress,
       };
-      console.log("ss");
       setOrderInfo(productInfo);
       setOrderAddressInfo(addressInfo);
       setIsDone(true);
