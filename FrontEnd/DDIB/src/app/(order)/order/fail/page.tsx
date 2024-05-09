@@ -1,3 +1,3 @@
 export default function Fail() {
-  return <>결제실패</>;
+  return <div>결제실패</div>;
 }

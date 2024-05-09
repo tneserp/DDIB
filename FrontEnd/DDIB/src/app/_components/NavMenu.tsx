@@ -11,6 +11,9 @@ import { GoBell } from "react-icons/go";
 import { GoBellFill } from "react-icons/go";
 import { GoPerson } from "react-icons/go";
 import { GoPersonFill } from "react-icons/go";
+import { BiLogIn } from "react-icons/bi";
+import { TbLogin2 } from "react-icons/tb";
+import { CiLogin } from "react-icons/ci";
 import Alarm from "./Alarm";
 
 export default function NavMenu() {
@@ -22,7 +25,7 @@ export default function NavMenu() {
   const [bellOn, setBellOn] = useState(false);
 
   const kakaoLogin = () => {
-    //window.location.href = "https://localhost:8081/api/oauth2/ddib/kakao";
+    //window.location.href = "http://localhost:8081/api/oauth2/ddib/kakao";
     window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
   };
 
@@ -70,6 +73,17 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
+        {/* <li>
+          {jwt.length == 0 ? (
+            <div>
+              <BiLogIn className={styles.icons} />
+              <TbLogin2 className={styles.icons} />
+              <CiLogin className={styles.icons} />
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </li> */}
 
         {jwt.length != 0 && (
           <li>

@@ -1,3 +1,11 @@
+import styles from "./searcch.module.scss";
+
 export default function search() {
-  return <main>검색</main>;
+  return (
+    <div className={styles.container}>
+      <div className={styles.searchTitle}>Search</div>
+      <div></div>
+      <div></div>
+    </div>
+  );
 }
