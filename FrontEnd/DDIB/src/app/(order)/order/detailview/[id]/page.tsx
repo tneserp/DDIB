@@ -22,7 +22,7 @@ export default function OrderDetailView() {
   });
 
   useEffect(() => {
-    console.log("sd");
+    console.log(id);
     if (data) {
       const productInfo = {
         productId: 0,
