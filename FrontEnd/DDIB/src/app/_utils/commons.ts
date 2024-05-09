@@ -27,6 +27,7 @@ const ClientAxiosApi = () => {
   instance.defaults.headers.common["Authorization"] =
     "BearereyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTE0NDA4NCwiZXhwIjoxNzE1MTQ3Njg0fQ.0LIE7oWR6C8nOhb-zykEZF3IEWecoSAyvkZiNG37fIY";
 
+  instance.defaults.headers.post["Content-Type"] = "application/json";
   return instance;
 };
 

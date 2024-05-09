@@ -9,9 +9,9 @@ import { userStore } from "@/app/_store/user";
 import { Product } from "@/app/_types/types";
 
 export default function WishList() {
-  const { user } = userStore();
+  const { user, userPk } = userStore();
 
-  const pk = user.userPk;
+  const pk = userPk;
 
   const { data } = useQuery<Product[]>({
     queryKey: ["wishList", pk],

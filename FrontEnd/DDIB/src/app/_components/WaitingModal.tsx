@@ -40,9 +40,7 @@ export default function WaitingModal() {
       console.log(expiresAt);
       expiresAt.setMinutes(expiresAt.getMinutes() + 5);
       Cookies.set("state", "true", { expires: expiresAt });
-      setTimeout(() => {
-        router.replace(`/order`);
-      }, 0);
+      router.replace(`/order`);
     }
   }, [data]);
 

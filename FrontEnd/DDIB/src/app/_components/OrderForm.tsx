@@ -4,6 +4,7 @@ import ProductOrdered from "@/app/_components/ProductOrdered";
 import styles from "./orderForm.module.scss";
 import AddressForm, { RefProps } from "./AddressForm";
 import { orderStore, orderAddressStore } from "@/app/_store/product";
+import { userStore } from "@/app/_store/user";
 import { FaDotCircle } from "react-icons/fa";
 import { FaRegDotCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -30,16 +31,17 @@ export default function OrderForm({
   const saveRef = useRef<RefProps>(null);
   const { orderInfo } = orderStore();
   const { addressInfo } = orderAddressStore();
+  const { userPk } = userStore();
   const router = useRouter();
   const [checkPay, setCheckPay] = useState(false);
 
   const sendOrder = useMutation({
-    mutationFn: async (data: OrderInfo) => {
-      return postReady(data);
+    mutationFn: async (data: OrderInfo, userPk: number) => {
+      return postReady(data, 1);
     },
     async onSuccess(response) {
       const url = response.next_redirect_pc_url;
-      console.log(url);
+      window.location.href = url;
     },
     onError(error) {
       console.error(error);
@@ -61,7 +63,7 @@ export default function OrderForm({
   const buyItem = (type: string) => {
     if (type === "order") {
       const check = saveRef?.current?.saveAddress();
-      if (check) {
+      if (check && checkPay) {
         const sendInfo = {
           productId: orderInfo.productId,
           itemName: orderInfo.name,
@@ -75,10 +77,12 @@ export default function OrderForm({
           orderZipcode: addressInfo.orderZipcode,
         };
         console.log(sendInfo);
-        // sendOrder.mutate(sendInfo);
-        router.push(`/order/complete/${orderInfo.productId}`);
-      } else {
-        alert("주소에 비어있는 칸이 있어요ㅠ");
+        sendOrder.mutate(sendInfo);
+        //router.push(`/order/complete/${orderInfo.productId}`);
+      } else if (!check) {
+        alert("주소에 비어있는 칸이 있어요");
+      } else if (!checkPay) {
+        alert("결제 방식을 선택해주세요");
       }
     } else if (type === "complete") {
       router.push("/");

@@ -8,11 +8,10 @@ async function getWaitingList(pk: number) {
   return data;
 }
 
-async function test(pk: number) {
+async function test() {
   console.log("aaaa");
-  await api.get(`/api/v1/queue?user_id=2`);
-  await api.get(`/api/v1/queue?user_id=3`);
-  await api.get(`/api/v1/queue?user_id=4`);
+  const { data } = await api.get(`/api/order/1`);
+  conssole.log(data);
 }
 
 async function listIn(pk: number) {
