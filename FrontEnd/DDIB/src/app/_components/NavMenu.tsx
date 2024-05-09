@@ -72,15 +72,8 @@ export default function NavMenu() {
 
         {jwt.length != 0 && (
           <li>
-            <div
-              className={styles.alarm}
-              onClick={() => setBellOn((prev) => !prev)}
-            >
-              {bellOn ? (
-                <GoBellFill className={styles.icons} />
-              ) : (
-                <GoBell className={styles.icons} />
-              )}
+            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
             </div>
             {bellOn && (
               <div className={styles.alarmModal}>
@@ -106,7 +99,7 @@ export default function NavMenu() {
             </>
           ) : (
             <Link href="/mypage">
-              <div onClick={kakaoLogin}>
+              <div>
                 <GoPerson className={styles.icons} />
               </div>
             </Link>
