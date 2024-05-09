@@ -8,11 +8,14 @@ import Link from "next/link";
 import ProductOrdered from "@/app/_components/ProductOrdered";
 import { useQuery } from "@tanstack/react-query";
 import { getOrderList } from "@/app/_api/order";
+import { userStore } from "@/app/_store/user";
 
 export default function OrderList() {
+  const { userPk } = userStore();
+
   const { data } = useQuery<OrderDetail[]>({
-    queryKey: ["orderList"],
-    queryFn: () => getOrderList(),
+    queryKey: ["orderList", userPk],
+    queryFn: () => getOrderList(userPk),
   });
 
   return (

@@ -9,8 +9,8 @@ async function getOrderDetail(orderId: string) {
   return data;
 }
 
-async function getOrderList() {
-  const { data } = await api.get(`/api/order`);
+async function getOrderList(userPk: number) {
+  const { data } = await api.get(`/api/order/${userPk}`);
   console.log(data);
   return data;
 }
