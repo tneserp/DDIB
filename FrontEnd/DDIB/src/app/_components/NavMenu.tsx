@@ -22,8 +22,8 @@ export default function NavMenu() {
   const [bellOn, setBellOn] = useState(false);
 
   const kakaoLogin = () => {
-    window.location.href = "http://localhost:8081/api/oauth2/ddib/kakao";
-    //window.location.href = "http://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
+    //window.location.href = "https://localhost:8081/api/oauth2/ddib/kakao";
+    window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
   };
 
   return (
