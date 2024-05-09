@@ -14,6 +14,7 @@ export default function WaitingModal() {
   const { user } = userStore();
 
   useEffect(() => {
+    console.log("대기페이지에용");
     document.body.style.cssText = `
     position : fixed;
     top: -${window.scrollY}px;

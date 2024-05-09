@@ -3,9 +3,10 @@ import { OrderInfo } from "../_types/types";
 
 const api = ClientAxiosApi();
 
-async function postReady(orderData: OrderInfo) {
+async function postReady(orderData: OrderInfo, userPk: number) {
   console.log("pay");
-  const { data } = await api.post(`/api/payment/ready`, orderData);
+  const { data } = await api.get(`/api/order/1`);
+  // const { data } = await api.post(`/api/payment/ready/${userPk}`, orderData);
   return data;
 }
 

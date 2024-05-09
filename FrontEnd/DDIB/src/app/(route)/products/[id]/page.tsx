@@ -4,10 +4,8 @@ import styles from "./productDetail.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import product from "../../../../../public/product.webp";
-import detail1 from "../../../../../public/detail1.jpg";
-import detail2 from "../../../../../public/detail2.jpg";
+import { useRouter, usePathname, useParams } from "next/navigation";
+
 import { ProductInfo } from "@/app/_types/types";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
@@ -19,25 +17,31 @@ import TimeCount from "@/app/_components/TimeCount";
 import AmountBtn from "@/app/_components/AmountBtn";
 import { amountStore, orderStore } from "@/app/_store/product";
 import { userStore } from "@/app/_store/user";
-import { listIn } from "@/app/_api/waiting";
+import { listIn, test } from "@/app/_api/waiting";
 import { useQuery } from "@tanstack/react-query";
 import { getProductDetail } from "@/app/_api/product";
+import EventBtn from "@/app/(route)/products/_components/EventBtn";
 
 export default function ProductDetail() {
-  const productId = window.location.pathname.split("/").pop() as string;
-
   const router = useRouter();
+  const path = useParams();
+  const id = path.id as string;
+
   const { amount } = amountStore();
   const { setOrderInfo } = orderStore();
   const { user } = userStore();
 
   const { data } = useQuery<ProductInfo>({
-    queryKey: ["productInfo", productId, 2],
-    queryFn: () => getProductDetail(productId, 2),
+    queryKey: ["productInfo", id, 1],
+    queryFn: () => getProductDetail(id, 1),
   });
 
   const [salePrice, setSalePrice] = useState(0);
   const [viewMore, setViewMore] = useState(false);
+
+  const testSend = () => {
+    test();
+  };
 
   const joinBuy = () => {
     if (data) {
@@ -52,7 +56,6 @@ export default function ProductDetail() {
         status: 0,
       };
       setOrderInfo(sendInfo);
-      router.push("/order");
       listIn(1)
         .then(() => {
           router.push("/order");
@@ -69,6 +72,7 @@ export default function ProductDetail() {
       const finPrice = data.price - sale;
       setSalePrice(finPrice);
     }
+    console.log(data);
   }, [data]);
 
   return (
@@ -109,7 +113,7 @@ export default function ProductDetail() {
                   <div>무료배송</div>
                 </div>
                 {/* button area */}
-                <TimeCount startTime={data.eventStartTime} />
+                <TimeCount startTime={data.eventStartDate} />
                 <AmountBtn stock={data.stock} />
                 <div className={styles.line}></div>
                 <div className={styles.totalPrice}>
@@ -117,18 +121,9 @@ export default function ProductDetail() {
                   <div>{(amount * salePrice).toLocaleString("ko-KR")}</div>
                 </div>
                 <div className={styles.btnArea}>
-                  <div></div>
+                  <div onClick={testSend}>dd</div>
                   <div>
-                    <div
-                      className={styles.joinBuy}
-                      onClick={() => {
-                        joinBuy();
-                      }}
-                    ></div>
-                    {/* <Link
-                href={`/products/${productInfo.productId}/wait`}
-              >
-              </Link> */}
+                    <EventBtn joinBuy={joinBuy} />
                   </div>
                 </div>
               </div>

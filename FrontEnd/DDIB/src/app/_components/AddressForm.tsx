@@ -90,13 +90,40 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
     setMyAddress((prev) => !prev);
   };
 
+  const numberFormat = (e: ChangeEvent<HTMLInputElement>) => {
+    const rawPhone = e.target.value.replace(/-/g, "");
+    let formattedPhone = "";
+
+    if (rawPhone.length < 4) {
+      formattedPhone = rawPhone;
+    } else if (rawPhone.length < 8) {
+      formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(3)}`;
+    } else if (rawPhone.length < 11) {
+      formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(
+        3,
+        7
+      )}-${rawPhone.slice(7)}`;
+    } else {
+      formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(
+        3,
+        7
+      )}-${rawPhone.slice(7, 11)}`;
+    }
+
+    const displayPhone = formattedPhone.length > 0 ? formattedPhone : "";
+    numRef.current.value = displayPhone;
+  };
+
   useEffect(() => {
     if (props.type === "mypage") {
       setMyAddress(true);
     }
   }, []);
 
-  useEffect(() => console.log("렌더링된다"));
+  useEffect(() => {
+    console.log("렌더링된다");
+    console.log(user);
+  });
 
   useEffect(() => {
     if (myAddress && user) {
@@ -159,7 +186,12 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
         <div>{props.type === "mypage" ? "이름" : "받으시는 분"}</div>
         <div>
           {props.type === "order" || props.type === "mypage" ? (
-            <input type="text" className={styles.input} ref={nameRef}></input>
+            <input
+              type="text"
+              className={styles.input}
+              ref={nameRef}
+              maxLength={5}
+            ></input>
           ) : (
             <div>{addressInfo.receiverName}</div>
           )}
@@ -174,7 +206,9 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
               <input
                 type="text"
                 className={styles.inputNum}
+                maxLength={13}
                 ref={numRef}
+                onChange={numberFormat}
               ></input>
             </>
           ) : (

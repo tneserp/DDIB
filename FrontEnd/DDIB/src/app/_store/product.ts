@@ -64,3 +64,8 @@ export const orderAddressStore = create(
     }
   )
 );
+
+// interface Timer {
+//   timer : boolean;
+//   set : ()
+// }
