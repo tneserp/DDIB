@@ -4,6 +4,7 @@ import com.ddib.user.user.handler.CustomSuccessHandler;
 import com.ddib.user.user.service.oauth.CustomOAuth2UserService;
 import com.ddib.user.user.setting.jwt.JWTFilter;
 import com.ddib.user.user.setting.jwt.JWTUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -48,6 +50,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        log.info("filter chain 입성!");
 
         http
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
@@ -93,8 +96,8 @@ public class SecurityConfig {
                         .authorizationEndpoint(redirection -> redirection
                                 .baseUri("/api/oauth2/ddib"))
                         .successHandler(customSuccessHandler)
-
                 );
+
 
         //경로별 인가 작업
         http
