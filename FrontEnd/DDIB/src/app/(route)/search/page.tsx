@@ -3,19 +3,19 @@
 import styles from "./searcch.module.scss";
 import React, { useRef, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import SearchResult from "./_components/searchResult";
+import SearchResult from "./_components/SearchResult";
 
 export default function search() {
   const searchRef = useRef<HTMLInputElement>(null);
   const [result, setResult] = useState("");
-  const [searchResult, setSearchResult] = useState(true);
+  const [showResult, setShowResult] = useState(true);
 
   const searchKeyWord = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (searchRef.current) {
         setResult(searchRef.current.value);
         searchRef.current.value = "";
-        setSearchResult(false);
+        setShowResult(false);
       }
     }
   };
@@ -28,7 +28,7 @@ export default function search() {
         <IoSearchOutline className={styles.icons} />
       </div>
       <div>
-        {!searchResult && (
+        {!showResult && (
           <>
             <div className={styles.result}>"{result}"로 검색한 결과입니다.</div>
             <SearchResult keyword={result} />

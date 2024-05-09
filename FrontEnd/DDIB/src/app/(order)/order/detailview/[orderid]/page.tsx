@@ -6,17 +6,19 @@ import { OrderDetail } from "@/app/_types/types";
 import { useQuery } from "@tanstack/react-query";
 import { getOrderDetail } from "@/app/_api/order";
 import { orderStore, orderAddressStore } from "@/app/_store/product";
+import { useParams } from "next/navigation";
 
 export default function OrderDetailView() {
-  const orderId = window.location.pathname.split("/").pop() as string;
+  const path = useParams();
+  const id = path.id as string;
 
   const { setOrderInfo } = orderStore();
   const { setOrderAddressInfo } = orderAddressStore();
   const [isDone, setIsDone] = useState(false);
 
   const { data } = useQuery<OrderDetail>({
-    queryKey: ["orderView", orderId],
-    queryFn: () => getOrderDetail(orderId),
+    queryKey: ["orderView", id],
+    queryFn: () => getOrderDetail(id),
   });
 
   useEffect(() => {
@@ -51,12 +53,7 @@ export default function OrderDetailView() {
     <>
       {isDone && data && (
         <>
-          <OrderForm
-            type="orderView"
-            orderId={data.orderId}
-            orderDate={data.orderDate}
-            paymentMethod={data.paymentMethod}
-          />
+          <OrderForm type="orderView" orderId={data.orderId} orderDate={data.orderDate} paymentMethod={data.paymentMethod} />
         </>
       )}
     </>

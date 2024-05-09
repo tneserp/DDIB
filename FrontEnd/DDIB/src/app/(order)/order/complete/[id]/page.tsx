@@ -6,15 +6,19 @@ import { OrderDetail } from "@/app/_types/types";
 import { orderStore, orderAddressStore } from "@/app/_store/product";
 import { useQuery } from "@tanstack/react-query";
 import { getOrderDetail } from "@/app/_api/order";
+import { useParams } from "next/navigation";
 
 export default function OrderComplete() {
   const { setOrderInfo } = orderStore();
   const { setOrderAddressInfo } = orderAddressStore();
   const [isDone, setIsDone] = useState(true);
 
+  const path = useParams();
+  const id = path.id as string;
+
   const { data } = useQuery<OrderDetail>({
-    queryKey: ["orderDetail", "1"],
-    queryFn: () => getOrderDetail("1"),
+    queryKey: ["orderDetail", id],
+    queryFn: () => getOrderDetail(id),
   });
 
   useEffect(() => {
@@ -47,12 +51,7 @@ export default function OrderComplete() {
     <>
       {isDone && data && (
         <>
-          <OrderForm
-            type="complete"
-            orderId={data.orderId}
-            orderDate={data.orderDate}
-            paymentMethod={data.paymentMethod}
-          />
+          <OrderForm type="complete" orderId={data.orderId} orderDate={data.orderDate} paymentMethod={data.paymentMethod} />
         </>
       )}
     </>
