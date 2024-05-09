@@ -14,7 +14,7 @@ interface UserInfo {
 export const userStore = create(
   persist<UserInfo>(
     (set) => ({
-      jwt: "no",
+      jwt: "",
       userPk: 0,
       user: {
         name: "",
