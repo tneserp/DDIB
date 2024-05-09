@@ -21,6 +21,7 @@ public class UserQueueController { // UserQueueController 클래스 선언
     public Mono<?> waitingRoomPage(@RequestParam(name = "queue", defaultValue = "default") String queue,
                                    @RequestParam(name = "user_id") Long userId) {
 
+        log.info(String.valueOf(maxSize));
         if (maxSize < 3) {
             maxSize += 1;
             return Mono.just(-5);
@@ -46,6 +47,15 @@ public class UserQueueController { // UserQueueController 클래스 선언
     @GetMapping("/leave")
     public Mono<?> leavePage() {
         maxSize -= 1;
+
+        return null;
+    }
+
+
+    // 테스트용
+    @GetMapping("/reset")
+    public Mono<?> reset() {
+        maxSize = 0;
 
         return null;
     }
