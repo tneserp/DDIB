@@ -30,7 +30,6 @@ public class UserController {
     })
     public ResponseEntity<?> userDetails(@PathVariable Integer userId) {
         try {
-            log.info("일반회원 조회!!!");
             return new ResponseEntity<>(userService.findUser(userId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
