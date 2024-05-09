@@ -39,9 +39,9 @@ export default function ProductDetail() {
   const [salePrice, setSalePrice] = useState(0);
   const [viewMore, setViewMore] = useState(false);
 
-  const testSend = () => {
-    test();
-  };
+  // const testSend = () => {
+  //   test();
+  // };
 
   const joinBuy = () => {
     if (data) {
@@ -121,7 +121,7 @@ export default function ProductDetail() {
                   <div>{(amount * salePrice).toLocaleString("ko-KR")}</div>
                 </div>
                 <div className={styles.btnArea}>
-                  <div onClick={testSend}>dd</div>
+                  <div>dd</div>
                   <div>
                     <EventBtn joinBuy={joinBuy} />
                   </div>

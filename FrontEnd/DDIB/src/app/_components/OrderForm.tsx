@@ -37,7 +37,7 @@ export default function OrderForm({
 
   const sendOrder = useMutation({
     mutationFn: async (data: OrderInfo) => {
-      return postReady(data, userPk);
+      return postReady(data, 9);
     },
     async onSuccess(response) {
       const url = response.next_redirect_pc_url;

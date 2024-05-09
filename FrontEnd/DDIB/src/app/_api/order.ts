@@ -4,7 +4,7 @@ const api = ClientAxiosApi();
 
 async function getOrderDetail(orderId: string) {
   console.log("orderDetail");
-  const { data } = await api.get(`/api/order/${orderId}`);
+  const { data } = await api.get(`/api/order/detail/${orderId}`);
   console.log(data);
   return data;
 }
