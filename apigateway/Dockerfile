@@ -9,4 +9,4 @@ VOLUME /tmp
 COPY build/libs/*.jar apigateway.jar
 
 # 실행할 명령어
-ENTRYPOINT ["java", "-jar", "apigateway.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "apigateway.jar", "--spring.profiles.active=k8s"]
