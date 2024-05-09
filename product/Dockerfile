@@ -9,4 +9,4 @@ VOLUME /tmp
 COPY build/libs/*.jar product.jar
 
 # 실행할 명령어
-ENTRYPOINT ["java", "-jar", "product.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "product.jar", "--spring.profiles.active=k8s"]
