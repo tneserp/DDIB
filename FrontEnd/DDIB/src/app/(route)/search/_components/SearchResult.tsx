@@ -14,7 +14,7 @@ interface Props {
 export default function SearchResult({ keyword }: Props) {
   const { data } = useQuery<Product[]>({
     queryKey: ["category", keyword, ""],
-    queryFn: () => getProductSearch("", ""),
+    queryFn: () => getProductSearch(keyword, ""),
   });
 
   return (

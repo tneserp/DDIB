@@ -49,6 +49,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
     },
     async onSuccess(response) {
       console.log("취소성공");
+      router.back;
     },
     onError(error) {
       console.error(error);

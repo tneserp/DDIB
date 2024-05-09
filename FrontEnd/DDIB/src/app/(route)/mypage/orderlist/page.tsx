@@ -27,7 +27,7 @@ export default function OrderList() {
             {data.map((items) => {
               return (
                 <div key={items.orderId} className={styles.productList}>
-                  <Link href={`/order/complete/${items.orderId}`}>
+                  <Link href={`/order/detailview/${items.orderId}`}>
                     <div className={styles.date}>
                       <div>{items.orderDate}</div>
                       {items.status === 0 ? "결제완료" : "취소완료"}

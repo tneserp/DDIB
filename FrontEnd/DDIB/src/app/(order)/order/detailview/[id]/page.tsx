@@ -3,18 +3,18 @@
 import OrderForm from "@/app/_components/OrderForm";
 import { useEffect, useState } from "react";
 import { OrderDetail } from "@/app/_types/types";
+import { orderStore, orderAddressStore } from "@/app/_store/product";
 import { useQuery } from "@tanstack/react-query";
 import { getOrderDetail } from "@/app/_api/order";
-import { orderStore, orderAddressStore } from "@/app/_store/product";
 import { useParams } from "next/navigation";
 
-export default function OrderDetailView() {
-  const path = useParams();
-  const id = path.id as string;
-
+export default function OrderComplete() {
   const { setOrderInfo } = orderStore();
   const { setOrderAddressInfo } = orderAddressStore();
-  const [isDone, setIsDone] = useState(false);
+  const [isDone, setIsDone] = useState(true);
+
+  const path = useParams();
+  const id = path.id as string;
 
   const { data } = useQuery<OrderDetail>({
     queryKey: ["orderView", id],
