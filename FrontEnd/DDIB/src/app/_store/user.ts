@@ -15,14 +15,14 @@ export const userStore = create(
   persist<UserInfo>(
     (set) => ({
       jwt: "",
-      userPk: 0,
+      userPk: 9,
       user: {
-        name: "",
-        phone: "",
+        name: "재거스",
+        phone: "010-2222-2222",
         email: "",
-        zipCode: "",
-        roadAddress: "",
-        detailAddress: "",
+        zipCode: "23423",
+        roadAddress: "화개중앙로 76번길",
+        detailAddress: "102동 303호",
       },
       setJwt: (token) => set(() => ({ jwt: token })),
       setUserPk: (pk) => set(() => ({ userPk: pk })),
