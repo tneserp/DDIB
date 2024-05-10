@@ -14,6 +14,8 @@ import { GoPersonFill } from "react-icons/go";
 import { BiLogIn } from "react-icons/bi";
 import { TbLogin2 } from "react-icons/tb";
 import { CiLogin } from "react-icons/ci";
+import { ImEnter } from "react-icons/im";
+import { TbDoorEnter } from "react-icons/tb";
 import Alarm from "./Alarm";
 
 export default function NavMenu() {
@@ -73,17 +75,19 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
-        {/* <li>
+        <li>
           {jwt.length == 0 ? (
             <div>
-              <BiLogIn className={styles.icons} />
+              {/* <BiLogIn className={styles.icons} />
               <TbLogin2 className={styles.icons} />
-              <CiLogin className={styles.icons} />
+              <CiLogin className={styles.icons} /> */}
+              {/* <ImEnter className={styles.icons} /> */}
+              <TbDoorEnter className={styles.icons} />
             </div>
           ) : (
             <div></div>
           )}
-        </li> */}
+        </li>
 
         <li>
           <div
