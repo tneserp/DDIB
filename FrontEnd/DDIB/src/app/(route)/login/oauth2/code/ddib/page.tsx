@@ -1,3 +1,3 @@
 export default function Login() {
-  return <></>;
+  return <>로그인됨</>;
 }
