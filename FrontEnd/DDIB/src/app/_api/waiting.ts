@@ -10,7 +10,7 @@ async function getWaitingList(pk: number) {
 
 async function test() {
   console.log("aaaa");
-  const { data } = await api.get(`/api/order/1`);
+  const { data } = await api.get(`/api/order/1`); 
   console.log(data);
 }
 
