@@ -45,10 +45,9 @@ public class UserQueueController { // UserQueueController 클래스 선언
     }
 
     @GetMapping("/leave")
-    public Mono<?> leavePage() {
+    public void leavePage() {
         maxSize -= 1;
-
-        return null;
+        log.info("사용자 떠남");
     }
 
 
