@@ -24,6 +24,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JWTUtil jwtUtil;
     private final RedisService redisService;
 
+    @Value("${releaseHostName}")
+    private String releaseHostName;
     @Value("${access.token.expiration.time}")
     private Long accessExpireMs;
 
@@ -63,7 +65,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addHeader("Authorization", "Bearer " + access);
         log.info("response " + response.getHeader("Authorization"));
 
-        response.sendRedirect("https://k10c102.p.ssafy.io");
+        response.sendRedirect("https://" + releaseHostName);
     }
 
     private Cookie createCookie(String key, String value) {

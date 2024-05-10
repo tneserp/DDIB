@@ -1,15 +1,12 @@
-package com.ddib.user.user.repository;
+package com.ddib.product.user.repository;
 
-
-import com.ddib.user.user.domain.User;
-import com.ddib.user.user.dto.resposne.UserInfoDto;
+import com.ddib.product.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUserId(Integer userId);
-    User findByEmail(String email);
-    void deleteByUserId(Integer userId);
-    User findUserIdByEmail(String email);
+
+    Optional<User> findByUserId(int id);
+
 }

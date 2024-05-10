@@ -28,7 +28,7 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.0'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.1.0'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -59,12 +59,14 @@ dependencies {
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.2.0'
 
 	// micrometer & zipkin
-	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+//	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+//
+//	// Filebeat
+//	implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.3'
 
-	// Filebeat
-	implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.3'
+
 }
 
 dependencyManagement {

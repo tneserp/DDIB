@@ -21,8 +21,12 @@ export default function NavMenu() {
 
   const [bellOn, setBellOn] = useState(false);
 
+  const BASE_URL = "https://ddib.kro.kr";
+  //const BASE_URL = "https://k10c102.p.ssafy.io";
+
   const kakaoLogin = () => {
-    window.location.href = "http://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
+    console.log(BASE_URL);
+    window.location.href = `${BASE_URL}/api/oauth2/ddib/kakao`;
   };
 
   return (

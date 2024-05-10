@@ -13,7 +13,7 @@ spring:
           kakao:
             client-id: 3bdd477e0baccd07c4369a4cf8c31ed4
             client-secret: 5qAnQWrFYkaO5inuXcDrvQbW5t6lejlR
-            redirect-uri: http://localhost:8081/login/oauth2/code/ddib
+            redirect-uri: https://ddib.kro.kr/login/oauth2/code/ddib
             authorization-grant-type: authorization_code
             client-name: Kakao
             client-authentication-method: client_secret_post
@@ -25,26 +25,25 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
-#    jpa:
-#      hibernate:
-#        ddl-auto: update
-#      generate-ddl: true
-#      show-sql: true
+  #  jpa:
+  #    hibernate:
+  #      ddl-auto: update
+  #    generate-ddl: true
+  #    show-sql: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ddib?useSSL=false&characterEncoding=UTF-8
-    username: root
-    password: 1234
+    url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&characterEncoding=UTF-8
+    username: ssafy
+    password: ssafy
 
   data:
     redis:
-      host: localhost
+      host: 10.182.0.12
       port: 6379
 
   jwt:
     secret: adkafjlsdjgldkfjskdlakjdjkfljdkjkdkkkksjakslfejfghlajsdflaksjdgljadk
-
 
 access:
   token:
@@ -56,16 +55,21 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: localhost
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
+releaseHostName: ddib.kro.kr
 
 
 management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: prometheus
+      base-path: /actuator/user
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true

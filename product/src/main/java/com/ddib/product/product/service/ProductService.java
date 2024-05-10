@@ -1,6 +1,5 @@
 package com.ddib.product.product.service;
 
-import com.ddib.product.common.file.util.S3Uploader;
 import com.ddib.product.product.domain.FavoriteProduct;
 import com.ddib.product.product.domain.Product;
 import com.ddib.product.product.domain.ProductDetail;
@@ -33,9 +32,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.ddib.product.common.file.constant.S3Domain.PRODUCT_DETAIL;
-import static com.ddib.product.common.file.constant.S3Domain.PRODUCT_THUMBNAIL;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -50,22 +46,21 @@ public class ProductService {
 
     private final ProductRepositorySupport productRepositorySupport;
 
-    private final S3Uploader s3Uploader;
 
 //    private final AlarmClient alarmClient;
 
     public void createProduct(List<MultipartFile> thumbnails, List<MultipartFile> details, ProductCreateRequestDto dto) {
         log.info("PRODUCT SERVICE : SAVE PRODUCT : {}", dto.getName());
-        Seller seller = sellerRepository.findBySellerId(dto.getSellerId())
-                .orElseThrow(SellerNotFoundException::new);
-
-        List<String> detail = s3Uploader.storeImages(PRODUCT_DETAIL, details);
-        List<String> thumbnail = s3Uploader.storeImages(PRODUCT_THUMBNAIL, thumbnails);
-
-        Product product = dto.toEntity(seller);
-        product.updateThumbnail(thumbnail.get(0));
-        product.insertProductDetails(ProductDetail.of(detail, product));
-        productRepository.save(product);
+//        Seller seller = sellerRepository.findBySellerId(dto.getSellerId())
+//                .orElseThrow(SellerNotFoundException::new);
+//
+////        List<String> detail = s3Uploader.storeImages(PRODUCT_DETAIL, details);
+////        List<String> thumbnail = s3Uploader.storeImages(PRODUCT_THUMBNAIL, thumbnails);
+//
+//        Product product = dto.toEntity(seller);
+//        product.updateThumbnail(thumbnail.get(0));
+//        product.insertProductDetails(ProductDetail.of(detail, product));
+//        productRepository.save(product);
     }
 
     public ProductMainResponseDto getMainPageData() {

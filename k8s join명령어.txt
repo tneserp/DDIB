@@ -1,0 +1,2 @@
+sudo kubeadm join 172.26.5.119:6443 --token rvlndn.jeujgy6594h4jp1m \
+        --discovery-token-ca-cert-hash sha256:03a44f2a85dacab9a4173e1918265924c6f03336aeb2ef4412af74dca1e4c30e
