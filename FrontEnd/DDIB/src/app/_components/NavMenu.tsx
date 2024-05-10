@@ -85,18 +85,25 @@ export default function NavMenu() {
           )}
         </li> */}
 
-        {jwt.length != 0 && (
-          <li>
-            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
-            </div>
-            {bellOn && (
-              <div className={styles.alarmModal}>
-                <Alarm />
-              </div>
+        <li>
+          <div
+            className={styles.alarm}
+            onClick={() => setBellOn((prev) => !prev)}
+          >
+            {bellOn ? (
+              <GoBellFill className={styles.icons} />
+            ) : (
+              <GoBell className={styles.icons} />
             )}
-          </li>
-        )}
+          </div>
+          {bellOn && (
+            <div className={styles.alarmModal}>
+              <Alarm />
+            </div>
+          )}
+        </li>
+        {/* {jwt.length != 0 && (
+        )} */}
         <li>
           {jwt.length == 0 ? (
             <>

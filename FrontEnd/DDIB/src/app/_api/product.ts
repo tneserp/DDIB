@@ -9,11 +9,17 @@ async function getProductWeek() {
   return data;
 }
 
-async function getProductSearch(keyword: string | null, category: string | null) {
+async function getProductSearch(
+  keyword: string | null,
+  category: string | null,
+  isOver: boolean
+) {
   console.log(keyword);
   console.log(category);
-  const { data } = await api.get(`/api/product/search?keyword=${keyword}&category=${category}`);
-
+  const { data } = await api.get(
+    `/api/product/search?keyword=${keyword}&category=${category}&isOver=${isOver}`
+  );
+  console.log(data);
   return data;
 }
 

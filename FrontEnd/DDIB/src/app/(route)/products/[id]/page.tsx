@@ -138,13 +138,14 @@ export default function ProductDetail() {
                 }
               >
                 {data.details.map((image, index) => (
-                  <Image
-                    key={index}
-                    src={image.imageUrl}
-                    alt="상품썸네일"
-                    fill
-                    sizes="auto"
-                  ></Image>
+                  <div className={styles.wrapper} key={index}>
+                    <Image
+                      src={image.imageUrl}
+                      alt="상품썸네일"
+                      fill
+                      sizes="auto"
+                    ></Image>
+                  </div>
                 ))}
               </div>
               <div
