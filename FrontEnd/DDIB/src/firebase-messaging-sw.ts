@@ -18,20 +18,25 @@ const messaging = getMessaging(app);
 const requestPermission = async () => {
   console.log("권한 요청 중...");
 
-  const permission = await Notification.requestPermission();
-  if (permission === "denied") {
-    console.log("알림 권한 허용 안됨");
-    return;
-  }
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      console.log("알림 권한이 허용됨");
 
-  console.log("알림 권한이 허용됨");
+      // FCM 메세지 처리
+    } else {
+      console.log("알림 권한 허용 안됨");
+    }
+  });
 
   const token = await getToken(messaging, {
     vapidKey: process.env.REACT_APP_VAPID_KEY,
   });
 
-  if (token) console.log("token: ", token);
-  else console.log("Can not get Token");
+  if (token) {
+    console.log("token: ", token);
+  } else {
+    console.log("Can not get Token");
+  }
 
   onMessage(messaging, (payload) => {
     console.log("메시지가 도착했습니다.", payload);
