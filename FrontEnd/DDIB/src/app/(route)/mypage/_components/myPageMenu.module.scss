@@ -1,10 +1,10 @@
 .myPageMenu {
-  background: #fff5f5;
+  background: var(--scarlet);
   float: left;
   overflow: hidden;
   position: relative;
-  padding: 10px 0;
   width: 100%;
+  margin-top: 2vw;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 }
@@ -14,12 +14,20 @@
 .menuUser {
   display: flex;
   justify-content: space-around;
-  padding: 1.5vh;
+  li {
+    padding: 1.5vw;
+  }
 }
 
 .menuOrder {
   .horiselector {
     left: 0%;
+  }
+
+  .menuItemOne a {
+    color: var(--scarlet);
+    background-color: transparent;
+    transition: all 0.7s;
   }
 }
 
@@ -28,19 +36,31 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
+  .menuItemTwo a {
+    color: var(--scarlet);
+    background-color: transparent;
+    transition: all 0.7s;
+  }
 }
 
 .menuUser {
   .horiselector {
     left: 100%-(100%/3);
   }
+
+  .menuItemThree a {
+    color: var(--scarlet);
+    background-color: transparent;
+    transition: all 0.7s;
+  }
 }
 
-.menuItem a {
-  color: black;
+.menuItemOne a,
+.menuItemTwo a,
+.menuItemThree a {
+  color: #fff;
   font-size: 1.3vw;
-  transition-duration: 0.6s;
-  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   position: relative;
 }
 
@@ -55,7 +75,7 @@
   position: absolute;
   height: 100%;
   width: (100%/3);
-  top: 5px;
+
   transition-duration: 0.6s;
   transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   background-color: #fff;

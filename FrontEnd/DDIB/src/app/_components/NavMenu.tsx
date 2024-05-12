@@ -28,7 +28,8 @@ export default function NavMenu() {
 
   const kakaoLogin = () => {
     //window.location.href = "http://localhost:8081/api/oauth2/ddib/kakao";
-    window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
+    // window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
+    window.location.href = "https://ddib.kro.kr/api/oauth2/ddib/kakao";
   };
 
   return (
@@ -90,15 +91,8 @@ export default function NavMenu() {
         </li>
 
         <li>
-          <div
-            className={styles.alarm}
-            onClick={() => setBellOn((prev) => !prev)}
-          >
-            {bellOn ? (
-              <GoBellFill className={styles.icons} />
-            ) : (
-              <GoBell className={styles.icons} />
-            )}
+          <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+            {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
           </div>
           {bellOn && (
             <div className={styles.alarmModal}>

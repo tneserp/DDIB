@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { PublicAxiosApi } from "./app/_utils/commons";
+import Cookies from "js-cookie";
+
+const api = PublicAxiosApi();
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgQxyvJ_L4cjliM8kq1M7xn0yHNWwvHw4",
@@ -29,10 +33,23 @@ const requestPermission = async () => {
   });
 
   const token = await getToken(messaging, {
-    vapidKey: process.env.REACT_APP_VAPID_KEY,
+    vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
   });
 
   if (token) {
+    const data = {
+      userId: 8,
+      fcmToken: token,
+    };
+
+    console.log(data);
+
+    try {
+      api.put(`https://k10c102.p.ssafy.io/api/user/token`, data);
+    } catch (error) {
+      console.log("전송실패");
+    }
+
     console.log("token: ", token);
   } else {
     console.log("Can not get Token");

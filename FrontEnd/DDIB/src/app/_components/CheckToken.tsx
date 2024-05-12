@@ -21,6 +21,7 @@ export default function CheckToken() {
       }
     }
 
+    console.log(parseInt(Cookies.get("num") as string, 10));
     console.log(jwt);
     console.log(userPk);
   };
