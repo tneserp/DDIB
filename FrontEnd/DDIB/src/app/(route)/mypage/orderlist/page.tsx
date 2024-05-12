@@ -1,9 +1,8 @@
 "use client";
 
 import styles from "./orderList.module.scss";
-import product from "../../../../../public/product.webp";
 import { useState, useEffect } from "react";
-import { OrderDetail, OrderProduct } from "@/app/_types/types";
+import { OrderDetail } from "@/app/_types/types";
 import Link from "next/link";
 import ProductOrdered from "@/app/_components/ProductOrdered";
 import { useQuery } from "@tanstack/react-query";

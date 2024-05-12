@@ -38,7 +38,7 @@ const requestPermission = async () => {
 
   if (token) {
     const data = {
-      userId: 8,
+      userId: 9,
       fcmToken: token,
     };
 

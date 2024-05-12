@@ -9,16 +9,10 @@ async function getProductWeek() {
   return data;
 }
 
-async function getProductSearch(
-  keyword: string | null,
-  category: string | null,
-  isOver: boolean
-) {
+async function getProductSearch(keyword: string | null, category: string | null, isOver: boolean) {
   console.log(keyword);
   console.log(category);
-  const { data } = await api.get(
-    `/api/product/search?keyword=${keyword}&category=${category}&isOver=${isOver}`
-  );
+  const { data } = await api.get(`/api/product/search?keyword=${keyword}&category=${category}&isOver=${isOver}`);
   console.log(data);
   return data;
 }
@@ -35,10 +29,16 @@ async function getWishList(userPk: number) {
   return data;
 }
 
-async function postLike() {}
+async function postLike(productId: string, userPk: number) {
+  const info = {
+    productId: productId,
+    userId: userPk,
+  };
+  await api.post(`/api/product/like`, info);
+}
 
 async function deleteLike(productId: string, userPk: number) {
   await api.delete(`/api/product/${productId}/${userPk}`);
 }
 
-export { getProductWeek, getProductSearch, getProductDetail, getWishList };
+export { getProductWeek, getProductSearch, getProductDetail, getWishList, postLike, deleteLike };

@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./eventBtm.module.scss";
+import styles from "./eventBtn.module.scss";
 
 interface Props {
   joinBuy: () => void;

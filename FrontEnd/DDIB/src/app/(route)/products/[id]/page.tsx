@@ -21,6 +21,7 @@ import { listIn, test } from "@/app/_api/waiting";
 import { useQuery } from "@tanstack/react-query";
 import { getProductDetail } from "@/app/_api/product";
 import EventBtn from "@/app/(route)/products/_components/EventBtn";
+import LikeBtn from "../_components/LikeBtn";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -84,12 +85,7 @@ export default function ProductDetail() {
             <div className={styles.info}>
               <div className={styles.sectionOne}>
                 <div className={styles.thumbnail}>
-                  <Image
-                    src={data.thumbnailImage}
-                    alt="상품썸네일"
-                    fill
-                    sizes="auto"
-                  ></Image>
+                  <Image src={data.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
                 </div>
               </div>
               <div className={styles.sectionTwo}>
@@ -121,7 +117,9 @@ export default function ProductDetail() {
                   <div>{(amount * salePrice).toLocaleString("ko-KR")}</div>
                 </div>
                 <div className={styles.btnArea}>
-                  <div>dd</div>
+                  <div>
+                    <LikeBtn like={data.liked} likeCnt={data.likeCount} />
+                  </div>
                   <div>
                     <EventBtn joinBuy={joinBuy} />
                   </div>
@@ -130,21 +128,10 @@ export default function ProductDetail() {
             </div>
             <div className={styles.detailArea}>
               <div className={styles.detailTitle}>Details</div>
-              <div
-                className={
-                  viewMore
-                    ? `${styles.detailPhotoView}`
-                    : `${styles.detailPhoto}`
-                }
-              >
+              <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
                 {data.details.map((image, index) => (
                   <div className={styles.wrapper} key={index}>
-                    <Image
-                      src={image.imageUrl}
-                      alt="상품썸네일"
-                      fill
-                      sizes="auto"
-                    ></Image>
+                    <Image src={image.imageUrl} alt="상품썸네일" fill sizes="auto"></Image>
                   </div>
                 ))}
               </div>
@@ -175,15 +162,17 @@ export default function ProductDetail() {
                 <div className={styles.sellerItemArea}>
                   <div className={styles.sellerItem}>
                     <div>회사명</div>
+                    <div>사업자번호</div>
+                    <div>대표명</div>
                     <div>대표번호</div>
                     <div>대표이메일</div>
-                    <div>사업자번호</div>
                   </div>
                   <div className={styles.sellerItem}>
                     <div>{data.companyName}</div>
-                    <div>{data.companyPhone}</div>
-                    <div>{data.companyEmail}</div>
                     <div>{data.businessNumber}</div>
+                    <div>{data.ceoName}</div>
+                    <div>{data.ceoPhone}</div>
+                    <div>{data.ceoEmail}</div>
                   </div>
                 </div>
               </div>
