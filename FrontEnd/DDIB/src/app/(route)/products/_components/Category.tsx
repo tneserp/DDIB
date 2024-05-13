@@ -42,6 +42,7 @@ export default function Category({ category }: Props) {
                 totalStock={item.totalStock}
                 stock={item.stock}
                 discount={item.discount}
+                over={item.over}
               />
             </Link>
           ))}

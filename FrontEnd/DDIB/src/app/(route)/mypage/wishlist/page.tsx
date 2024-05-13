@@ -38,6 +38,7 @@ export default function WishList() {
                       totalStock={item.totalStock}
                       stock={item.stock}
                       discount={item.discount}
+                      over={item.over}
                     />
                   </Link>
                 </div>

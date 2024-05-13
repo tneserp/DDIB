@@ -46,6 +46,7 @@ export default function SearchResult({ keyword, category, over }: Props) {
                   totalStock={item.totalStock}
                   stock={item.stock}
                   discount={item.discount}
+                  over={item.over}
                 />
               </Link>
             ))}

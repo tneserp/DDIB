@@ -85,6 +85,7 @@ export default function WeekItem({ checkDay }: Props) {
                           totalStock={item.totalStock}
                           stock={item.stock}
                           discount={item.discount}
+                          over={item.over}
                         />
                       </Link>
                     </SwiperSlide>
