@@ -17,19 +17,41 @@ import { CiLogin } from "react-icons/ci";
 import { ImEnter } from "react-icons/im";
 import { TbDoorEnter } from "react-icons/tb";
 import Alarm from "./Alarm";
+import Cookies from "js-cookie";
+import { useMutation } from "@tanstack/react-query";
+import { postUser } from "@/app/_api/user";
+import { useRouter } from "next/navigation";
 
 export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
   console.log(segment);
 
   const { jwt } = userStore();
+  const router = useRouter();
 
   const [bellOn, setBellOn] = useState(false);
 
+  const logOutUser = useMutation({
+    mutationFn: async () => {
+      return postUser();
+    },
+    async onSuccess(response) {
+      console.log("로그아웃완료");
+      router.replace("/");
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+
   const kakaoLogin = () => {
     //window.location.href = "http://localhost:8081/api/oauth2/ddib/kakao";
-    // window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
-    window.location.href = "https://ddib.kro.kr/api/oauth2/ddib/kakao";
+    window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/ddib/kakao";
+    // window.location.href = "https://ddib.kro.kr/api/oauth2/ddib/kakao";
+  };
+
+  const logOut = () => {
+    logOutUser.mutate();
   };
 
   return (
@@ -76,53 +98,55 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
-        <li>
-          {jwt.length == 0 ? (
-            <div>
-              {/* <BiLogIn className={styles.icons} />
-              <TbLogin2 className={styles.icons} />
-              <CiLogin className={styles.icons} /> */}
-              {/* <ImEnter className={styles.icons} /> */}
-              <TbDoorEnter className={styles.icons} />
+        {Cookies.get("Authorization") && (
+          <li>
+            <div
+              className={styles.alarm}
+              onClick={() => setBellOn((prev) => !prev)}
+            >
+              {bellOn ? (
+                <GoBellFill className={styles.icons} />
+              ) : (
+                <GoBell className={styles.icons} />
+              )}
             </div>
-          ) : (
-            <div></div>
-          )}
-        </li>
-
-        <li>
-          <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-            {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
-          </div>
-          {bellOn && (
-            <div className={styles.alarmModal}>
-              <Alarm />
-            </div>
-          )}
-        </li>
-        {/* {jwt.length != 0 && (
-        )} */}
+            {bellOn && (
+              <div className={styles.alarmModal}>
+                <Alarm />
+              </div>
+            )}
+          </li>
+        )}
         <li>
           {jwt.length == 0 ? (
             <>
-              <div onClick={kakaoLogin}>
+              <div onClick={kakaoLogin} className={styles.beforeLogin}>
                 <GoPerson className={styles.icons} />
+                <div className={styles.logBtn}>Login</div>
               </div>
             </>
           ) : segment === "mypage" ? (
             <>
               <Link href="/mypage">
-                <div>
+                <div className={styles.afterLogin}>
                   <GoPersonFill className={styles.icons} />
+                  <div className={styles.logBtn} onClick={logOut}>
+                    Logout
+                  </div>
                 </div>
               </Link>
             </>
           ) : (
-            <Link href="/mypage">
-              <div>
-                <GoPerson className={styles.icons} />
-              </div>
-            </Link>
+            <>
+              <Link href="/mypage">
+                <div div className={styles.afterLogin}>
+                  <GoPerson className={styles.icons} />
+                  <div className={styles.logBtn} onClick={logOut}>
+                    Logout
+                  </div>
+                </div>
+              </Link>
+            </>
           )}
         </li>
       </div>
