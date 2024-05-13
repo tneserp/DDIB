@@ -118,7 +118,7 @@ export default function ProductDetail() {
                 </div>
                 <div className={styles.btnArea}>
                   <div>
-                    <LikeBtn like={data.liked} likeCnt={data.likeCount} />
+                    <LikeBtn productId={data.productId} like={data.liked} likeCnt={data.likeCount} />
                   </div>
                   <div>
                     <EventBtn joinBuy={joinBuy} />

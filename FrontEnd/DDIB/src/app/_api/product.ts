@@ -17,7 +17,7 @@ async function getProductSearch(keyword: string | null, category: string | null,
   return data;
 }
 
-async function getProductDetail(productId: string, userPk: number) {
+async function getProductDetail(productId: number, userPk: number) {
   const { data } = await api.get(`/api/product/${productId}/${userPk}`);
   return data;
 }
@@ -29,7 +29,7 @@ async function getWishList(userPk: number) {
   return data;
 }
 
-async function postLike(productId: string, userPk: number) {
+async function postLike(productId: number, userPk: number) {
   const info = {
     productId: productId,
     userId: userPk,
@@ -37,7 +37,7 @@ async function postLike(productId: string, userPk: number) {
   await api.post(`/api/product/like`, info);
 }
 
-async function deleteLike(productId: string, userPk: number) {
+async function deleteLike(productId: number, userPk: number) {
   await api.delete(`/api/product/${productId}/${userPk}`);
 }
 
