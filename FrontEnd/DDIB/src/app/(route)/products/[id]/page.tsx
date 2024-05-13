@@ -33,8 +33,8 @@ export default function ProductDetail() {
   const { user } = userStore();
 
   const { data } = useQuery<ProductInfo>({
-    queryKey: ["productInfo", id, 1],
-    queryFn: () => getProductDetail(id, 1),
+    queryKey: ["productInfo", id, 9],
+    queryFn: () => getProductDetail(id, 9),
   });
 
   const [salePrice, setSalePrice] = useState(0);
@@ -84,9 +84,18 @@ export default function ProductDetail() {
             <div className={styles.category}>TimeDeal &gt; {data.category}</div>
             <div className={styles.info}>
               <div className={styles.sectionOne}>
-                <div className={styles.thumbnail}>
-                  <Image src={data.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
-                </div>
+                <Image
+                  src={data.thumbnailImage}
+                  alt="상품썸네일"
+                  fill
+                  sizes="auto"
+                ></Image>
+                {data.over && (
+                  <>
+                    <div className={styles.sold}></div>
+                    <div className={styles.soldLogo}>SOLD</div>
+                  </>
+                )}
               </div>
               <div className={styles.sectionTwo}>
                 <div className={styles.companyMini}>
@@ -109,7 +118,9 @@ export default function ProductDetail() {
                   <div>무료배송</div>
                 </div>
                 {/* button area */}
-                <TimeCount startTime={data.eventStartDate} />
+                <div className={styles.time}>
+                  <TimeCount startTime={data.eventStartDate} />
+                </div>
                 <AmountBtn stock={data.stock} />
                 <div className={styles.line}></div>
                 <div className={styles.totalPrice}>
@@ -118,7 +129,11 @@ export default function ProductDetail() {
                 </div>
                 <div className={styles.btnArea}>
                   <div>
-                    <LikeBtn productId={data.productId} like={data.liked} likeCnt={data.likeCount} />
+                    <LikeBtn
+                      productId={data.productId}
+                      like={data.liked}
+                      likeCnt={data.likeCount}
+                    />
                   </div>
                   <div>
                     <EventBtn joinBuy={joinBuy} />
@@ -128,10 +143,21 @@ export default function ProductDetail() {
             </div>
             <div className={styles.detailArea}>
               <div className={styles.detailTitle}>Details</div>
-              <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
+              <div
+                className={
+                  viewMore
+                    ? `${styles.detailPhotoView}`
+                    : `${styles.detailPhoto}`
+                }
+              >
                 {data.details.map((image, index) => (
                   <div className={styles.wrapper} key={index}>
-                    <Image src={image.imageUrl} alt="상품썸네일" fill sizes="auto"></Image>
+                    <Image
+                      src={image.imageUrl}
+                      alt="상품썸네일"
+                      fill
+                      sizes="auto"
+                    ></Image>
                   </div>
                 ))}
               </div>

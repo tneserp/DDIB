@@ -20,9 +20,22 @@ export default function LikeBtn({ productId, like, likeCnt }: Props) {
 
   const heart = useMutation({
     mutationFn: async () => {
-      return postLike(productId, userPk);
+      return postLike(productId, 9);
     },
-    onMutate() {},
+    async onSuccess(response) {},
+    onError(error) {
+      console.error(error);
+    },
+  });
+
+  const unheart = useMutation({
+    mutationFn: async () => {
+      return deleteLike(productId, 9);
+    },
+    async onSuccess(response) {},
+    onError(error) {
+      console.error(error);
+    },
   });
 
   const likeProduct = async () => {
@@ -30,10 +43,12 @@ export default function LikeBtn({ productId, like, likeCnt }: Props) {
       console.log("좋아요취소");
       setIsLiked(false);
       setLikeNowCnt((prev) => prev - 1);
+      unheart.mutate();
     } else {
       console.log("좋아요");
       setIsLiked(true);
       setLikeNowCnt((prev) => prev + 1);
+      heart.mutate();
     }
   };
 

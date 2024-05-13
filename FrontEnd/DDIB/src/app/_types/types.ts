@@ -84,3 +84,10 @@ export interface OrderDetail extends OrderAddressInfo {
   totalAmount: number;
   paymentMethod: string;
 }
+
+export interface AlarmList {
+  title: string;
+  content: string;
+  generatedTime: string;
+  read: boolean;
+}

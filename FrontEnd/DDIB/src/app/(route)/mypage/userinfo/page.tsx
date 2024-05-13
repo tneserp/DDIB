@@ -36,7 +36,7 @@ export default function UserInfo() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>개인정보수정</div>
+      <div className={styles.title}>User Info</div>
       <AddressForm type="mypage" />
       <div className={styles.btnArea}>
         <div className={styles.modifyBtn} onClick={() => modify()}>

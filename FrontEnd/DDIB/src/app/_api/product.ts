@@ -9,10 +9,16 @@ async function getProductWeek() {
   return data;
 }
 
-async function getProductSearch(keyword: string | null, category: string | null, isOver: boolean) {
+async function getProductSearch(
+  keyword: string | null,
+  category: string | null,
+  isOver: boolean
+) {
   console.log(keyword);
   console.log(category);
-  const { data } = await api.get(`/api/product/search?keyword=${keyword}&category=${category}&isOver=${isOver}`);
+  const { data } = await api.get(
+    `/api/product/search?keyword=${keyword}&category=${category}&isOver=${isOver}`
+  );
   console.log(data);
   return data;
 }
@@ -35,10 +41,20 @@ async function postLike(productId: number, userPk: number) {
     userId: userPk,
   };
   await api.post(`/api/product/like`, info);
+  console.log(info);
+  console.log("좋아요");
 }
 
 async function deleteLike(productId: number, userPk: number) {
   await api.delete(`/api/product/${productId}/${userPk}`);
+  console.log("좋아요 취소");
 }
 
-export { getProductWeek, getProductSearch, getProductDetail, getWishList, postLike, deleteLike };
+export {
+  getProductWeek,
+  getProductSearch,
+  getProductDetail,
+  getWishList,
+  postLike,
+  deleteLike,
+};

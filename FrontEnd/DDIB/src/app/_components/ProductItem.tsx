@@ -16,6 +16,7 @@ interface Props {
   totalStock: number;
   stock: number;
   discount: number;
+  over: boolean;
 }
 
 export default function ProductItem({
@@ -28,6 +29,7 @@ export default function ProductItem({
   totalStock,
   stock,
   discount,
+  over,
 }: Props) {
   const [salePrice, setSalePrice] = useState(0);
 
@@ -41,6 +43,12 @@ export default function ProductItem({
     <div className={styles.containers}>
       <div className={styles.wrapper}>
         <Image src={thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
+        {over && (
+          <>
+            <div className={styles.sold}></div>
+            <div className={styles.soldLogo}>SOLD</div>
+          </>
+        )}
       </div>
       <div className={styles.companyMini}>
         <div>

@@ -37,6 +37,7 @@ export default function NavMenu() {
     },
     async onSuccess(response) {
       console.log("로그아웃완료");
+      localStorage.clear();
       router.replace("/");
     },
     onError(error) {
@@ -98,29 +99,29 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
-        {Cookies.get("Authorization") && (
-          <li>
-            <div
-              className={styles.alarm}
-              onClick={() => setBellOn((prev) => !prev)}
-            >
-              {bellOn ? (
-                <GoBellFill className={styles.icons} />
-              ) : (
-                <GoBell className={styles.icons} />
-              )}
-            </div>
-            {bellOn && (
-              <div className={styles.alarmModal}>
-                <Alarm />
-              </div>
+        <li>
+          <div
+            className={styles.alarm}
+            onClick={() => setBellOn((prev) => !prev)}
+          >
+            {bellOn ? (
+              <GoBellFill className={styles.icons} />
+            ) : (
+              <GoBell className={styles.icons} />
             )}
-          </li>
-        )}
+          </div>
+          {bellOn && (
+            <div className={styles.alarmModal}>
+              <Alarm />
+            </div>
+          )}
+        </li>
+        {/* {Cookies.get("Authorization") && (
+        )} */}
         <li>
           {jwt.length == 0 ? (
             <>
-              <div onClick={kakaoLogin} className={styles.beforeLogin}>
+              <div onClick={logOut} className={styles.beforeLogin}>
                 <GoPerson className={styles.icons} />
                 <div className={styles.logBtn}>Login</div>
               </div>
@@ -139,7 +140,7 @@ export default function NavMenu() {
           ) : (
             <>
               <Link href="/mypage">
-                <div div className={styles.afterLogin}>
+                <div className={styles.afterLogin}>
                   <GoPerson className={styles.icons} />
                   <div className={styles.logBtn} onClick={logOut}>
                     Logout

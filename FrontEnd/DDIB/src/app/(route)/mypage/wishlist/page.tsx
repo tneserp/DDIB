@@ -15,34 +15,37 @@ export default function WishList() {
 
   const { data } = useQuery<Product[]>({
     queryKey: ["wishList", pk],
-    queryFn: () => getWishList(pk),
+    queryFn: () => getWishList(9),
   });
 
   return (
-    <div className={styles.container}>
-      {data && (
-        <>
-          {data.map((item) => {
-            return (
-              <div key={item.productId} className={styles.listItem}>
-                <Link href={`/products/${item.productId}`}>
-                  <ProductItem
-                    thumbnailImage={item.thumbnailImage}
-                    companyName={item.companyName}
-                    name={item.name}
-                    eventStartTime={item.eventStartTime}
-                    eventEndTime={item.eventEndTime}
-                    price={item.price}
-                    totalStock={item.totalStock}
-                    stock={item.stock}
-                    discount={item.discount}
-                  />
-                </Link>
-              </div>
-            );
-          })}
-        </>
-      )}
-    </div>
+    <>
+      <div className={styles.title}>Wish List</div>
+      <div className={styles.container}>
+        {data && (
+          <>
+            {data.map((item) => {
+              return (
+                <div key={item.productId} className={styles.listItem}>
+                  <Link href={`/products/${item.productId}`}>
+                    <ProductItem
+                      thumbnailImage={item.thumbnailImage}
+                      companyName={item.companyName}
+                      name={item.name}
+                      eventStartTime={item.eventStartTime}
+                      eventEndTime={item.eventEndTime}
+                      price={item.price}
+                      totalStock={item.totalStock}
+                      stock={item.stock}
+                      discount={item.discount}
+                    />
+                  </Link>
+                </div>
+              );
+            })}
+          </>
+        )}
+      </div>
+    </>
   );
 }

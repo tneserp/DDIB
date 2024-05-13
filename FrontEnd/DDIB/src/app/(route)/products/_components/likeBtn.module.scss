@@ -8,10 +8,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -58%) scale(0.9);
+  transform: translate(-50%, -58%) scale(50%);
   width: 100px;
   height: 100px;
-  background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png")
+    no-repeat;
   background-position: 0 0;
   cursor: pointer;
   transition: background-position 1s steps(28);
