@@ -58,10 +58,18 @@ public class UserQueueService {
 
     // 사용자 순위 조회
     public Mono<Long> getRank(final String queue, final Long userId) {
-        return reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString()) // 랭크 조회
+
+        Mono<Long> a = reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString()) // 랭크 조회
 //                .defaultIfEmpty(-1L) // 기본값 설정
                 .defaultIfEmpty(-1L) // 기본값 설정
-                .map(rank -> rank >= 0 ? rank + 1 : rank); // 순위 반환
+                .map(rank -> rank >= 0 ? rank + 1 : rank);// 순위 반환
+
+        log.info("==============");
+        log.info(String.valueOf(userId));
+        log.info(a.toString());
+        log.info("==============");
+
+        return a;
     }
 
     // 토큰 생성
@@ -84,7 +92,7 @@ public class UserQueueService {
         }
     }
 
-    @Scheduled(initialDelay = 5000, fixedDelay = 1000) // 주기적으로 메서드 실행을 스케줄링, 서버 시작 후 5초 지연 후 10초마다 실행
+    @Scheduled(initialDelay = 5000, fixedDelay = 10000) // 주기적으로 메서드 실행을 스케줄링, 서버 시작 후 5초 지연 후 10초마다 실행
     public void scheduleAllowUser() { // 사용자 허용을 스케줄링하는 메서드 정의
         if (!scheduling) { // 스케줄링이 비활성화된 경우
             log.info("passed scheduling"); // 로그 출력
@@ -106,4 +114,5 @@ public class UserQueueService {
                 .doOnNext(tuple -> log.info("Tried %d and allowed %d members of %s queues".formatted(maxAllowUserCount, tuple.getT2(), tuple.getT1()))) // 로그 출력
                 .subscribe(); // 구독하여 비동기적으로 실행
     }
+
 }
