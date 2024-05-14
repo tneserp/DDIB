@@ -64,11 +64,6 @@ public class UserQueueService {
                 .defaultIfEmpty(-1L) // 기본값 설정
                 .map(rank -> rank >= 0 ? rank + 1 : rank);// 순위 반환
 
-        log.info("==============");
-        log.info(String.valueOf(userId));
-        log.info(a.toString());
-        log.info("==============");
-
         return a;
     }
 
