@@ -13,26 +13,18 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class UserQueueController { // UserQueueController 클래스 선언
 
-    private int maxSize = 0;
-
     private final UserQueueService userQueueService; // UserQueueService 주입
 
     @GetMapping("")
     public Mono<?> waitingRoomPage(@RequestParam(name = "queue", defaultValue = "default") String queue,
                                    @RequestParam(name = "user_id") Long userId) {
 
-        log.info(String.valueOf(maxSize));
-        if (maxSize < 3) {
-            maxSize += 1;
-            return Mono.just(-5);
-        }
-
-        // 입장이 허용되어 페이지 리다이렉트 가능한지 확인
+            // 입장이 허용되어 페이지 리다이렉트 가능한지 확인
         return userQueueService.isAllowedByToken(queue, userId).filter(allowed -> allowed) // 허용되었다면
                 .flatMap(allowed -> Mono.empty()) // 렌더링 없이 빈 Mono 반환
                 .switchIfEmpty(
                         // 대기열 등록. 이미 대기열에 있으면서 오류가 발생할 경우, 해당 큐에서의 사용자 랭크 가져오기
-                        userQueueService.registerWaitQueue(queue, userId).onErrorResume(ex -> userQueueService.getRank(queue, userId)).then() // Mono<Void> 반환
+                        userQueueService.registerWaitQueue(queue, userId).onErrorResume(ex -> userQueueService.getRank(queue, (long)(Math.random() * 10000))).then() // Mono<Void> 반환
                 );
     }
 
@@ -42,21 +34,6 @@ public class UserQueueController { // UserQueueController 클래스 선언
 
         return userQueueService.getRank(queue, userId) // 사용자의 순위 조회
                 .map(RankNumberResponse::new); // 순위 응답으로 매핑
-    }
-
-    @GetMapping("/leave")
-    public void leavePage() {
-        maxSize -= 1;
-        log.info("사용자 떠남");
-    }
-
-
-    // 테스트용
-    @GetMapping("/reset")
-    public Mono<?> reset() {
-        maxSize = 0;
-
-        return null;
     }
 
 }
