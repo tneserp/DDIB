@@ -39,6 +39,8 @@ public class UserQueueController { // UserQueueController 클래스 선언
     @GetMapping("/{userId}")
     public Mono<?> waitingRoomPage2(@RequestParam(name = "queue", defaultValue = "default") String queue, @PathVariable Long userId) {
 
+        log.info("userId : {}", userId);
+
         // 입장이 허용되어 페이지 리다이렉트 가능한지 확인
         return userQueueService.isAllowedByToken(queue, userId).filter(allowed -> allowed) // 허용되었다면
                 .flatMap(allowed -> Mono.empty()) // 렌더링 없이 빈 Mono 반환
