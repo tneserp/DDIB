@@ -24,7 +24,6 @@ public class UserQueueService {
 
     @Value("${scheduler.enabled}")
     private Boolean scheduling = false;
-
     private final String USER_QUEUE_WAIT_KEY = "users:queue:%s:wait"; // 대기열 키
     private final String USER_QUEUE_WAIT_KEY_FOR_SCAN = "users:queue:*:wait"; // 스캔 대상 대기열 키
     private final String USER_QUEUE_PROCEED_KEY = "users:queue:%s:proceed"; // 진행 중인 대기열 키
@@ -66,7 +65,7 @@ public class UserQueueService {
 
     // 토큰 생성
     public Mono<String> generateToken(final String queue, final Long userId) {
-        MessageDigest digest = null;
+        MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA-256"); // SHA-256 알고리즘으로 해시 생성
 
@@ -84,7 +83,7 @@ public class UserQueueService {
         }
     }
 
-    @Scheduled(initialDelay = 5000, fixedDelay = 3000) // 주기적으로 메서드 실행을 스케줄링, 서버 시작 후 5초 지연 후 10초마다 실행
+    @Scheduled(initialDelay = 5000, fixedDelay = 1000) // 주기적으로 메서드 실행을 스케줄링, 서버 시작 후 5초 지연 후 10초마다 실행
     public void scheduleAllowUser() { // 사용자 허용을 스케줄링하는 메서드 정의
         if (!scheduling) { // 스케줄링이 비활성화된 경우
             log.info("passed scheduling"); // 로그 출력
@@ -93,7 +92,7 @@ public class UserQueueService {
 
         log.info("called scheduling..."); // 스케줄링이 호출됨을 로그로 기록
 
-        Long maxAllowUserCount = 1L; // 허용할 최대 사용자 수
+        Long maxAllowUserCount = 0L; // 허용할 최대 사용자 수
 
         // 대기열 키를 기반으로 대기열 스캔을 수행하고, 각 대기열에서 사용자를 허용하는 코드
         reactiveRedisTemplate.scan(ScanOptions.scanOptions()
