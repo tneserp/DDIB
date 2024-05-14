@@ -92,17 +92,17 @@ public class UserQueueService {
 
         log.info("called scheduling..."); // 스케줄링이 호출됨을 로그로 기록
 
-        Long maxAllowUserCount = 0L; // 허용할 최대 사용자 수
+        Long maxAllowUserCount = 1L; // 허용할 최대 사용자 수
 
         // 대기열 키를 기반으로 대기열 스캔을 수행하고, 각 대기열에서 사용자를 허용하는 코드
-        reactiveRedisTemplate.scan(ScanOptions.scanOptions()
-                        .match(USER_QUEUE_WAIT_KEY_FOR_SCAN) // 지정된 패턴과 일치하는 키 검색
-                        .count(100) // 한 번에 반환할 최대 키 수 지정
-                        .build())
-                .map(key -> key.split(":")[2]) // 대기열 이름 추출
-                .flatMap(queue -> allowUser(queue, maxAllowUserCount) // 허용 메서드 호출
-                        .map(allowed -> Tuples.of(queue, allowed))) // 허용된 사용자 수와 대기열 이름 튜플로 매핑
-                .doOnNext(tuple -> log.info("Tried %d and allowed %d members of %s queues".formatted(maxAllowUserCount, tuple.getT2(), tuple.getT1()))) // 로그 출력
-                .subscribe(); // 구독하여 비동기적으로 실행
+//        reactiveRedisTemplate.scan(ScanOptions.scanOptions()
+//                        .match(USER_QUEUE_WAIT_KEY_FOR_SCAN) // 지정된 패턴과 일치하는 키 검색
+//                        .count(100) // 한 번에 반환할 최대 키 수 지정
+//                        .build())
+//                .map(key -> key.split(":")[2]) // 대기열 이름 추출
+//                .flatMap(queue -> allowUser(queue, maxAllowUserCount) // 허용 메서드 호출
+//                        .map(allowed -> Tuples.of(queue, allowed))) // 허용된 사용자 수와 대기열 이름 튜플로 매핑
+//                .doOnNext(tuple -> log.info("Tried %d and allowed %d members of %s queues".formatted(maxAllowUserCount, tuple.getT2(), tuple.getT1()))) // 로그 출력
+//                .subscribe(); // 구독하여 비동기적으로 실행
     }
 }
