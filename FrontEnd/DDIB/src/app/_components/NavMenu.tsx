@@ -100,8 +100,15 @@ export default function NavMenu() {
           </Link>
         </li>
         <li>
-          <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-            {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
+          <div
+            className={styles.alarm}
+            onClick={() => setBellOn((prev) => !prev)}
+          >
+            {bellOn ? (
+              <GoBellFill className={styles.icons} />
+            ) : (
+              <GoBell className={styles.icons} />
+            )}
           </div>
           {bellOn && (
             <div className={styles.alarmModal}>
@@ -112,7 +119,7 @@ export default function NavMenu() {
         {/* {Cookies.get("Authorization") && (
         )} */}
         <li>
-          {jwt.length == 0 ? (
+          {Cookies.get("Authorization") ? (
             <>
               <div onClick={logOut} className={styles.beforeLogin}>
                 <GoPerson className={styles.icons} />
