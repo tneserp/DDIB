@@ -119,7 +119,7 @@ export default function NavMenu() {
         {/* {Cookies.get("Authorization") && (
         )} */}
         <li>
-          {Cookies.get("Authorization") ? (
+          {!Cookies.get("Authorization") ? (
             <>
               <div onClick={kakaoLogin} className={styles.beforeLogin}>
                 <GoPerson className={styles.icons} />
