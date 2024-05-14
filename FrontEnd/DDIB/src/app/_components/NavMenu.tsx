@@ -77,7 +77,7 @@ export default function NavMenu() {
           </Link>
         </li>
         <li>
-          <Link href="https://www.naver.com">
+          <Link href="https://k10c102.p.ssafy.io/bidd">
             <div className={styles.subTitle} style={{ paddingRight: "1.5vw" }}>
               <div>BIDD</div>
               {/* <div className={styles.goIcon}>
@@ -100,15 +100,8 @@ export default function NavMenu() {
           </Link>
         </li>
         <li>
-          <div
-            className={styles.alarm}
-            onClick={() => setBellOn((prev) => !prev)}
-          >
-            {bellOn ? (
-              <GoBellFill className={styles.icons} />
-            ) : (
-              <GoBell className={styles.icons} />
-            )}
+          <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+            {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
           </div>
           {bellOn && (
             <div className={styles.alarmModal}>
