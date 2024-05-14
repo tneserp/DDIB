@@ -35,7 +35,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--scarlet);
-  font-size: 5vw;
+  font-size: 3vw;
   font-family: "Oooh Baby";
   font-weight: bold;
   &::before {
@@ -44,7 +44,7 @@
     position: absolute;
     bottom: 3px;
     left: 1vw;
-    width: 13vw;
+    width: 80%;
     height: 2px;
     background-color: var(--scarlet);
   }
@@ -54,7 +54,7 @@
     position: absolute;
     bottom: -1px;
     left: 2.5vw;
-    width: 13vw;
+    width: 80%;
     height: 2px;
     background-color: var(--scarlet);
   }

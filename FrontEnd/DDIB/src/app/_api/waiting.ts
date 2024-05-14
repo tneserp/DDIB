@@ -5,12 +5,13 @@ const api = ClientAxiosApi();
 async function getWaitingList(pk: number) {
   console.log("ddd");
   const { data } = await api.get(`/api/v1/queue/rank?user_id=1`);
+  console.log(data);
   return data;
 }
 
 async function test() {
   console.log("aaaa");
-  const { data } = await api.get(`/api/order/1`); 
+  const { data } = await api.get(`/api/order/1`);
   console.log(data);
 }
 

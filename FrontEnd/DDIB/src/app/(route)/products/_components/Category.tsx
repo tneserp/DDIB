@@ -14,8 +14,8 @@ interface Props {
 
 export default function Category({ category }: Props) {
   const { data } = useQuery<Product[]>({
-    queryKey: ["category", "", category, true],
-    queryFn: () => getProductSearch("", category, true),
+    queryKey: ["category", "", category, false],
+    queryFn: () => getProductSearch("", category, false),
   });
 
   useEffect(() => {
