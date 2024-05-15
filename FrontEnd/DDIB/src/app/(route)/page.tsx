@@ -1,14 +1,15 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
-import CheckToken from "@/app/_components/CheckToken";
-import GetAlarmToken from "@/app/_components/GetAlarmToken";
+
 import MainSlider from "../_components/MainSlider";
+
+import Cookies from "js-cookie";
+import GetAlarmToken from "../_components/GetAlarmToken";
 
 export default function Home() {
   return (
     <>
-      {/* s<CheckToken /> */}
-      <GetAlarmToken />
+      {!Cookies.get("fcm") && <GetAlarmToken />}
 
       <main className={styles.main}>{/* <MainSlider /> */}</main>
     </>

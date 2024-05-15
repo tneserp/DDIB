@@ -1,7 +1,6 @@
-import GetAlarmToken from "@/app/_components/GetAlarmToken";
+import { useRouter } from "next/navigation";
 
 export default function LoginDone() {
-  // const router = useRouter();
-  // router.replace("/");
-  return <GetAlarmToken />;
+  const router = useRouter();
+  router.replace("/");
 }

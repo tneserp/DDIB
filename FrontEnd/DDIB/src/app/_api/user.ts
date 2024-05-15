@@ -3,7 +3,7 @@ import { ClientAxiosApi } from "@/app/_utils/commons";
 const api = ClientAxiosApi();
 
 // 일반회원 정보 조회
-async function getUserInfo(userPk: number) {
+async function getUserInfo(userPk: string) {
   console.log("ddd");
   const { data } = await api.get(`/api/user/${userPk}`);
   return data;

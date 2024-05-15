@@ -14,7 +14,7 @@ export default function WishList() {
 
   const { data } = useQuery<Product[]>({
     queryKey: ["wishList", pk],
-    queryFn: () => getWishList(9),
+    queryFn: () => getWishList(pk),
   });
 
   return (

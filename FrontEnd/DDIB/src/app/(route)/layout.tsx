@@ -9,7 +9,7 @@ export default function Layout({ children, modal }: Props) {
   return (
     <>
       <RQProvider>
-        <div>
+        <div className={styles.nav}>
           <NavMenu></NavMenu>
         </div>
         <div className={styles.container}>
