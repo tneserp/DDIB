@@ -2,6 +2,11 @@ import { ClientAxiosApi } from "@/app/_utils/commons";
 
 const api = ClientAxiosApi();
 
+async function getTodayList() {
+  const { data } = await api.get("/api/product/main");
+  return data;
+}
+
 async function getProductWeek() {
   console.log("week");
   const { data } = await api.get("/api/product/all");
@@ -9,16 +14,10 @@ async function getProductWeek() {
   return data;
 }
 
-async function getProductSearch(
-  keyword: string | null,
-  category: string | null,
-  isOver: boolean
-) {
+async function getProductSearch(keyword: string | null, category: string | null, isOver: boolean) {
   console.log(keyword);
   console.log(category);
-  const { data } = await api.get(
-    `/api/product/search?keyword=${keyword}&category=${category}&isOver=${isOver}`
-  );
+  const { data } = await api.get(`/api/product/search?keyword=${keyword}&category=${category}&isOver=${isOver}`);
   console.log(data);
   return data;
 }
@@ -50,11 +49,4 @@ async function deleteLike(productId: number, userPk: number) {
   console.log("좋아요 취소");
 }
 
-export {
-  getProductWeek,
-  getProductSearch,
-  getProductDetail,
-  getWishList,
-  postLike,
-  deleteLike,
-};
+export { getTodayList, getProductWeek, getProductSearch, getProductDetail, getWishList, postLike, deleteLike };

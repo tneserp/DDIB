@@ -14,6 +14,7 @@ import kakao from "../../../public/kakaopay.svg";
 import { useMutation } from "@tanstack/react-query";
 import { postReady, putCancelPay } from "../_api/pay";
 import { OrderInfo } from "@/app/_types/types";
+import Cookies from "js-cookie";
 
 interface Props {
   type: string;
@@ -26,7 +27,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
   const saveRef = useRef<RefProps>(null);
   const { orderInfo } = orderStore();
   const { addressInfo } = orderAddressStore();
-  const { userPk } = userStore();
+  const userPk = Cookies.get("num") as string;
   const router = useRouter();
   const [checkPay, setCheckPay] = useState(false);
 

@@ -38,7 +38,7 @@ const requestPermission = async () => {
 
   if (token) {
     const data = {
-      userId: 9,
+      userId: Cookies.get("num"),
       fcmToken: token,
     };
 

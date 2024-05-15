@@ -1,3 +1,7 @@
+import GetAlarmToken from "@/app/_components/GetAlarmToken";
+
 export default function LoginDone() {
-  return <>로그인완료</>;
+  // const router = useRouter();
+  // router.replace("/");
+  return <GetAlarmToken />;
 }

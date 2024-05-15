@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postLike, deleteLike } from "@/app/_api/product";
 import { userStore } from "@/app/_store/user";
 import cx from "classnames";
+import Cookies from "js-cookie";
 
 interface Props {
   productId: number;
@@ -14,13 +15,13 @@ interface Props {
 }
 
 export default function LikeBtn({ productId, like, likeCnt }: Props) {
-  const { userPk } = userStore();
+  const userPk = Cookies.get("num") as string;
   const [isLiked, setIsLiked] = useState(like);
   const [likeNowCnt, setLikeNowCnt] = useState(likeCnt);
 
   const heart = useMutation({
     mutationFn: async () => {
-      return postLike(productId, 9);
+      return postLike(productId, userPk);
     },
     async onSuccess(response) {},
     onError(error) {
@@ -30,7 +31,7 @@ export default function LikeBtn({ productId, like, likeCnt }: Props) {
 
   const unheart = useMutation({
     mutationFn: async () => {
-      return deleteLike(productId, 9);
+      return deleteLike(productId, userPk);
     },
     async onSuccess(response) {},
     onError(error) {
