@@ -18,7 +18,7 @@ export const userStore = create<UserInfo>((set, get) => ({
     name: "",
     phone: "",
     email: "",
-    zipCode: "",
+    zipcode: "",
     roadAddress: "",
     detailAddress: "",
   },

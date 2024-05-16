@@ -2,7 +2,7 @@ export interface User {
   name: string;
   phone: string;
   email: string;
-  zipCode: string;
+  zipcode: string;
   roadAddress: string;
   detailAddress: string;
 }

@@ -141,7 +141,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
         if (emailRef.current) {
           emailRef.current.value = user.email;
         }
-        zipCodeRef.current.value = user.zipCode;
+        zipCodeRef.current.value = user.zipcode;
         addressRef.current.value = user.roadAddress;
         addressDetailRef.current.value = user.detailAddress;
       }

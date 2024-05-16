@@ -25,7 +25,7 @@ export default function SetUserInfo({ pk }: Props) {
         name: data.name,
         phone: data.phone,
         email: data.email,
-        zipCode: data.zipCode,
+        zipcode: data.zipcode,
         roadAddress: data.roadAddress,
         detailAddress: data.detailAddress,
       };
