@@ -77,7 +77,7 @@ export default function NavMenu() {
           </Link>
         </li>
         <li>
-          <Link href="https://k10c102.p.ssafy.io/bidd">
+          <Link href="https://bidd.kro.kr">
             <div className={styles.subTitle} style={{ paddingRight: "1.5vw" }}>
               <div>BIDD</div>
               {/* <div className={styles.goIcon}>
@@ -99,18 +99,18 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
-        {Cookies.get("Authorization") && (
-          <li>
-            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
+        <li>
+          <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+            {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
+          </div>
+          {bellOn && (
+            <div className={styles.alarmModal}>
+              <Alarm />
             </div>
-            {bellOn && (
-              <div className={styles.alarmModal}>
-                <Alarm />
-              </div>
-            )}
-          </li>
-        )}
+          )}
+        </li>
+        {/* {Cookies.get("Authorization") && (
+        )} */}
         <li>
           {!Cookies.get("Authorization") ? (
             <>

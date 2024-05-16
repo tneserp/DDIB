@@ -1,3 +1,38 @@
 .container {
   width: 100%;
 }
+
+.alarm {
+  font-size: 1vw;
+  display: flex;
+  align-content: center;
+  gap: 0.3vw;
+  margin-bottom: 0.6vw;
+  font-weight: bold;
+  > div:nth-child(3) {
+    cursor: pointer;
+  }
+}
+
+.textArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vw;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2vw;
+  font-size: 0.8vw;
+  box-shadow: 0 0 3px 1px rgb(212, 212, 212);
+  border-radius: 5px;
+  padding: 0.5vw;
+  > div:nth-child(1) {
+    color: dimgray;
+    font-size: 0.7vw;
+  }
+  > div:nth-child(2) {
+    font-size: 0.7vw;
+  }
+}
