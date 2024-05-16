@@ -50,4 +50,9 @@ public class UserQueueController { // UserQueueController 클래스 선언
                 );
     }
 
+    @GetMapping("/test")
+    public Mono<String> test() {
+        return Mono.just("test");
+    }
+
 }
