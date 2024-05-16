@@ -35,7 +35,7 @@ export default function UserInfo() {
 
   const modifyUser = useMutation({
     mutationFn: async (data: UserModi) => {
-      return await putUserInfo(data);
+      return await putUserInfo(userPk, data);
     },
     async onSuccess(response) {
       alert("수정완료");

@@ -5,13 +5,13 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getWaitingList } from "../_api/waiting";
-import { userStore } from "@/app/_store/user";
 import { Que } from "@/app/_types/types";
 import Cookies from "js-cookie";
 
 export default function WaitingModal() {
   const router = useRouter();
-  const { user } = userStore();
+
+  const userPk = Cookies.get("num") as string;
 
   useEffect(() => {
     console.log("대기페이지에용");
@@ -28,13 +28,13 @@ export default function WaitingModal() {
   }, []);
 
   const { data } = useQuery<Que>({
-    queryKey: ["waiting", 1],
-    queryFn: () => getWaitingList(1),
+    queryKey: ["waiting", userPk],
+    queryFn: () => getWaitingList(userPk),
     refetchInterval: 3000,
   });
 
   useEffect(() => {
-    if (data && data.rank <= 0) {
+    if (data && data.rank !== undefined && data.rank <= 0) {
       console.log("change");
       var expiresAt = new Date();
       console.log(expiresAt);

@@ -11,9 +11,13 @@ async function getUserInfo(userPk: string) {
 }
 
 // 일반회원 정보 수정
-async function putUserInfo(sendUser: UserModi) {
-  const { data } = await api.put(`/api/user`, sendUser);
-  return data;
+async function putUserInfo(userPk: string, sendUser: UserModi) {
+  console.log(UserModi);
+  try {
+    await api.put(`/api/user/${userPk}`, sendUser);
+  } catch (error) {
+    throw error;
+  }
 }
 
 // 일반회원로그아웃
