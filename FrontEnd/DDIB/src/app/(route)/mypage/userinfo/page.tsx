@@ -7,14 +7,18 @@ import { deleteUser, putUserInfo } from "@/app/_api/user";
 import SetUserInfo from "@/app/_components/SetUserInfo";
 import Apply from "@/app/(route)/mypage/userinfo/_components/Apply";
 import Cookies from "js-cookie";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { RefProps } from "@/app/_components/AddressForm";
 import { useRouter } from "next/navigation";
+import { orderAddressStore } from "@/app/_store/product";
+import { UserModi } from "@/app/_types/types";
 
 export default function UserInfo() {
+  const { addressInfo } = orderAddressStore();
   const userPk = Cookies.get("num") as string;
   const saveRef = useRef<RefProps>(null);
   const router = useRouter();
+  const [renderKey, setRenderKey] = useState(0);
 
   const quitUser = useMutation({
     mutationFn: async () => {
@@ -30,8 +34,8 @@ export default function UserInfo() {
   });
 
   const modifyUser = useMutation({
-    mutationFn: async () => {
-      return await putUserInfo();
+    mutationFn: async (data: UserModi) => {
+      return await putUserInfo(data);
     },
     async onSuccess(response) {
       alert("수정완료");
@@ -44,7 +48,17 @@ export default function UserInfo() {
   const modify = () => {
     const check = saveRef?.current?.saveAddress();
     if (check) {
-      modifyUser.mutate();
+      const sendUser = {
+        name: addressInfo.receiverName,
+        phone: addressInfo.receiverPhone,
+        roadAddress: addressInfo.orderRoadAddress,
+        detailAddress: addressInfo.orderDetailAddress,
+        zipcode: addressInfo.orderZipcode,
+      };
+      modifyUser.mutate(sendUser);
+      setRenderKey((prevKey) => prevKey + 1);
+    } else {
+      alert("비어있는 칸이 있습니다.");
     }
   };
 
@@ -54,7 +68,7 @@ export default function UserInfo() {
 
   return (
     <>
-      <SetUserInfo pk={"1"} />
+      <SetUserInfo pk={userPk} />
       <div>
         <div className={styles.title}>User Info</div>
         <div className={styles.categoryArea}>

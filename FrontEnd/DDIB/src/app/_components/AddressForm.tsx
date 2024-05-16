@@ -228,6 +228,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
                 type="text"
                 className={styles.inputNum}
                 ref={emailRef}
+                readOnly
               ></input>
             </div>
           </div>

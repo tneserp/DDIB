@@ -1,4 +1,5 @@
 import { ClientAxiosApi } from "@/app/_utils/commons";
+import { UserModi } from "@/app/_types/types";
 
 const api = ClientAxiosApi();
 
@@ -10,8 +11,8 @@ async function getUserInfo(userPk: string) {
 }
 
 // 일반회원 정보 수정
-async function putUserInfo() {
-  const { data } = await api.put(`/api/user`);
+async function putUserInfo(sendUser: UserModi) {
+  const { data } = await api.put(`/api/user`, sendUser);
   return data;
 }
 

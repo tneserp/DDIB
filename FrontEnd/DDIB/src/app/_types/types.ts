@@ -1,10 +1,13 @@
-export interface User {
+export interface UserModi {
   name: string;
   phone: string;
-  email: string;
   zipcode: string;
   roadAddress: string;
   detailAddress: string;
+}
+
+export interface User extends UserModi {
+  email: string;
 }
 
 export interface Product {
