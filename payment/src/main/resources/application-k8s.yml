@@ -19,7 +19,7 @@ spring:
 
   data:
     redis:
-      host: ddib.kro.kr
+      host: redis-master.default.svc.cluster.local
       port: 6379
 
 # -- Eureka client
