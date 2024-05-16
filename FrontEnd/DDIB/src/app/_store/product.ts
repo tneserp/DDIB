@@ -47,23 +47,16 @@ interface OrderAddress {
   setOrderAddressInfo: (info: OrderAddressInfo) => void;
 }
 
-export const orderAddressStore = create(
-  persist<OrderAddress>(
-    (set) => ({
-      addressInfo: {
-        receiverName: "",
-        receiverPhone: "",
-        orderZipcode: "",
-        orderRoadAddress: "",
-        orderDetailAddress: "",
-      },
-      setOrderAddressInfo: (info) => set(() => ({ addressInfo: info })),
-    }),
-    {
-      name: "orderAddressStorage",
-    }
-  )
-);
+export const orderAddressStore = create<OrderAddress>((set) => ({
+  addressInfo: {
+    receiverName: "",
+    receiverPhone: "",
+    orderZipcode: "",
+    orderRoadAddress: "",
+    orderDetailAddress: "",
+  },
+  setOrderAddressInfo: (info) => set(() => ({ addressInfo: info })),
+}));
 
 // interface Timer {
 //   timer : boolean;

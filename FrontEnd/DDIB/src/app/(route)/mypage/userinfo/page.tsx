@@ -7,15 +7,23 @@ import { deleteUser, putUserInfo } from "@/app/_api/user";
 import SetUserInfo from "@/app/_components/SetUserInfo";
 import Apply from "@/app/(route)/mypage/userinfo/_components/Apply";
 import Cookies from "js-cookie";
+import { useRef } from "react";
+import { RefProps } from "@/app/_components/AddressForm";
+import { useRouter } from "next/navigation";
 
 export default function UserInfo() {
   const userPk = Cookies.get("num") as string;
+  const saveRef = useRef<RefProps>(null);
+  const router = useRouter();
 
   const quitUser = useMutation({
     mutationFn: async () => {
       return await deleteUser();
     },
-    async onSuccess(response) {},
+    async onSuccess(response) {
+      alert("탈퇴완료");
+      router.replace("/");
+    },
     onError(error) {
       console.error(error);
     },
@@ -25,14 +33,19 @@ export default function UserInfo() {
     mutationFn: async () => {
       return await putUserInfo();
     },
-    async onSuccess(response) {},
+    async onSuccess(response) {
+      alert("수정완료");
+    },
     onError(error) {
       console.error(error);
     },
   });
 
   const modify = () => {
-    modifyUser.mutate();
+    const check = saveRef?.current?.saveAddress();
+    if (check) {
+      modifyUser.mutate();
+    }
   };
 
   const quit = () => {
@@ -41,13 +54,13 @@ export default function UserInfo() {
 
   return (
     <>
-      <SetUserInfo pk={"2"} />
-      <div className={styles.container}>
+      <SetUserInfo pk={"1"} />
+      <div>
         <div className={styles.title}>User Info</div>
         <div className={styles.categoryArea}>
           <Apply />
         </div>
-        <AddressForm type="mypage" />
+        <AddressForm type="mypage" ref={saveRef} />
         <div className={styles.btnArea}>
           <div className={styles.modifyBtn} onClick={() => modify()}>
             수정하기

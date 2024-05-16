@@ -4,18 +4,12 @@ import { ClientAxiosApi } from "@/app/_utils/commons";
 const api = ClientAxiosApi();
 
 async function putAlarmOn(userPk: string, info: AlarmApply) {
-  console.log("pay");
-  const { data } = await api.post(
-    `/api/notification/subscribe/${userPk}`,
-    info
-  );
-  return data;
+  console.log(info);
+  await api.put(`/api/notification/subscribe/${userPk}`, info);
 }
 
 async function putAlarmOff(userPk: string) {
-  const { data } = await api.post(
-    `/api/notification/subscribe/cancel/${userPk}`
-  );
+  await api.put(`/api/notification/subscribe/cancel/${userPk}`);
 }
 
 async function getAlarmList(userPk: string) {
