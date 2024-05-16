@@ -91,3 +91,14 @@ export interface AlarmList {
   generatedTime: string;
   read: boolean;
 }
+
+export interface AlarmApply {
+  subscribeFashion: boolean;
+  subscribeBeauty: boolean;
+  subscribeFood: boolean;
+  subscribeAppliance: boolean;
+  subscribeSports: boolean;
+  subscribeLiving: boolean;
+  subscribePet: boolean;
+  subscribeTravel: boolean;
+}

@@ -1,10 +1,14 @@
+import { AlarmApply } from "@/app/_types/types";
 import { ClientAxiosApi } from "@/app/_utils/commons";
 
 const api = ClientAxiosApi();
 
-async function putAlarmOn(userPk: string) {
+async function putAlarmOn(userPk: string, info: AlarmApply) {
   console.log("pay");
-  const { data } = await api.post(`/api/notification/subscribe/${userPk}`);
+  const { data } = await api.post(
+    `/api/notification/subscribe/${userPk}`,
+    info
+  );
   return data;
 }
 

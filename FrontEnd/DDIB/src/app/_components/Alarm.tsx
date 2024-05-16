@@ -5,11 +5,14 @@ import styles from "./alarm.module.scss";
 import { useQuery } from "@tanstack/react-query";
 import { AlarmList } from "@/app/_types/types";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 export default function Alarm() {
+  const userPk = Cookies.get("num") as string;
+
   const { data } = useQuery<AlarmList[]>({
-    queryKey: ["orderDetail", "1"],
-    queryFn: () => getAlarmList("1"),
+    queryKey: ["orderDetail", userPk],
+    queryFn: () => getAlarmList(userPk),
   });
 
   const setDate = (date: string) => {
@@ -22,20 +25,27 @@ export default function Alarm() {
     <div className={styles.container}>
       <div className={styles.alarm}>
         <div>키워드 알람</div>
-        <div>ON</div>
+        {Cookies.get("fcm") ? (
+          <div className={styles.on}>ON</div>
+        ) : (
+          <div className={styles.off}>OFF</div>
+        )}
+
         <Link href="/mypage/userinfo">
           <div>&gt;</div>
         </Link>
       </div>
-      <div className={styles.textArea}>
-        {data &&
-          data.map((item) => (
-            <div className={styles.text}>
-              <div>{setDate(item.generatedTime)}</div>
-              <div>{item.content}</div>
-            </div>
-          ))}
-      </div>
+      {Cookies.get("fcm") && (
+        <div className={styles.textArea}>
+          {data &&
+            data.map((item, index) => (
+              <div className={styles.text} key={index}>
+                <div>{setDate(item.generatedTime)}</div>
+                <div>{item.content}</div>
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 }

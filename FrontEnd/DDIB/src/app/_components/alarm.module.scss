@@ -7,17 +7,26 @@
   display: flex;
   align-content: center;
   gap: 0.3vw;
-  margin-bottom: 0.6vw;
+
   font-weight: bold;
   > div:nth-child(3) {
     cursor: pointer;
   }
 }
 
+.on {
+  color: rgb(75, 253, 75);
+}
+
+.off {
+  color: red;
+}
+
 .textArea {
   display: flex;
   flex-direction: column;
   gap: 0.6vw;
+  margin-top: 0.6vw;
 }
 
 .text {
