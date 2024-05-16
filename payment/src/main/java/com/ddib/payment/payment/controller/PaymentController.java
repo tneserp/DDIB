@@ -132,7 +132,7 @@ public class PaymentController {
         log.info(Thread.currentThread().getName() + "카카오 승인 후 재고 차감까지 완료한 후 현재 Contoller단");
 
         // Feign Client로 대기열 서버 호출
-        waitingClient.leave();
+        // waitingClient.leave();
 
         RedirectView redirectView = new RedirectView();
         if(kakaoApproveResponseDto != null) {
@@ -160,6 +160,9 @@ public class PaymentController {
         // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
         kakaoPayAsyncService.deleteOrder(orderId);
 
+        // Feign Client로 대기열 서버 호출
+        // waitingClient.leave();
+
         response.sendRedirect(kakaoProperties.payCancelUrl);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -183,6 +186,9 @@ public class PaymentController {
 
         // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
         kakaoPayAsyncService.deleteOrder(orderId);
+
+        // Feign Client로 대기열 서버 호출
+        // waitingClient.leave();
 
         response.sendRedirect(kakaoProperties.payFailUrl);
         return new ResponseEntity<>(HttpStatus.OK);
