@@ -14,10 +14,30 @@ type SlideshowItem = {
 };
 
 const slideshowItems: SlideshowItem[] = [
-  { id: 1, imageUrl: "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-2.jpg", title: "Canyon" },
-  { id: 2, imageUrl: "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-3.jpg", title: "Desert" },
-  { id: 3, imageUrl: "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-4.jpg", title: "Erosion" },
-  { id: 4, imageUrl: "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-1.jpg", title: "Shape" },
+  {
+    id: 1,
+    imageUrl:
+      "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-2.jpg",
+    title: "Canyon",
+  },
+  {
+    id: 2,
+    imageUrl:
+      "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-3.jpg",
+    title: "Desert",
+  },
+  {
+    id: 3,
+    imageUrl:
+      "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-4.jpg",
+    title: "Erosion",
+  },
+  {
+    id: 4,
+    imageUrl:
+      "https://raw.githubusercontent.com/supahfunk/supah-codepen/master/canyon-1.jpg",
+    title: "Shape",
+  },
 ];
 
 const SlideshowComponent: React.FC = () => {
@@ -38,7 +58,9 @@ const SlideshowComponent: React.FC = () => {
       }
     };
 
-    const sliderElement = document.querySelector(".slideshow-left .slick-slider");
+    const sliderElement = document.querySelector(
+      ".slideshow-left .slick-slider"
+    );
     sliderElement?.addEventListener("wheel", handleWheel);
 
     return () => {

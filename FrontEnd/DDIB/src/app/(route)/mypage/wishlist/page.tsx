@@ -10,7 +10,7 @@ import { Product } from "@/app/_types/types";
 import Cookies from "js-cookie";
 
 export default function WishList() {
-  const pk = Cookies.get("num");
+  const pk = Cookies.get("num") as string;
 
   const { data } = useQuery<Product[]>({
     queryKey: ["wishList", pk],

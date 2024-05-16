@@ -48,7 +48,9 @@ export default function Search() {
       <div className={styles.resultArea}>
         {!showResult && (
           <>
-            <div className={styles.result}>"{result}"로 검색한 결과입니다.</div>
+            <div className={styles.result}>
+              &nbsp;{result}&nbsp;로 검색한 결과입니다.
+            </div>
             <div className={styles.category}>
               {CategoryItem.map((item, index) => (
                 <div
@@ -67,7 +69,7 @@ export default function Search() {
             <div>
               <div
                 className={over && styles.overYes}
-                onClick={() => setOver(false)}
+                onClick={() => setOver("false")}
               >
                 종료 띱 제외
               </div>

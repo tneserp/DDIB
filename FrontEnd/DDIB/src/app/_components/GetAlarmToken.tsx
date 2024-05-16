@@ -4,8 +4,9 @@ import "@/firebase-messaging-sw";
 import Cookies from "js-cookie";
 
 export default function GetAlarmToken() {
-  if (Cookies.get("Authorization")) {
-    useEffect(() => {
+  useEffect(() => {
+    // 쿠키가 있는지 확인
+    if (Cookies.get("Authorization")) {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("../../../public/firebase-messaging-sw.js")
@@ -16,7 +17,8 @@ export default function GetAlarmToken() {
             console.log("Service Worker 등록 실패:", err);
           });
       }
-    }, []);
-    return null;
-  }
+    }
+  }, []); // 빈 배열을 의존성으로 사용하여 컴포넌트가 처음 렌더링될 때만 실행
+
+  return null;
 }

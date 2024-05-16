@@ -6,8 +6,11 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteUser, putUserInfo } from "@/app/_api/user";
 import SetUserInfo from "@/app/_components/SetUserInfo";
 import Apply from "@/app/(route)/mypage/userinfo/_components/Apply";
+import Cookies from "js-cookie";
 
 export default function UserInfo() {
+  const userPk = Cookies.get("num") as string;
+
   const quitUser = useMutation({
     mutationFn: async () => {
       return await deleteUser();
@@ -38,7 +41,7 @@ export default function UserInfo() {
 
   return (
     <>
-      <SetUserInfo pk={1} />
+      <SetUserInfo pk={"2"} />
       <div className={styles.container}>
         <div className={styles.title}>User Info</div>
         <div className={styles.categoryArea}>

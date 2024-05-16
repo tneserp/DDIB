@@ -7,7 +7,7 @@ import { User } from "../_types/types";
 import { userStore } from "../_store/user";
 
 interface Props {
-  pk: number;
+  pk: string;
 }
 
 export default function SetUserInfo({ pk }: Props) {

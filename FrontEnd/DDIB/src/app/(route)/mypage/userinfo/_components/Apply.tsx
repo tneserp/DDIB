@@ -45,7 +45,7 @@ export default function Apply() {
     },
   });
 
-  const handleItemClick = (index) => {
+  const handleItemClick = (index: number) => {
     setCategoryItem((prevItems) =>
       prevItems.map((item, i) =>
         i === index ? { ...item, value: !item.value } : item

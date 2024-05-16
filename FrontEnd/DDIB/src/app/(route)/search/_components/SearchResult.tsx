@@ -10,7 +10,7 @@ import styles from "./searchResult.module.scss";
 interface Props {
   keyword: string;
   category: string;
-  over: boolean;
+  over: string;
 }
 
 export default function SearchResult({ keyword, category, over }: Props) {

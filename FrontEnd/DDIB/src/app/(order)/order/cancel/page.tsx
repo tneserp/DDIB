@@ -1,3 +1,4 @@
-export default function () {
-  return <div>취소페이지임</div>;
+export default function Cancel() {
+  return;
+  <div>취소페이지임</div>;
 }
