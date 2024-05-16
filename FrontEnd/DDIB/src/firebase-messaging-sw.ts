@@ -47,7 +47,7 @@ const requestPermission = async () => {
       console.log(data);
 
       try {
-        api.put(`https://k10c102.p.ssafy.io/api/user/token`, data);
+        api.put(`https://ddib.kro.kr/api/user/token`, data);
       } catch (error) {
         console.log("전송실패");
       }
