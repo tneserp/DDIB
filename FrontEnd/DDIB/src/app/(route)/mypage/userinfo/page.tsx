@@ -2,23 +2,45 @@
 
 import AddressForm from "@/app/_components/AddressForm";
 import styles from "./userInfo.module.scss";
-import { useMutation } from "@tanstack/react-query";
-import { deleteUser, putUserInfo } from "@/app/_api/user";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { deleteUser, putUserInfo, getUserInfo } from "@/app/_api/user";
 import SetUserInfo from "@/app/_components/SetUserInfo";
 import Apply from "@/app/(route)/mypage/userinfo/_components/Apply";
 import Cookies from "js-cookie";
-import { useRef, useState } from "react";
+import { useRef, useEffect } from "react";
 import { RefProps } from "@/app/_components/AddressForm";
 import { useRouter } from "next/navigation";
 import { orderAddressStore } from "@/app/_store/product";
 import { UserModi } from "@/app/_types/types";
+import { User } from "@/app/_types/types";
+import { userStore } from "@/app/_store/user";
 
 export default function UserInfo() {
+  const { setUserInfo } = userStore();
   const { addressInfo } = orderAddressStore();
   const userPk = Cookies.get("num") as string;
   const saveRef = useRef<RefProps>(null);
   const router = useRouter();
-  const [renderKey, setRenderKey] = useState(0);
+
+  const { data } = useQuery<User>({
+    queryKey: ["userInfo", userPk],
+    queryFn: () => getUserInfo(userPk),
+  });
+
+  useEffect(() => {
+    console.log(data);
+    if (data) {
+      const info = {
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        zipcode: data.zipcode,
+        roadAddress: data.roadAddress,
+        detailAddress: data.detailAddress,
+      };
+      setUserInfo(info);
+    }
+  }, []);
 
   const quitUser = useMutation({
     mutationFn: async () => {
@@ -56,7 +78,6 @@ export default function UserInfo() {
         zipcode: addressInfo.orderZipcode,
       };
       modifyUser.mutate(sendUser);
-      setRenderKey((prevKey) => prevKey + 1);
     } else {
       alert("비어있는 칸이 있습니다.");
     }
@@ -68,22 +89,23 @@ export default function UserInfo() {
 
   return (
     <>
-      <SetUserInfo pk={userPk} />
-      <div>
-        <div className={styles.title}>User Info</div>
-        <div className={styles.categoryArea}>
-          <Apply />
-        </div>
-        <AddressForm type="mypage" ref={saveRef} />
-        <div className={styles.btnArea}>
-          <div className={styles.modifyBtn} onClick={() => modify()}>
-            수정하기
+      {data && (
+        <div>
+          <div className={styles.title}>User Info</div>
+          <div className={styles.categoryArea}>
+            <Apply />
           </div>
-          <div className={styles.quitBtn} onClick={() => quit()}>
-            탈퇴하기
+          <AddressForm type="mypage" ref={saveRef} />
+          <div className={styles.btnArea}>
+            <div className={styles.modifyBtn} onClick={() => modify()}>
+              수정하기
+            </div>
+            <div className={styles.quitBtn} onClick={() => quit()}>
+              탈퇴하기
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
