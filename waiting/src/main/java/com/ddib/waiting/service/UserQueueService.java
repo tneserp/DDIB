@@ -76,12 +76,12 @@ public class UserQueueService {
             String input = "user-queue-%s-%d".formatted(queue, userId); // 입력 문자열 생성
             byte[] encodedHash = digest.digest(input.getBytes(StandardCharsets.UTF_8)); // 해시 생성
 
-            StringBuilder hexString = new StringBuilder(); // 해시를 16진수 문자열로 변환
+            StringBuilder hexString = new StringBuilder();
             for (byte aByte : encodedHash) {
                 hexString.append(String.format("%02x", aByte));
             }
 
-            return Mono.just(hexString.toString()); // 생성된 토큰 반환
+            return Mono.just(hexString.toString());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -89,8 +89,8 @@ public class UserQueueService {
 
     @Scheduled(initialDelay = 5000, fixedDelay = 1000) // 주기적으로 메서드 실행을 스케줄링, 서버 시작 후 5초 지연 후 10초마다 실행
     public void scheduleAllowUser() { // 사용자 허용을 스케줄링하는 메서드 정의
-        if (!scheduling) { // 스케줄링이 비활성화된 경우
-            log.info("passed scheduling"); // 로그 출력
+        if (!scheduling) {
+            log.info("passed scheduling");
             return; // 메서드 종료
         }
 

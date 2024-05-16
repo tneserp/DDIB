@@ -19,11 +19,11 @@ public class UserQueueController { // UserQueueController 클래스 선언
     public Mono<?> waitingRoomPage(@RequestParam(name = "queue", defaultValue = "default") String queue,
                                    @RequestParam(name = "user_id") Long userId) {
 
+        log.info("userId = {}", userId);
         // 입장이 허용되어 페이지 리다이렉트 가능한지 확인
         return userQueueService.isAllowedByToken(queue, userId).filter(allowed -> allowed) // 허용되었다면
-                .flatMap(allowed -> Mono.empty()) // 렌더링 없이 빈 Mono 반환
+                .flatMap(allowed -> Mono.empty())
                 .switchIfEmpty(
-                        // 대기열 등록. 이미 대기열에 있으면서 오류가 발생할 경우, 해당 큐에서의 사용자 랭크 가져오기
                         userQueueService.registerWaitQueue(queue, userId).onErrorResume(ex -> userQueueService.getRank(queue, userId)).then() // Mono<Void> 반환
                 );
     }
@@ -48,11 +48,6 @@ public class UserQueueController { // UserQueueController 클래스 선언
                         // 대기열 등록. 이미 대기열에 있으면서 오류가 발생할 경우, 해당 큐에서의 사용자 랭크 가져오기
                         userQueueService.registerWaitQueue(queue, userId).onErrorResume(ex -> userQueueService.getRank(queue, userId)).then() // Mono<Void> 반환
                 );
-    }
-
-    @GetMapping("/test")
-    public Mono<String> test() {
-        return Mono.just("test");
     }
 
 }
