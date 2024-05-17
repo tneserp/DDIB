@@ -34,11 +34,12 @@ public class UserQueueService {
         // 먼저 등록한 사람이 높은 랭크를 갖도록 redis의 sortedset<userId,unix timestamp> 사용.
         // 등록과 동시에 몇 번째 대기인지 리턴
         long unixTimestamp = Instant.now().getEpochSecond();
+        String finalUserId = userId;
         return reactiveRedisTemplate.opsForZSet()
                 .add(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString(), unixTimestamp) // ZSet에 사용자 추가
                 .filter(i -> i) // 조건 필터링
                 .switchIfEmpty(Mono.error(new Error("이미 존재함"))) // 오류 처리
-                .flatMap(i -> reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString())) // 랭크 조회
+                .flatMap(i -> reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), finalUserId)) // 랭크 조회
                 .map(i -> i >= 0 ? i + 1 : i); // 랭크 반환
     }
 
