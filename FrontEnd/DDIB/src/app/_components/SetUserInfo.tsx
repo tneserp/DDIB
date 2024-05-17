@@ -5,13 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "../_api/user";
 import { User } from "../_types/types";
 import { userStore } from "../_store/user";
+import Cookies from "js-cookie";
 
-interface Props {
-  pk: string;
-}
-
-export default function SetUserInfo({ pk }: Props) {
+export default function SetUserInfo() {
   const { setUserInfo } = userStore();
+  const pk = Cookies.get("num") as string;
 
   const { data } = useQuery<User>({
     queryKey: ["userInfo", pk],

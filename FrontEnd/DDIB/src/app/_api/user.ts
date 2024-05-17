@@ -7,11 +7,13 @@ const api = ClientAxiosApi();
 async function getUserInfo(userPk: string) {
   console.log("ddd");
   const { data } = await api.get(`/api/user/${userPk}`);
+  console.log(data);
   return data;
 }
 
 // 일반회원 정보 수정
 async function putUserInfo(userPk: string, sendUser: UserModi) {
+  console.log(sendUser);
   try {
     await api.put(`/api/user/${userPk}`, sendUser);
   } catch (error) {
@@ -26,8 +28,8 @@ async function postUser() {
 }
 
 // 일반회원탈퇴
-async function deleteUser() {
-  await api.delete(`api/user`);
+async function deleteUser(userPk: string) {
+  await api.delete(`/api/user/${userPk}`);
 }
 
 export { getUserInfo, putUserInfo, postUser, deleteUser };

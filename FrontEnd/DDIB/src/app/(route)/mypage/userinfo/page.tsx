@@ -23,11 +23,11 @@ export default function UserInfo() {
 
   const { data } = useQuery<User>({
     queryKey: ["userInfo", userPk],
-    queryFn: () => getUserInfo("11"),
+    queryFn: () => getUserInfo("8"),
   });
 
   useEffect(() => {
-    console.log(data);
+    console.log("useEffect");
     if (data) {
       const info = {
         name: data.name,
@@ -37,13 +37,16 @@ export default function UserInfo() {
         roadAddress: data.roadAddress,
         detailAddress: data.detailAddress,
       };
+
+      console.log(data);
+      console.log(info);
       setUserInfo(info);
     }
   }, [data]);
 
   const quitUser = useMutation({
     mutationFn: async () => {
-      return await deleteUser();
+      return await deleteUser("8");
     },
     async onSuccess(response) {
       alert("탈퇴완료");
@@ -56,7 +59,7 @@ export default function UserInfo() {
 
   const modifyUser = useMutation({
     mutationFn: async (data: UserModi) => {
-      return await putUserInfo(userPk, data);
+      return await putUserInfo("8", data);
     },
     async onSuccess(response) {
       alert("수정완료");
@@ -68,14 +71,16 @@ export default function UserInfo() {
 
   const modify = () => {
     const check = saveRef?.current?.saveAddress();
+
     if (check) {
       const sendUser = {
-        name: addressInfo.receiverName,
-        phone: addressInfo.receiverPhone,
-        roadAddress: addressInfo.orderRoadAddress,
-        detailAddress: addressInfo.orderDetailAddress,
-        zipcode: addressInfo.orderZipcode,
+        name: check.receiverName,
+        phone: check.receiverPhone,
+        roadAddress: check.orderRoadAddress,
+        detailAddress: check.orderDetailAddress,
+        zipcode: check.orderZipcode,
       };
+      console.log(sendUser);
       modifyUser.mutate(sendUser);
     } else {
       alert("비어있는 칸이 있습니다.");

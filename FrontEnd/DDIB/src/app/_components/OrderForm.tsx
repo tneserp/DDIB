@@ -15,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postReady, putCancelPay } from "../_api/pay";
 import { OrderInfo } from "@/app/_types/types";
 import Cookies from "js-cookie";
+import SetUserInfo from "./SetUserInfo";
 
 interface Props {
   type: string;
@@ -27,6 +28,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
   const saveRef = useRef<RefProps>(null);
   const { orderInfo } = orderStore();
   const { addressInfo } = orderAddressStore();
+  const { setUserInfo } = userStore();
   const userPk = Cookies.get("num") as string;
   const router = useRouter();
   const [checkPay, setCheckPay] = useState(false);
@@ -67,11 +69,11 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
           quantity: orderInfo.totalAmount,
           totalAmount: orderInfo.totalAmount * orderInfo.salePrice,
           taxFreeAmount: 0,
-          receiverName: addressInfo.receiverName,
-          receiverPhone: addressInfo.receiverPhone,
-          orderRoadAddress: addressInfo.orderRoadAddress,
-          orderDetailAddress: addressInfo.orderDetailAddress,
-          orderZipcode: addressInfo.orderZipcode,
+          receiverName: check.receiverName,
+          receiverPhone: check.receiverPhone,
+          orderRoadAddress: check.orderRoadAddress,
+          orderDetailAddress: check.orderDetailAddress,
+          orderZipcode: check.orderZipcode,
         };
         console.log(sendInfo);
         sendOrder.mutate(sendInfo);
@@ -95,6 +97,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
 
   return (
     <div className={styles.main}>
+      <SetUserInfo />
       {type === "order" && <div className={styles.title}>주문/결제</div>}
       {type === "complete" && <div className={styles.title}>결제완료</div>}
       {type === "orderView" && (
