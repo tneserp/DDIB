@@ -29,17 +29,15 @@ public class UserQueueService {
     private final String USER_QUEUE_PROCEED_KEY = "users:queue:%s:proceed"; // 진행 중인 대기열 키
 
     // 대기열 등록
-    public Mono<Long> registerWaitQueue(final String queue, String userId) {
-        userId = "userId : ".concat(userId);
+    public Mono<Long> registerWaitQueue(final String queue, final Long userId) {
         // 먼저 등록한 사람이 높은 랭크를 갖도록 redis의 sortedset<userId,unix timestamp> 사용.
         // 등록과 동시에 몇 번째 대기인지 리턴
         long unixTimestamp = Instant.now().getEpochSecond();
-        String finalUserId = userId;
         return reactiveRedisTemplate.opsForZSet()
                 .add(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString(), unixTimestamp) // ZSet에 사용자 추가
                 .filter(i -> i) // 조건 필터링
                 .switchIfEmpty(Mono.error(new Error("이미 존재함"))) // 오류 처리
-                .flatMap(i -> reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), finalUserId)) // 랭크 조회
+                .flatMap(i -> reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString())) // 랭크 조회
                 .map(i -> i >= 0 ? i + 1 : i); // 랭크 반환
     }
 
@@ -52,16 +50,14 @@ public class UserQueueService {
     }
 
     // 토큰을 통한 사용자 진입 가능 여부 확인
-    public Mono<Boolean> isAllowedByToken(final String queue, String userId) {
-        userId = "userId : ".concat(userId);
+    public Mono<Boolean> isAllowedByToken(final String queue, final Long userId) {
         return this.generateToken(queue, userId) // 토큰 생성
                 .map(i -> true) // 허용 여부 반환
                 .defaultIfEmpty(false); // 기본값 설정
     }
 
     // 사용자 순위 조회
-    public Mono<Long> getRank(final String queue, String userId) {
-        userId = "userId : ".concat(userId);
+    public Mono<Long> getRank(final String queue, final Long userId) {
 
         Mono<Long> a = reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString()) // 랭크 조회
 //                .defaultIfEmpty(-1L) // 기본값 설정
@@ -72,8 +68,7 @@ public class UserQueueService {
     }
 
     // 토큰 생성
-    public Mono<String> generateToken(final String queue, String userId) {
-        userId = "userId : ".concat(userId);
+    public Mono<String> generateToken(final String queue, final Long userId) {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA-256"); // SHA-256 알고리즘으로 해시 생성
