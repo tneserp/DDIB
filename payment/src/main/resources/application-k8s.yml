@@ -19,9 +19,9 @@ spring:
 
   data:
     redis:
-      host: ddib.kro.kr
+      host: redis-master.default.svc.cluster.local
       port: 6379
-
+      password: jG87zG5UKc  # 비밀번호 설정
 # -- Eureka client
 #eureka:
 #  client:
@@ -67,7 +67,7 @@ feign-client:
   product: http://ddib-product-service.ddib.svc.cluster.local:8082
 
 # Swagger
-springdoc:
+springdoc:duc
   swagger-ui:
     path: /swagger.html
     tags-sorter: alpha

@@ -10,8 +10,13 @@ spring:
     name: waiting
   data:
     redis:
-      host: ddib.kro.kr
+      host: redis-master.default.svc.cluster.local
       port: 6379
+#      cluster:
+#        nodes:
+#          - redis-master.default.svc.cluster.local:6379
+#          - redis-replicas.default.svc.cluster.local:6379
+      password: jG87zG5UKc  # 비밀번호 설정
 
 # metric 설정
 management:
