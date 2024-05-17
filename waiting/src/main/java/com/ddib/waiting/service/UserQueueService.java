@@ -32,6 +32,9 @@ public class UserQueueService {
     public Mono<Long> registerWaitQueue(final String queue, final Long userId) {
         // 먼저 등록한 사람이 높은 랭크를 갖도록 redis의 sortedset<userId,unix timestamp> 사용.
         // 등록과 동시에 몇 번째 대기인지 리턴
+        log.info("================================");
+        log.info(USER_QUEUE_WAIT_KEY.formatted(queue));
+        log.info("================================");
         long unixTimestamp = Instant.now().getEpochSecond();
         return reactiveRedisTemplate.opsForZSet()
                 .add(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString(), unixTimestamp) // ZSet에 사용자 추가
