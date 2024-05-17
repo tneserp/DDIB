@@ -34,10 +34,10 @@ public class UserQueueService {
         // 등록과 동시에 몇 번째 대기인지 리턴
         long unixTimestamp = Instant.now().getEpochSecond();
         return reactiveRedisTemplate.opsForZSet()
-                .add(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString(), unixTimestamp) // ZSet에 사용자 추가
+                .add(USER_QUEUE_WAIT_KEY.formatted(queue), "userId : ". concat(userId.toString()), unixTimestamp) // ZSet에 사용자 추가
                 .filter(i -> i) // 조건 필터링
                 .switchIfEmpty(Mono.error(new Error("이미 존재함"))) // 오류 처리
-                .flatMap(i -> reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString())) // 랭크 조회
+                .flatMap(i -> reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), "userId : ". concat(userId.toString()))) // 랭크 조회
                 .map(i -> i >= 0 ? i + 1 : i); // 랭크 반환
     }
 
@@ -59,7 +59,7 @@ public class UserQueueService {
     // 사용자 순위 조회
     public Mono<Long> getRank(final String queue, final Long userId) {
 
-        Mono<Long> a = reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), userId.toString()) // 랭크 조회
+        Mono<Long> a = reactiveRedisTemplate.opsForZSet().rank(USER_QUEUE_WAIT_KEY.formatted(queue), "userId : ". concat(userId.toString())) // 랭크 조회
 //                .defaultIfEmpty(-1L) // 기본값 설정
                 .defaultIfEmpty(-1L) // 기본값 설정
                 .map(rank -> rank >= 0 ? rank + 1 : rank);// 순위 반환
