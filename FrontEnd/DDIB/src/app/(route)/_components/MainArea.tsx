@@ -6,6 +6,7 @@ import TodayItems from "./TodayItems";
 import { useQuery } from "@tanstack/react-query";
 import { getTodayList } from "@/app/_api/product";
 import { TodayList } from "@/app/_types/types";
+import MainSlider from "@/app/(route)/_components/MainSlider";
 
 export default function MainArea() {
   const { data } = useQuery<TodayList>({
@@ -19,7 +20,7 @@ export default function MainArea() {
     <div className={styles.main}>
       {data && (
         <>
-          {/* <MainSlider todayList={data.todayProducts} /> */}
+          <MainSlider todayList={data.todayProducts} />
           <TodayItems todayList={data.todayNotOverProducts} />
         </>
       )}

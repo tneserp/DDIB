@@ -117,6 +117,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
   };
 
   useEffect(() => {
+
     if (props.type === "mypage") {
       setMyAddress(true);
     }

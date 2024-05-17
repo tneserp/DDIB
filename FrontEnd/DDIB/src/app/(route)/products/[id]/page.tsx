@@ -135,6 +135,7 @@ export default function ProductDetail() {
                       like={data.liked}
                       likeCnt={data.likeCount}
                     />
+                    <div>좋아요누르고 오픈 알람받아요~</div>
                   </div>
                   <div>
                     <EventBtn joinBuy={joinBuy} />

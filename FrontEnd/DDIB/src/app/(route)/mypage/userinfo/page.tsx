@@ -23,7 +23,7 @@ export default function UserInfo() {
 
   const { data } = useQuery<User>({
     queryKey: ["userInfo", userPk],
-    queryFn: () => getUserInfo("8"),
+    queryFn: () => getUserInfo("11"),
   });
 
   useEffect(() => {

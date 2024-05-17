@@ -10,7 +10,9 @@ export default function Home() {
     <>
       {!Cookies.get("fcm") && <GetAlarmToken />}
 
-      <main className={styles.main}>{/* <MainArea /> */}</main>
+      <main className={styles.main}>
+        <MainArea />
+      </main>
     </>
   );
 }
