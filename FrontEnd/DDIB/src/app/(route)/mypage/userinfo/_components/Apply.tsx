@@ -1,9 +1,9 @@
 "use client";
 
 import styles from "./apply.module.scss";
-import { useState } from "react";
-import { putAlarmOff, putAlarmOn } from "@/app/_api/alarm";
-import { useMutation } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { putAlarmOff, putAlarmOn, getAlarmCategory } from "@/app/_api/alarm";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AlarmApply } from "@/app/_types/types";
 import Cookies from "js-cookie";
 
@@ -20,6 +20,11 @@ export default function Apply() {
     { title: "Pet", value: false },
     { title: "Travel", value: false },
   ]);
+
+  const { data } = useQuery<AlarmApply>({
+    queryKey: ["alarmApply", userPk],
+    queryFn: () => getAlarmCategory(userPk),
+  });
 
   const apply = useMutation({
     mutationFn: async (data: AlarmApply) => {
@@ -46,11 +51,7 @@ export default function Apply() {
   });
 
   const handleItemClick = (index: number) => {
-    setCategoryItem((prevItems) =>
-      prevItems.map((item, i) =>
-        i === index ? { ...item, value: !item.value } : item
-      )
-    );
+    setCategoryItem((prevItems) => prevItems.map((item, i) => (i === index ? { ...item, value: !item.value } : item)));
   };
 
   const applyAlarm = () => {
@@ -71,17 +72,15 @@ export default function Apply() {
     cancle.mutate();
   };
 
+  useEffect(() => {}, [data]);
+
   return (
     <>
       <div>키워드 알림 신청</div>
       <div className={styles.underBar}></div>
       <div className={styles.category}>
         {CategoryItem.map((item, index) => (
-          <div
-            key={index}
-            className={item.value ? styles.check : styles.item}
-            onClick={() => handleItemClick(index)}
-          >
+          <div key={index} className={item.value ? styles.check : styles.item} onClick={() => handleItemClick(index)}>
             {item.title}
           </div>
         ))}

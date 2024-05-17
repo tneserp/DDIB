@@ -23,6 +23,7 @@ import { getProductDetail } from "@/app/_api/product";
 import EventBtn from "@/app/(route)/products/_components/EventBtn";
 import LikeBtn from "../_components/LikeBtn";
 import Cookies from "js-cookie";
+import { getDiscount } from "@/app/_utils/commonFunction";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -70,8 +71,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (data) {
-      const sale = data.price * (data.discount * 0.01);
-      const finPrice = data.price - sale;
+      const finPrice = getDiscount(data.price, data.discount);
       setSalePrice(finPrice);
     }
     console.log(data);
@@ -85,12 +85,7 @@ export default function ProductDetail() {
             <div className={styles.category}>TimeDeal &gt; {data.category}</div>
             <div className={styles.info}>
               <div className={styles.sectionOne}>
-                <Image
-                  src={data.thumbnailImage}
-                  alt="상품썸네일"
-                  fill
-                  sizes="auto"
-                ></Image>
+                <Image src={data.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
                 {data.over && (
                   <>
                     <div className={styles.sold}></div>
@@ -130,11 +125,7 @@ export default function ProductDetail() {
                 </div>
                 <div className={styles.btnArea}>
                   <div>
-                    <LikeBtn
-                      productId={data.productId}
-                      like={data.liked}
-                      likeCnt={data.likeCount}
-                    />
+                    <LikeBtn productId={data.productId} like={data.liked} likeCnt={data.likeCount} />
                   </div>
                   <div>
                     <EventBtn joinBuy={joinBuy} />
@@ -144,21 +135,10 @@ export default function ProductDetail() {
             </div>
             <div className={styles.detailArea}>
               <div className={styles.detailTitle}>Details</div>
-              <div
-                className={
-                  viewMore
-                    ? `${styles.detailPhotoView}`
-                    : `${styles.detailPhoto}`
-                }
-              >
+              <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
                 {data.details.map((image, index) => (
                   <div className={styles.wrapper} key={index}>
-                    <Image
-                      src={image.imageUrl}
-                      alt="상품썸네일"
-                      fill
-                      sizes="auto"
-                    ></Image>
+                    <Image src={image.imageUrl} alt="상품썸네일" fill sizes="auto"></Image>
                   </div>
                 ))}
               </div>

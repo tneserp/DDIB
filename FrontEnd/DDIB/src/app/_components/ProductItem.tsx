@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MdCorporateFare } from "react-icons/md";
 import { BiSolidBusiness } from "react-icons/bi";
+import { getDiscount } from "../_utils/commonFunction";
 
 interface Props {
   thumbnailImage: string;
@@ -19,23 +20,11 @@ interface Props {
   over: boolean;
 }
 
-export default function ProductItem({
-  thumbnailImage,
-  companyName,
-  name,
-  eventStartTime,
-  eventEndTime,
-  price,
-  totalStock,
-  stock,
-  discount,
-  over,
-}: Props) {
+export default function ProductItem({ thumbnailImage, companyName, name, eventStartTime, eventEndTime, price, totalStock, stock, discount, over }: Props) {
   const [salePrice, setSalePrice] = useState(0);
 
   useEffect(() => {
-    const sale = price * (discount * 0.01);
-    const finPrice = price - sale;
+    const finPrice = getDiscount(price, discount);
     setSalePrice(finPrice);
   }, []);
 

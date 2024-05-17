@@ -26,13 +26,18 @@ export interface Product {
   details: Array<DetailImage>;
   likeCount: number;
   sellerId: number;
-  sellerEamil: string;
+  sellerEmail: string;
   companyName: string;
   businessNumber: number;
   ceoName: string;
   ceoEmail: string;
   ceoPhone: string;
   over: boolean;
+}
+
+export interface TodayList {
+  todayNotOverProducts: Array<Product>;
+  todayProducts: Array<Product>;
 }
 
 export interface ProductInfo extends Product {

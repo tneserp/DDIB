@@ -40,7 +40,7 @@ export default function UserInfo() {
       };
       setUserInfo(info);
     }
-  }, []);
+  }, [data]);
 
   const quitUser = useMutation({
     mutationFn: async () => {

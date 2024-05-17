@@ -18,4 +18,9 @@ async function getAlarmList(userPk: string) {
   return data;
 }
 
-export { putAlarmOn, putAlarmOff, getAlarmList };
+async function getAlarmCategory(userPk: string) {
+  const { data } = await api.get(`/api/notification/subscription/${userPk}`);
+  return data;
+}
+
+export { putAlarmOn, putAlarmOff, getAlarmList, getAlarmCategory };

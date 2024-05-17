@@ -99,25 +99,18 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
-        {Cookies.get("Authorization") && (
-          <li>
-            <div
-              className={styles.alarm}
-              onClick={() => setBellOn((prev) => !prev)}
-            >
-              {bellOn ? (
-                <GoBellFill className={styles.icons} />
-              ) : (
-                <GoBell className={styles.icons} />
-              )}
+        <li>
+          <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+            {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
+          </div>
+          {bellOn && (
+            <div className={styles.alarmModal}>
+              <Alarm />
             </div>
-            {bellOn && (
-              <div className={styles.alarmModal}>
-                <Alarm />
-              </div>
-            )}
-          </li>
-        )}
+          )}
+        </li>
+        {/* {Cookies.get("Authorization") && (
+        )} */}
         <li>
           {!Cookies.get("Authorization") ? (
             <>
