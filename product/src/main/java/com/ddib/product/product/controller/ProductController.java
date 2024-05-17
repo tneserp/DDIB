@@ -141,8 +141,4 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/test/yusan")
-    public void testYusan(){
-        log.info("HELLO GET TEST FROM YUSAN");
-    }
 }
