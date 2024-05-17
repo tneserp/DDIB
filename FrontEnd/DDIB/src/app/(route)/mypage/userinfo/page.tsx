@@ -11,8 +11,7 @@ import { useRef, useEffect } from "react";
 import { RefProps } from "@/app/_components/AddressForm";
 import { useRouter } from "next/navigation";
 import { orderAddressStore } from "@/app/_store/product";
-import { UserModi } from "@/app/_types/types";
-import { User } from "@/app/_types/types";
+import { User, UserModi } from "@/app/_types/types";
 import { userStore } from "@/app/_store/user";
 
 export default function UserInfo() {
@@ -24,7 +23,7 @@ export default function UserInfo() {
 
   const { data } = useQuery<User>({
     queryKey: ["userInfo", userPk],
-    queryFn: () => getUserInfo(userPk),
+    queryFn: () => getUserInfo("8"),
   });
 
   useEffect(() => {

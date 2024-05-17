@@ -1,6 +1,6 @@
 .main {
   width: 100dvw;
-  padding: 5% 15%;
+  padding: 15%;
 }
 
 .category {
@@ -166,7 +166,7 @@
   }
   & > div:nth-child(2) {
     flex: 1;
-    border: 1px solid blueviolet;
+    border: 1px solid var(--scarlet);
   }
 }
 

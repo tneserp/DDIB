@@ -1,10 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { PublicAxiosApi } from "./app/_utils/commons";
+import { PublicAxiosApi, ClientAxiosApi } from "./app/_utils/commons";
 import Cookies from "js-cookie";
 
-const api = PublicAxiosApi();
+const api = ClientAxiosApi();
 
 const firebaseConfig = {
   apiKey: "AIzaSyCgQxyvJ_L4cjliM8kq1M7xn0yHNWwvHw4",

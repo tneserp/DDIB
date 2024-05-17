@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./mainArea.module.scss";
-import MainSlider from "./MainSlider";
+// import MainSlider from "./MainSlider";
 import TodayItems from "./TodayItems";
 import { useQuery } from "@tanstack/react-query";
 import { getTodayList } from "@/app/_api/product";
@@ -17,8 +17,12 @@ export default function MainArea() {
 
   return (
     <div className={styles.main}>
-      <MainSlider todayList={data?.todayProducts} />
-      <TodayItems todayList={data?.todayNotOverProducts} />
+      {data && (
+        <>
+          {/* <MainSlider todayList={data.todayProducts} /> */}
+          <TodayItems todayList={data.todayNotOverProducts} />
+        </>
+      )}
     </div>
   );
 }

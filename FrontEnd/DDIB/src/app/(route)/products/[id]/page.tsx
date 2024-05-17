@@ -36,7 +36,7 @@ export default function ProductDetail() {
 
   const { data } = useQuery<ProductInfo>({
     queryKey: ["productInfo", id, userPk],
-    queryFn: () => getProductDetail(id, userPk),
+    queryFn: () => getProductDetail(id, "8"),
   });
 
   const [salePrice, setSalePrice] = useState(0);
@@ -85,7 +85,12 @@ export default function ProductDetail() {
             <div className={styles.category}>TimeDeal &gt; {data.category}</div>
             <div className={styles.info}>
               <div className={styles.sectionOne}>
-                <Image src={data.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
+                <Image
+                  src={data.thumbnailImage}
+                  alt="상품썸네일"
+                  fill
+                  sizes="auto"
+                ></Image>
                 {data.over && (
                   <>
                     <div className={styles.sold}></div>
@@ -125,7 +130,11 @@ export default function ProductDetail() {
                 </div>
                 <div className={styles.btnArea}>
                   <div>
-                    <LikeBtn productId={data.productId} like={data.liked} likeCnt={data.likeCount} />
+                    <LikeBtn
+                      productId={data.productId}
+                      like={data.liked}
+                      likeCnt={data.likeCount}
+                    />
                   </div>
                   <div>
                     <EventBtn joinBuy={joinBuy} />
@@ -135,10 +144,21 @@ export default function ProductDetail() {
             </div>
             <div className={styles.detailArea}>
               <div className={styles.detailTitle}>Details</div>
-              <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
+              <div
+                className={
+                  viewMore
+                    ? `${styles.detailPhotoView}`
+                    : `${styles.detailPhoto}`
+                }
+              >
                 {data.details.map((image, index) => (
                   <div className={styles.wrapper} key={index}>
-                    <Image src={image.imageUrl} alt="상품썸네일" fill sizes="auto"></Image>
+                    <Image
+                      src={image.imageUrl}
+                      alt="상품썸네일"
+                      fill
+                      sizes="auto"
+                    ></Image>
                   </div>
                 ))}
               </div>

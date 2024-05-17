@@ -79,7 +79,10 @@
   transition-duration: 0.6s;
   transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   background-color: #fff;
-  border: 1px solid var(--scarlet);
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  border-color: var(--scarlet);
+
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
 }

@@ -1,5 +1,10 @@
 import styles from "./todayItem.module.scss";
+import { Product } from "@/app/_types/types";
 
-export default function TodayItems() {
+interface Props {
+  todayList: Product[];
+}
+
+export default function TodayItems({ todayList }: Props) {
   return <div className={styles.main}></div>;
 }

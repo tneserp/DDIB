@@ -12,7 +12,6 @@ async function getUserInfo(userPk: string) {
 
 // 일반회원 정보 수정
 async function putUserInfo(userPk: string, sendUser: UserModi) {
-  console.log(UserModi);
   try {
     await api.put(`/api/user/${userPk}`, sendUser);
   } catch (error) {

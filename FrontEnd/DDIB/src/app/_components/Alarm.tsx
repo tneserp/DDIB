@@ -12,7 +12,7 @@ export default function Alarm() {
 
   const { data } = useQuery<AlarmList[]>({
     queryKey: ["orderDetail", userPk],
-    queryFn: () => getAlarmList("1"),
+    queryFn: () => getAlarmList("8"),
   });
 
   const setDate = (date: string) => {
@@ -25,24 +25,30 @@ export default function Alarm() {
     <div className={styles.container}>
       <div className={styles.alarm}>
         <div>키워드 알람</div>
-        {Cookies.get("fcm") ? <div className={styles.on}>ON</div> : <div className={styles.off}>OFF</div>}
+        {Cookies.get("fcm") ? (
+          <div className={styles.on}>ON</div>
+        ) : (
+          <div className={styles.off}>OFF</div>
+        )}
 
         <Link href="/mypage/userinfo">
           <div>&gt;</div>
         </Link>
       </div>
-      {Cookies.get("fcm") && (
-        <div className={styles.textArea}>
-          {data &&
-            data.map((item, index) => (
-              <div className={styles.text} key={index}>
-                {item.generatedTime.length != 0 && <div>{setDate(item.generatedTime)}</div>}
-                <div>{item.title}</div>
-                <div>{item.content}</div>
-              </div>
-            ))}
-        </div>
-      )}
+      <div className={styles.textArea}>
+        {data &&
+          data.map((item, index) => (
+            <div className={styles.text} key={index}>
+              {item.generatedTime.length != 0 && (
+                <div>{setDate(item.generatedTime)}</div>
+              )}
+              <div>{item.title}</div>
+              <div>{item.content}</div>
+            </div>
+          ))}
+      </div>
+      {/* {Cookies.get("fcm") && (
+      )} */}
     </div>
   );
 }
