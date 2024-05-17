@@ -11,7 +11,7 @@
 # # 실행할 명령어
 # # ENTRYPOINT ["java", "-jar", "user.jar" ,"--spring.profiles.active=prod"]
 
- ENTRYPOINT ["java", "-jar", "wating.jar" , "--spring.profiles.active=prod"]
+ ENTRYPOINT ["java", "-jar", "wating.jar" , "--spring.profiles.active=k8s"]
 
 
 
