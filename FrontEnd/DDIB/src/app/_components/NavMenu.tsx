@@ -11,11 +11,6 @@ import { GoBell } from "react-icons/go";
 import { GoBellFill } from "react-icons/go";
 import { GoPerson } from "react-icons/go";
 import { GoPersonFill } from "react-icons/go";
-import { BiLogIn } from "react-icons/bi";
-import { TbLogin2 } from "react-icons/tb";
-import { CiLogin } from "react-icons/ci";
-import { ImEnter } from "react-icons/im";
-import { TbDoorEnter } from "react-icons/tb";
 import Alarm from "./Alarm";
 import Cookies from "js-cookie";
 import { useMutation } from "@tanstack/react-query";
@@ -102,18 +97,18 @@ export default function NavMenu() {
             )}
           </Link>
         </li>
-        <li>
-          <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
-            {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
-          </div>
-          {bellOn && (
-            <div className={styles.alarmModal}>
-              <Alarm />
+        {Cookies.get("Authorization") && (
+          <li>
+            <div className={styles.alarm} onClick={() => setBellOn((prev) => !prev)}>
+              {bellOn ? <GoBellFill className={styles.icons} /> : <GoBell className={styles.icons} />}
             </div>
-          )}
-        </li>
-        {/* {Cookies.get("Authorization") && (
-        )} */}
+            {bellOn && (
+              <div className={styles.alarmModal}>
+                <Alarm />
+              </div>
+            )}
+          </li>
+        )}
         <li>
           {!Cookies.get("Authorization") ? (
             <>

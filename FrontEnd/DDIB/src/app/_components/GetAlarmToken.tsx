@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 export default function GetAlarmToken() {
   useEffect(() => {
     // 쿠키가 있는지 확인
+    const isOnline = navigator.onLine;
     if (Cookies.get("Authorization")) {
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker

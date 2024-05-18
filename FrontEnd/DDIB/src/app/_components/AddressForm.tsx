@@ -14,7 +14,7 @@ interface ChildProps {
 }
 
 export interface RefProps {
-  saveAddress: () => OrderAddressInfo;
+  saveAddress: () => OrderAddressInfo | undefined;
 }
 
 const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {

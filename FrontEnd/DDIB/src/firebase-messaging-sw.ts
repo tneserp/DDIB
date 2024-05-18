@@ -38,7 +38,6 @@ const requestPermission = async () => {
     });
 
     if (token) {
-      Cookies.set("fcm", token);
       const data = {
         userId: Cookies.get("num"),
         fcmToken: token,

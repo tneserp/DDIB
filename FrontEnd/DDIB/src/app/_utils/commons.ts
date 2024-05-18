@@ -11,9 +11,6 @@ const PublicAxiosApi = () => {
     baseURL: `${BASE_URL}`,
   });
 
-  //const token = Cookies.get("jwt");
-  // instance.defaults.headers.common["Authorization"] =
-  //   "BearereyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTE0NDA4NCwiZXhwIjoxNzE1MTQ3Njg0fQ.0LIE7oWR6C8nOhb-zykEZF3IEWecoSAyvkZiNG37fIY";
   instance.defaults.headers.put["Content-Type"] = "application/json";
   return instance;
 };
@@ -23,10 +20,10 @@ const ClientAxiosApi = () => {
     baseURL: `${BASE_URL}`,
   });
 
-  //const token = "";
-  //instance.defaults.headers.common["Authorization"] = token;
+  const token = Cookies.get("jwt");
   instance.defaults.headers.common["Authorization"] =
     "BearereyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTE0NDA4NCwiZXhwIjoxNzE1MTQ3Njg0fQ.0LIE7oWR6C8nOhb-zykEZF3IEWecoSAyvkZiNG37fIY";
+  // instance.defaults.headers.common["Authorization"] = token;
 
   instance.defaults.headers.post["Content-Type"] = "application/json";
   instance.defaults.headers.delete["Content-Type"] = "application/json";

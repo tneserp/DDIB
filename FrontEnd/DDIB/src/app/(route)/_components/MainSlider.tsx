@@ -29,14 +29,12 @@ const slideshowItems: Product[] = [
     eventEndTime: "16",
     price: 10000,
     discount: 10.0,
-    thumbnailImage:
-      "https://iandwe.s3.ap-northeast-2.amazonaws.com/thumbnail/OQcNkT4d",
+    thumbnailImage: "https://iandwe.s3.ap-northeast-2.amazonaws.com/thumbnail/OQcNkT4d",
     category: "Fashion",
     details: [
       {
         productDetailId: 23,
-        imageUrl:
-          "https://iandwe.s3.ap-northeast-2.amazonaws.com/details/hL5SqOBk",
+        imageUrl: "https://iandwe.s3.ap-northeast-2.amazonaws.com/details/hL5SqOBk",
       },
     ],
     likeCount: 1,
@@ -60,14 +58,12 @@ const slideshowItems: Product[] = [
     eventEndTime: "18",
     price: 10000,
     discount: 10.0,
-    thumbnailImage:
-      "https://iandwe.s3.ap-northeast-2.amazonaws.com/thumbnail/egqHlHZG",
+    thumbnailImage: "https://iandwe.s3.ap-northeast-2.amazonaws.com/thumbnail/egqHlHZG",
     category: "Fashion",
     details: [
       {
         productDetailId: 23,
-        imageUrl:
-          "https://iandwe.s3.ap-northeast-2.amazonaws.com/details/hL5SqOBk",
+        imageUrl: "https://iandwe.s3.ap-northeast-2.amazonaws.com/details/hL5SqOBk",
       },
     ],
     likeCount: 1,
@@ -91,14 +87,12 @@ const slideshowItems: Product[] = [
     eventEndTime: "20",
     price: 10000,
     discount: 10.0,
-    thumbnailImage:
-      "https://iandwe.s3.ap-northeast-2.amazonaws.com/thumbnail/egqHlHZG",
+    thumbnailImage: "https://iandwe.s3.ap-northeast-2.amazonaws.com/thumbnail/egqHlHZG",
     category: "Fashion",
     details: [
       {
         productDetailId: 23,
-        imageUrl:
-          "https://iandwe.s3.ap-northeast-2.amazonaws.com/details/hL5SqOBk",
+        imageUrl: "https://iandwe.s3.ap-northeast-2.amazonaws.com/details/hL5SqOBk",
       },
     ],
     likeCount: 1,
@@ -135,9 +129,7 @@ export default function MainSlider({ todayList }: Props) {
       }
     };
 
-    const sliderElement = document.querySelector(
-      ".slideshow-left .slick-slider"
-    );
+    const sliderElement = document.querySelector(".slideshow-left") as HTMLElement;
     sliderElement?.addEventListener("wheel", handleWheel);
 
     return () => {
@@ -201,12 +193,7 @@ export default function MainSlider({ todayList }: Props) {
               </div>
               <div className={styles.imageArea}>
                 <div className={styles.wrapper}>
-                  <Image
-                    src={item.thumbnailImage}
-                    alt="썸네일"
-                    fill
-                    sizes=""
-                  ></Image>
+                  <Image src={item.thumbnailImage} alt="썸네일" fill sizes=""></Image>
                 </div>
               </div>
             </div>
