@@ -9,6 +9,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,11 +82,11 @@ public class Product {
         this.isOver = isOver;
     }
 
-    public void updateThumbnail(String thumbnailImageUrl){
+    public void updateThumbnail(String thumbnailImageUrl) {
         this.thumbnailImage = thumbnailImageUrl;
     }
 
-    public void insertProductDetails(List<ProductDetail> details){
+    public void insertProductDetails(List<ProductDetail> details) {
         this.details.addAll(details);
     }
 
@@ -90,6 +94,27 @@ public class Product {
         if (stock - amount < 0) {
             throw new ProductStockShortageException();
         }
+    }
+
+    public boolean isBefore24Hours() {
+        LocalDateTime eventDateTime = eventStartDate.toLocalDateTime();
+        LocalDate eventDate = eventDateTime.toLocalDate();
+        int eventTime = eventDateTime.toLocalTime().getHour();
+
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        int now = LocalTime.now(ZoneId.of("Asia/Seoul")).getHour();
+        return eventDate.minusDays(1).equals(today) && eventTime == now;
+    }
+
+    public boolean isBefore1Hour() {
+        LocalDateTime eventDateTime = eventStartDate.toLocalDateTime();
+        LocalDate eventDate = eventDateTime.toLocalDate();
+        int eventTime = eventDateTime.toLocalTime().getHour();
+
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        int now = LocalTime.now(ZoneId.of("Asia/Seoul")).getHour();
+
+        return eventDate.equals(today) && eventTime - 1 == now;
     }
 
 }

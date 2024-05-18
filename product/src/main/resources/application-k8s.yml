@@ -11,7 +11,7 @@ spring:
     name: product
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.182.0.18:3306/ddib?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    url: jdbc:mysql://10.182.0.18:3306/ddib?useUnicode=true&serverTimezone=Asia/Seoul&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
     username: ssafy
     password: ssafy
   jpa:
