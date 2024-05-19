@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping(value = "/api/v1", produces = "application/json")
+@RequestMapping(value = "/api/user", produces = "application/json")
 public class ReissueController {
     private final ReissueService reissueService;
 
     @GetMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
-        log.info("토큰 재발행 실행");
         try {
             return reissueService.reissueRefreshToken(request, response);
         } catch (Exception e){

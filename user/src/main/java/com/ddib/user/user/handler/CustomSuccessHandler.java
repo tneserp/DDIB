@@ -1,5 +1,6 @@
 package com.ddib.user.user.handler;
 
+import com.ddib.user.user.domain.User;
 import com.ddib.user.user.dto.resposne.CustomOAuth2User;
 import com.ddib.user.user.repository.UserRepository;
 import com.ddib.user.user.service.oauth.RedisService;
@@ -24,25 +25,27 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JWTUtil jwtUtil;
     private final RedisService redisService;
 
-    @Value("${releaseHostName}")
-    private String releaseHostName;
     @Value("${access.token.expiration.time}")
     private Long accessExpireMs;
 
     @Value("${refresh.token.expiration.time}")
     private Long refreshExpireMs;
 
+    @Value("${releaseHostName}")
+    private String releaseHostName;
+
     private final UserRepository userRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("Success 로그인!!!");
         //OAuth2User
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
 
         String email = customUserDetails.getEmail();
 
         Integer userId  = userRepository.findUserIdByEmail(email).getUserId();
+
+        User user = userRepository.findByUserId(userId);
 
         // 권한을 찾아서 권한 설정해줌
         // authentication.getAuthorities()를 호출하여
@@ -52,20 +55,17 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String access = jwtUtil.createJwt("access", email, accessExpireMs);
         String refresh = jwtUtil.createJwt("refresh", email, refreshExpireMs);
 
-        log.info("accesstoken : " + access);
-        log.info("refreshtoken : " + refresh);
-
         // redis 에 담아서 refresh token 관리
         redisService.setValues(email, refresh, refreshExpireMs);
 
         response.addCookie(createCookie("refresh", refresh));
         response.addCookie(createCookie("Authorization", access));
         response.addCookie(createCookie("num", String.valueOf(userId)));
+        response.addCookie(createCookie("fcm", String.valueOf(user.isSubscribed())));
 
         response.addHeader("Authorization", "Bearer " + access);
-        log.info("response " + response.getHeader("Authorization"));
 
-        response.sendRedirect("https://" + releaseHostName);
+        response.sendRedirect("https://ddib.kro.kr");
     }
 
     private Cookie createCookie(String key, String value) {

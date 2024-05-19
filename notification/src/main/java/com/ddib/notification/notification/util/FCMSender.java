@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class FCMSender {
-
     private final FirebaseMessaging firebaseMessaging;
 
     public void sendFCM(FCMDto fcmDto) {
         Notification notification = Notification.builder()
                 .setTitle(fcmDto.getTitle())
                 .setBody(fcmDto.getBody())
+                .setImage("/DDIB.PNG")
                 .build();
 
         Message message = Message.builder()

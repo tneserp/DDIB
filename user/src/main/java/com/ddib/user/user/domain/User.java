@@ -1,13 +1,11 @@
 package com.ddib.user.user.domain;
 
-import com.ddib.user.notification.domain.Notification;
 import com.ddib.user.user.dto.request.UserModifyRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.ColumnDefault;
-
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -15,12 +13,12 @@ import java.util.List;
 @Builder
 @Getter
 @ToString
-
+@Slf4j
 @Schema(description = "일반회원")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(description = "일반 회원")
+    @Schema(description = "일반회원")
     private Integer userId;
 
     @Schema(description = "이름")
@@ -41,7 +39,7 @@ public class User {
     private String detailAddress;
 
     @Schema(description = "우편번호")
-    private int zipcode;
+    private String zipcode;
 
     @ColumnDefault("false")
     @Column(columnDefinition = "TINYINT(1)")
@@ -51,17 +49,15 @@ public class User {
     @Schema(description = "FCM 토큰")
     private String fcmToken;
 
-    @Schema(description = "알림")
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Notification> notifications;
-
     public void updateInfo(UserModifyRequestDto requestDto) {
-        System.out.println(requestDto.getName());
         this.name = requestDto.getName();
-        System.out.println(this.name);
         this.phone = requestDto.getPhone();
         this.roadAddress = requestDto.getRoadAddress();
         this.detailAddress = requestDto.getDetailAddress();
         this.zipcode = requestDto.getZipcode();
+    }
+
+    public void updateFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

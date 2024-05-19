@@ -1,5 +1,6 @@
 package com.ddib.user.user.service.oauth;
 
+import com.ddib.user.user.domain.User;
 import com.ddib.user.user.repository.UserRepository;
 import com.ddib.user.user.setting.jwt.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -37,15 +38,12 @@ public class ReissueServiceImpl implements ReissueService {
         String refresh = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            log.info(cookie.getName() + " " + cookie.getValue());
             if (cookie.getName().equals("refresh")) {
-
                 refresh = cookie.getValue();
             }
         }
 
         if (refresh == null) {
-
             // response status code
             return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
         }
@@ -54,7 +52,6 @@ public class ReissueServiceImpl implements ReissueService {
         try {
             jwtUtil.isExpired(refresh);
         } catch (ExpiredJwtException e) {
-
             // response status code
             return new ResponseEntity<>("refresh token expired", HttpStatus.BAD_REQUEST);
         }
@@ -63,7 +60,6 @@ public class ReissueServiceImpl implements ReissueService {
         String category = jwtUtil.getCategory(refresh);
 
         if (!category.equals("refresh")) {
-
             // response status code
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
@@ -71,14 +67,13 @@ public class ReissueServiceImpl implements ReissueService {
         // DB에 저장되어 있는지 확인
         Boolean isExist = redisService.checkExistsValue(refresh);
         if (!isExist) {
-
             // response body
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
-
         String email = jwtUtil.getEmail(refresh);
         Integer userId = userRepository.findUserIdByEmail(email).getUserId();
+        User user = userRepository.findByUserId(userId);
 
         // make new JWT
         String newAccess = jwtUtil.createJwt("access", email, accessExpireMs);
@@ -90,8 +85,10 @@ public class ReissueServiceImpl implements ReissueService {
 
         // response
         response.setHeader("Authorization", "Bearer " + newAccess);
+        response.addCookie(createCookie("Authorization", newAccess));
         response.addCookie(createCookie("refresh", newRefresh));
         response.addCookie(createCookie("num", String.valueOf(userId)));
+        response.addCookie(createCookie("fcm", String.valueOf(user.isSubscribed())));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

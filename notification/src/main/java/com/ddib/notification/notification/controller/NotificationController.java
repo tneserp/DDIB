@@ -9,7 +9,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/notification")
 @RequiredArgsConstructor
 @Tag(name = "Notification Controller", description = "알림 API")
+@Slf4j
 public class NotificationController {
     private final UserServiceImpl userService;
     private final SubscriptionCategoryService subscriptionCategoryService;
@@ -45,10 +49,11 @@ public class NotificationController {
             @ApiResponse(responseCode = "400", description = "구독 알림 신청 실패")
     })
     @PutMapping("/subscribe/{userId}")
+    @Transactional
     public ResponseEntity<?> applyNotification(@RequestBody SubscriptionCategoryRequestDto categories, @PathVariable Integer userId) {
         try {
-            userService.findByUserId(userId).updateSubscribed();
             subscriptionCategoryService.createSubscriptionCategory(categories, userId);
+            userService.findByUserId(userId).updateSubscribed();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,5 +91,27 @@ public class NotificationController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Operation(summary = "구독 목록 조회 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "구독 목록 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "구독 목록 조회 실패")
+    })
+    @GetMapping("/subscription/{userId}")
+    public ResponseEntity<?> subscriptionDetails(@PathVariable Integer userId) {
+        try {
+            return new ResponseEntity<>(subscriptionCategoryService.findSubscriptionList(userId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/test/sleep")
+    public ResponseEntity<?> sleep() throws InterruptedException {
+        log.info("NOTIFICATION : CALL SLEEP");
+        Thread.sleep(10000);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

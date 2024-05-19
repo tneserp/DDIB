@@ -23,19 +23,15 @@ public class UserInfoDto {
     @Schema(description = "이메일")
     private String email;
 
-    @NotNull
     @Schema(description = "핸드폰 번호")
     private String phone;
 
-    @NotNull
     @Schema(description = "도로명 주소")
     private String roadAddress;
 
-    @NotNull
     @Schema(description = "상세 주소")
     private String detailAddress;
 
-    @NotNull
     @Schema(description = "우편번호")
-    private int zipcode;
+    private String zipcode;
 }

@@ -1,5 +1,6 @@
 package com.ddib.user.user.controller;
 
+import com.ddib.user.user.dto.request.TokenRequestDto;
 import com.ddib.user.user.dto.request.UserModifyRequestDto;
 import com.ddib.user.user.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -89,6 +90,24 @@ public class UserController {
             response.addCookie(access);
             response.addCookie(num);
 
+            response.sendRedirect("https://ddib.kro.kr");
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/token")
+    @Operation(summary = "일반회원 토큰 저장 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "일반회원 토큰 저장 성공"),
+            @ApiResponse(responseCode = "400", description = "일반회원 토큰 저장 실패")
+    })
+    public ResponseEntity<?> tokenSave(@RequestBody TokenRequestDto tokenRequestDto) {
+        try {
+            userService.saveToken(tokenRequestDto);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
