@@ -21,9 +21,10 @@ export default function UserInfo() {
   const saveRef = useRef<RefProps>(null);
   const router = useRouter();
 
-  const { data } = useQuery<User>({
+  const { data, refetch } = useQuery<User>({
     queryKey: ["userInfo", userPk],
-    queryFn: () => getUserInfo("8"),
+    queryFn: () => getUserInfo(userPk),
+    staleTime: 86400000,
   });
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function UserInfo() {
 
   const quitUser = useMutation({
     mutationFn: async () => {
-      return await deleteUser("8");
+      return await deleteUser(userPk);
     },
     async onSuccess(response) {
       alert("탈퇴완료");
@@ -59,10 +60,11 @@ export default function UserInfo() {
 
   const modifyUser = useMutation({
     mutationFn: async (data: UserModi) => {
-      return await putUserInfo("8", data);
+      return await putUserInfo(userPk, data);
     },
     async onSuccess(response) {
       alert("수정완료");
+      refetch();
     },
     onError(error) {
       console.error(error);

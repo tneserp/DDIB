@@ -49,7 +49,7 @@ export default function ProductItem({ thumbnailImage, companyName, name, eventSt
       <div className={styles.price}>{price}</div>
       <div className={styles.salePrice}>
         <div>{discount}%</div>
-        <div>{salePrice}</div>
+        <div>{salePrice.toLocaleString("ko-KR")}</div>
       </div>
     </div>
   );

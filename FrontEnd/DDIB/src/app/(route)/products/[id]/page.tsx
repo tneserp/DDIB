@@ -36,7 +36,7 @@ export default function ProductDetail() {
 
   const { data } = useQuery<ProductInfo>({
     queryKey: ["productInfo", id, userPk],
-    queryFn: () => getProductDetail(id, "8"),
+    queryFn: () => getProductDetail(id, userPk),
   });
 
   const [salePrice, setSalePrice] = useState(0);
@@ -70,11 +70,15 @@ export default function ProductDetail() {
   };
 
   useEffect(() => {
-    if (data) {
-      const finPrice = getDiscount(data.price, data.discount);
-      setSalePrice(finPrice);
+    if (!Cookies.get("Authorization")) {
+      alert("로그인을 먼저 해주세요!!");
+      router.back();
+    } else {
+      if (data) {
+        const finPrice = getDiscount(data.price, data.discount);
+        setSalePrice(finPrice);
+      }
     }
-    console.log(data);
   }, [data]);
 
   return (
@@ -114,9 +118,6 @@ export default function ProductDetail() {
                   <div>무료배송</div>
                 </div>
                 {/* button area */}
-                <div className={styles.time}>
-                  <TimeCount startTime={data.eventStartDate} />
-                </div>
                 <AmountBtn stock={data.stock} />
                 <div className={styles.line}></div>
                 <div className={styles.totalPrice}>
@@ -129,7 +130,7 @@ export default function ProductDetail() {
                     <div className={styles.alert}>좋아요 누르고 오픈 알람받아요~</div>
                   </div>
                   <div>
-                    <EventBtn joinBuy={joinBuy} />
+                    <EventBtn joinBuy={joinBuy} over={data.over} startTime={data.eventStartDate} />
                   </div>
                 </div>
               </div>
@@ -139,7 +140,7 @@ export default function ProductDetail() {
               <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
                 {data.details.map((image, index) => (
                   <div className={styles.wrapper} key={index}>
-                    <Image src={image.imageUrl} alt="상품썸네일" fill sizes="auto"></Image>
+                    <Image src={image.imageUrl} alt="상품썸네일" layout="responsive" width={100} height={100} objectFit="contain"></Image>
                   </div>
                 ))}
               </div>
@@ -176,11 +177,11 @@ export default function ProductDetail() {
                     <div>대표이메일</div>
                   </div>
                   <div className={styles.sellerItem}>
-                    <div>{data.companyName}</div>
-                    <div>{data.businessNumber}</div>
-                    <div>{data.ceoName}</div>
-                    <div>{data.ceoPhone}</div>
-                    <div>{data.ceoEmail}</div>
+                    <div>{data.companyName.length != 0 ? data.companyName : " "}</div>
+                    <div>{data.businessNumber != 0 ? data.businessNumber : ""}</div>
+                    <div>{data.ceoName.length != 0 ? data.ceoName : " "}</div>
+                    <div>{data.ceoPhone.length != 0 ? data.ceoPhone : " "}</div>
+                    <div>{data.ceoEmail.length != 0 ? data.ceoEmail : " "}</div>
                   </div>
                 </div>
               </div>

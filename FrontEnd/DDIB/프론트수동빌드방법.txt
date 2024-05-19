@@ -5,11 +5,11 @@
  
 docker build -t kimyusan/k8s_front:latest .
  
-docker push kimyusan/k8s_pront:latest
+docker push kimyusan/k8s_front:latest
 
 
 
- k8s master 서버 접속
+k8s master 서버 접속
 
 kubectl get deployment -n ddib     ( ddib 의 파드를 조회합니다.)
 

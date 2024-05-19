@@ -14,6 +14,7 @@ export default function SetUserInfo() {
   const { data } = useQuery<User>({
     queryKey: ["userInfo", pk],
     queryFn: () => getUserInfo(pk),
+    staleTime: 86400000,
   });
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function SetUserInfo() {
       };
       setUserInfo(info);
     }
-  }, []);
+  }, [data]);
 
   return null;
 }

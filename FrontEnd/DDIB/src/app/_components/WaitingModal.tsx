@@ -35,11 +35,7 @@ export default function WaitingModal() {
 
   useEffect(() => {
     if (data && data.rank !== undefined && data.rank <= 0) {
-      console.log("change");
-      var expiresAt = new Date();
-      console.log(expiresAt);
-      expiresAt.setMinutes(expiresAt.getMinutes() + 5);
-      Cookies.set("state", "true", { expires: expiresAt });
+      Cookies.set("state", "true", { expires: 10 / 1440 });
       router.replace(`/order`);
     }
   }, [data]);

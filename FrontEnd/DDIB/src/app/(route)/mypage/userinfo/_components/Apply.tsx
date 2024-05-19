@@ -72,7 +72,20 @@ export default function Apply() {
     cancle.mutate();
   };
 
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    if (data) {
+      setCategoryItem([
+        { title: "Fashion", value: data.subscribeFashion },
+        { title: "Beauty", value: data.subscribeBeauty },
+        { title: "Food", value: data.subscribeFood },
+        { title: "Appliance", value: data.subscribeAppliance },
+        { title: "Sports", value: data.subscribeSports },
+        { title: "Living", value: data.subscribeLiving },
+        { title: "Pet", value: data.subscribePet },
+        { title: "Travel", value: data.subscribeTravel },
+      ]);
+    }
+  }, [data]);
 
   return (
     <>

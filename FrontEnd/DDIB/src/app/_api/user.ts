@@ -7,6 +7,7 @@ const api = ClientAxiosApi();
 async function getUserInfo(userPk: string) {
   console.log("ddd");
   const { data } = await api.get(`/api/user/${userPk}`);
+  console.log("회원정보조회호출");
   console.log(data);
   return data;
 }

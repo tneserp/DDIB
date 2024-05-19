@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./likeBtn.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postLike, deleteLike } from "@/app/_api/product";
 import { userStore } from "@/app/_store/user";
@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 
 interface Props {
   productId: number;
-  like: Boolean;
+  like: boolean;
   likeCnt: number;
 }
 

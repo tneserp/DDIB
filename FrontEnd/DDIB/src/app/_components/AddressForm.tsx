@@ -108,12 +108,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    console.log("렌더링된다");
-    console.log(user);
-  });
-
-  useEffect(() => {
-    if (myAddress && user) {
+    if (myAddress) {
       if (nameRef.current && numRef.current && zipCodeRef.current && addressRef.current && addressDetailRef.current) {
         nameRef.current.value = user.name;
         numRef.current.value = user.phone;

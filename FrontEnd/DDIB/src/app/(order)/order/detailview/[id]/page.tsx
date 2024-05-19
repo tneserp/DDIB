@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 export default function OrderComplete() {
   const { setOrderInfo } = orderStore();
   const { setOrderAddressInfo } = orderAddressStore();
-  const [isDone, setIsDone] = useState(true);
+  const [isDone, setIsDone] = useState(false);
 
   const path = useParams();
   const id = path.id as string;
@@ -45,7 +45,7 @@ export default function OrderComplete() {
       setOrderAddressInfo(addressInfo);
       setIsDone(true);
     }
-  }, []);
+  }, [data]);
 
   return (
     <>

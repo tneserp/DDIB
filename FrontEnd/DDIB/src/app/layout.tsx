@@ -8,13 +8,16 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "DDIB",
   description: "DDIB",
+  icons: {
+    icon: "../../public/ddib.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       {/* <MSWComponent /> */}
-      <body className={inter.className}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

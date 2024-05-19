@@ -38,6 +38,9 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
       return postReady(data, userPk);
     },
     async onSuccess(response) {
+      if (Cookies.get("state")) {
+        Cookies.remove("state");
+      }
       const url = response.next_redirect_pc_url;
       window.location.href = url;
     },
@@ -48,7 +51,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
 
   const cancelOrder = useMutation({
     mutationFn: async (orderId: string) => {
-      return putCancelPay(orderId);
+      return await putCancelPay(orderId);
     },
     async onSuccess(response) {
       console.log("취소성공");
@@ -75,6 +78,7 @@ export default function OrderForm({ type, orderId, orderDate, paymentMethod }: P
           orderDetailAddress: check.orderDetailAddress,
           orderZipcode: check.orderZipcode,
         };
+
         console.log(sendInfo);
         sendOrder.mutate(sendInfo);
         //router.push(`/order/complete/${orderInfo.productId}`);

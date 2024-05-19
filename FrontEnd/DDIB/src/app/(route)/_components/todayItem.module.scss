@@ -9,119 +9,162 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
-.item {
-  width: 200px;
-  height: 300px;
-  list-style-type: none;
+.title {
+  font-size: 4vw;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1;
-  background-position: center;
-  background-size: cover;
-  border-radius: 20px;
-  box-shadow: 0 20px 30px rgba(255, 255, 255, 0.3) inset;
-  transition: transform 0.1s, left 0.75s, top 0.75s, width 0.75s, height 0.75s;
-
-  &:nth-child(1),
-  &:nth-child(2) {
-    left: 10%;
-    top: 0;
-    width: 30%;
-    height: 100%;
-    transform: none;
-    border-radius: 0;
-    box-shadow: none;
-    opacity: 1;
-  }
-
-  &:nth-child(3) {
-    left: 50%;
-  }
-  &:nth-child(4) {
-    left: calc(50% + 220px);
-  }
-  &:nth-child(5) {
-    left: calc(50% + 440px);
-  }
-  &:nth-child(6) {
-    left: calc(50% + 660px);
-    opacity: 0;
-  }
-}
-
-.content {
-  width: min(30vw, 400px);
-  position: absolute;
-  top: 50%;
-  left: 3rem;
-  transform: translateY(-50%);
-  font: 400 0.85rem helvetica, sans-serif;
-  color: white;
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  display: none;
-
-  & .title {
-    font-family: "arial-black";
-    text-transform: uppercase;
-  }
-
-  & .description {
-    line-height: 1.7;
-    margin: 1rem 0 1.5rem;
-    font-size: 0.8rem;
-  }
-
-  & button {
-    width: fit-content;
-    background-color: rgba(0, 0, 0, 0.1);
-    color: white;
-    border: 2px solid white;
-    border-radius: 0.25rem;
-    padding: 0.75rem;
-    cursor: pointer;
-  }
-}
-
-.item:nth-of-type(2) .content {
-  display: block;
-  animation: show 0.75s ease-in-out 0.3s forwards;
-}
-
-@keyframes show {
-  0% {
-    filter: blur(5px);
-    transform: translateY(calc(-50% + 75px));
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0);
-  }
-}
-
-.nav {
-  position: absolute;
-  bottom: 2rem;
+  top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 5;
-  user-select: none;
+  font-family: "Oooh Baby";
+}
 
-  & .btn {
-    background-color: rgba(255, 255, 255, 0.5);
-    color: rgba(0, 0, 0, 0.7);
-    border: 2px solid rgba(0, 0, 0, 0.6);
-    margin: 0 0.25rem;
-    padding: 0.75rem;
-    border-radius: 50%;
-    cursor: pointer;
+.area {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  > div > div {
+    align-items: center;
+  }
+}
 
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.3);
+.container {
+  margin: 10vw 3vw 0;
+}
+
+.time {
+  z-index: 3;
+  position: absolute;
+  top: -10%;
+  padding: 0 1vw;
+  font-size: 3vw;
+  font-family: "Oooh Baby";
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  background-color: var(--scarlet);
+}
+
+.active {
+  .wrapper {
+    width: 100%;
+    height: 50vh;
+    box-shadow: 0 0 10px 2px rgb(232, 232, 232);
+  }
+}
+
+.wrapper {
+  position: relative;
+  width: 90%;
+  height: 40vh;
+  box-shadow: 0 0 10px 2px rgb(232, 232, 232);
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+  }
+
+  &:hover {
+    .reserve {
+      display: block;
     }
+    .reserveLogo {
+      display: block;
+    }
+  }
+}
+
+.sold {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.soldLogo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--scarlet);
+  font-size: 4vw;
+  font-family: "Oooh Baby";
+  font-weight: bold;
+  // &::before {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   bottom: 3px;
+  //   left: 1vw;
+  //   width: 80%;
+  //   height: 2px;
+  //   background-color: var(--scarlet);
+  // }
+  // &::after {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   bottom: -1px;
+  //   left: 2.5vw;
+  //   width: 80%;
+  //   height: 2px;
+  //   background-color: var(--scarlet);
+  // }
+}
+
+.reserve {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.reserveLogo {
+  display: none;
+  position: absolute;
+  font-size: 3vw;
+  font-weight: bold;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.name {
+  margin-top: 0.5vw;
+  text-align: center;
+  font-size: 1.5vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.priceArea {
+  display: flex;
+  justify-content: center;
+  gap: 0.5vw;
+  > div:nth-child(1) {
+    font-size: 1vw;
+    color: gray;
+    text-decoration: line-through;
+  }
+  > div:nth-child(2) {
+    font-size: 1.5vw;
+    color: black;
+    font-weight: bold;
+  }
+  > div:nth-child(3) {
+    font-size: 1.5vw;
+    color: var(--scarlet);
+    font-weight: bold;
   }
 }
