@@ -37,8 +37,9 @@ public class ProductRepositorySupport {
     QProduct qProduct = QProduct.product;
 
     public List<Product> getTodayListAll() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDate tomorrow = today.plusDays(1);
+        log.info("getTodayListAll TODAY : {}", today);
 
         return jpaQueryFactory
                 .selectFrom(qProduct)
@@ -51,7 +52,7 @@ public class ProductRepositorySupport {
     }
 
     public List<Product> getTodayListOver() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDate tomorrow = today.plusDays(ONE_DAY);
 
         return jpaQueryFactory
@@ -66,8 +67,9 @@ public class ProductRepositorySupport {
     }
 
     public List<Product> getWeekList() {
-        LocalDate startDate = LocalDate.now();
+        LocalDate startDate = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDate endDate = startDate.plusDays(WEEK_DAYS);
+        log.info("getWeekList TODAY : {}", startDate);
 
         return jpaQueryFactory
                 .selectFrom(qProduct)
@@ -79,9 +81,9 @@ public class ProductRepositorySupport {
     }
 
     public List<Product> getTodayListNotOver() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDate tomorrow = today.plusDays(ONE_DAY);
-
+        log.info("getTodayListNotOver TODAY : {}", today);
         return jpaQueryFactory
                 .selectFrom(qProduct)
                 .where(
@@ -89,6 +91,7 @@ public class ProductRepositorySupport {
                         qProduct.eventStartDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
                         qProduct.isOver.eq(false)
                 )
+                .orderBy(qProduct.eventStartTime.asc())
                 .limit(3)
                 .fetch();
     }
@@ -136,6 +139,7 @@ public class ProductRepositorySupport {
 
     public boolean[] getAvailableTime(LocalDate date) {
         LocalDate startOfDay = date.atStartOfDay().toLocalDate();
+        log.info("getAvailableTime 시간 비교 : 입력 {} = 변화 {}", date, startOfDay);
         LocalDate endOfDay = startOfDay.plusDays(ONE_DAY);
 
         BooleanExpression isEqualDate = qProduct.eventStartDate.goe(Timestamp.valueOf(startOfDay.atStartOfDay()))

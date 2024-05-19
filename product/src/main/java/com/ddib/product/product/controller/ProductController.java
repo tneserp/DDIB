@@ -141,4 +141,21 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/check/k8s")
+    public ResponseEntity<?> checkK8s(){
+        log.info("SUCCESS VER : 2405192103 ");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/test/alarm/favorite/{id}")
+    public ResponseEntity<?> favoriteAlarmTest(@PathVariable("id") int id){
+        productService.favoriteAlarmTester(id);
+        return new ResponseEntity<>("05200309", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/product/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") int id){
+        productService.deleteByProductId(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
