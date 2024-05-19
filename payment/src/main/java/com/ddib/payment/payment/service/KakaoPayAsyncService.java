@@ -186,7 +186,7 @@ public class KakaoPayAsyncService {
 
         try {
             // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
-            boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
+            boolean available = lock.tryLock(20, 10, TimeUnit.SECONDS);
             if(!available) {
                 log.info("===== " + worker + " : Lock Get Fail =====");
                 throw new RuntimeException("RuntimeException : Lock Get Fail");
