@@ -12,6 +12,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findByProductId(int id);
 
+    void deleteByProductId(int id);
+
 //    @Query("select distinct fp.user from FavoriteProduct fp join fp.Product p where date(now()) = date(date_sub(p.eventDate, INTERVAL '24' HOUR)) OR HOUR(NOW()) = p.eventStartTime + '1'")
 //    @Query("select distinct fp.user \n" +
 //            "from FavoriteProduct fp\n" +

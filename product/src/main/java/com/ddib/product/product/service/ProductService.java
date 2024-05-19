@@ -16,6 +16,7 @@ import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
 import com.ddib.product.product.dto.response.ProductViewResponseDto;
 import com.ddib.product.product.exception.ProductNotFoundException;
+import com.ddib.product.product.repository.FavoriteProductRepository;
 import com.ddib.product.product.repository.ProductRepository;
 import com.ddib.product.product.repository.ProductRepositorySupport;
 import com.ddib.product.user.domain.Seller;
@@ -32,11 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import static com.ddib.product.common.file.constant.S3Domain.PRODUCT_DETAIL;
@@ -61,6 +60,8 @@ public class ProductService {
     private final NotificationClient notificationClient;
 
     private final SubscriptionCategoryRepository subscriptionCategoryRepository;
+
+    private final FavoriteProductRepository favoriteProductRepository;
 
     public void createProduct(List<MultipartFile> thumbnails, List<MultipartFile> details, ProductCreateRequestDto dto) {
         log.info("PRODUCT SERVICE : SAVE PRODUCT : {}", dto.getName());
@@ -177,15 +178,21 @@ public class ProductService {
         Map<String, List<ProductResponseDto>> resultMap = new LinkedHashMap<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        LocalDate start = LocalDate.parse(LocalDate.now().toString().split("T")[0], formatter);
+        LocalDate start = LocalDate.parse(LocalDate.now(ZoneId.of("Asia/Seoul")).toString().split("T")[0], formatter);
+        log.info("181 = start : {}", start);
         for (int day = 0; day < 7; day++) {
             String key = formatter.format(start.plusDays(day));
             resultMap.computeIfAbsent(key, k -> new ArrayList<>());
+            log.info("185 생성 = key {} ", key);
+        }
+        for(ProductResponseDto dto : dtos){
+            log.info("188 Product in WeekList : {}", dto.getProductId());
         }
         for (ProductResponseDto dto : dtos) {
             LocalDate startDate = LocalDate.parse(dto.getEventStartDate().toString().split("T")[0], formatter);
             String key = formatter.format(startDate);
             resultMap.get(key).add(dto);
+            log.info("194 dto 키 = key : {} ", key);
         }
 
         return new ArrayList<>(resultMap.values());
@@ -257,5 +264,20 @@ public class ProductService {
                 .map(sc -> NotificationCreateDto.ofSubscription(product, sc.getUser().getUserId()))
 //                .forEach(notificationClient::createAlarm);
                 .forEach(dto -> CompletableFuture.runAsync(() -> notificationClient.createAlarm(dto)));
+    }
+
+    public void favoriteAlarmTester(int id) {
+        FavoriteProduct favoriteProduct = favoriteProductRepository.findByFavoriteProductId(id)
+                .orElseThrow(NoSuchElementException::new);
+        Product product = favoriteProduct.getProduct();
+        if(product.isBefore1Hour() || product.isBefore24Hours()) {
+            NotificationCreateDto dto = NotificationCreateDto.ofFavorite(favoriteProduct.getProduct(), favoriteProduct.getUser().getUserId());
+            notificationClient.createAlarm(dto);
+            log.info("{} : 알람 호출 성공", product.getProductId());
+        }
+    }
+
+    public void deleteByProductId(int id) {
+        productRepository.deleteByProductId(id);
     }
 }
