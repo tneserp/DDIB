@@ -7,6 +7,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getWaitingList } from "../_api/waiting";
 import { Que } from "@/app/_types/types";
 import Cookies from "js-cookie";
+import Lottie from "react-lottie-player";
+
+import cart from "./cart.json";
 
 export default function WaitingModal() {
   const router = useRouter();
@@ -46,6 +49,7 @@ export default function WaitingModal() {
         <div className={styles.modalInfo}>
           <div>나의 대기순서</div>
           <div>{data?.rank && data.rank < 0 ? "0" : data?.rank}</div>
+          <Lottie loop animationData={cart} play style={{ width: 200, height: 200 }} />
           <div>현재 접속량이 많아 대기 중입니다.</div>
           <div>잠시만 기다려 주시면 결제 페이지로 연결됩니다.</div>
           <div>
