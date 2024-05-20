@@ -5,13 +5,16 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getWaitingList } from "../_api/waiting";
-import { userStore } from "@/app/_store/user";
 import { Que } from "@/app/_types/types";
 import Cookies from "js-cookie";
+import Lottie from "react-lottie-player";
+
+import cart from "./cart.json";
 
 export default function WaitingModal() {
   const router = useRouter();
-  const { user } = userStore();
+
+  const userPk = Cookies.get("num") as string;
 
   useEffect(() => {
     console.log("대기페이지에용");
@@ -28,18 +31,14 @@ export default function WaitingModal() {
   }, []);
 
   const { data } = useQuery<Que>({
-    queryKey: ["waiting", 1],
-    queryFn: () => getWaitingList(1),
+    queryKey: ["waiting", userPk],
+    queryFn: () => getWaitingList(userPk),
     refetchInterval: 3000,
   });
 
   useEffect(() => {
-    if (data && data.rank <= 0) {
-      console.log("change");
-      var expiresAt = new Date();
-      console.log(expiresAt);
-      expiresAt.setMinutes(expiresAt.getMinutes() + 5);
-      Cookies.set("state", "true", { expires: expiresAt });
+    if (data && data.rank !== undefined && data.rank <= 0) {
+      Cookies.set("state", "true", { expires: 10 / 1440 });
       router.replace(`/order`);
     }
   }, [data]);
@@ -50,6 +49,7 @@ export default function WaitingModal() {
         <div className={styles.modalInfo}>
           <div>나의 대기순서</div>
           <div>{data?.rank && data.rank < 0 ? "0" : data?.rank}</div>
+          <Lottie loop animationData={cart} play style={{ width: 200, height: 200 }} />
           <div>현재 접속량이 많아 대기 중입니다.</div>
           <div>잠시만 기다려 주시면 결제 페이지로 연결됩니다.</div>
           <div>

@@ -10,7 +10,7 @@ import styles from "./searchResult.module.scss";
 interface Props {
   keyword: string;
   category: string;
-  over: boolean;
+  over: string;
 }
 
 export default function SearchResult({ keyword, category, over }: Props) {
@@ -46,6 +46,7 @@ export default function SearchResult({ keyword, category, over }: Props) {
                   totalStock={item.totalStock}
                   stock={item.stock}
                   discount={item.discount}
+                  over={item.over}
                 />
               </Link>
             ))}

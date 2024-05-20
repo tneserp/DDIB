@@ -21,6 +21,9 @@ import { listIn, test } from "@/app/_api/waiting";
 import { useQuery } from "@tanstack/react-query";
 import { getProductDetail } from "@/app/_api/product";
 import EventBtn from "@/app/(route)/products/_components/EventBtn";
+import LikeBtn from "../_components/LikeBtn";
+import Cookies from "js-cookie";
+import { getDiscount } from "@/app/_utils/commonFunction";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -29,11 +32,11 @@ export default function ProductDetail() {
 
   const { amount } = amountStore();
   const { setOrderInfo } = orderStore();
-  const { user } = userStore();
+  const userPk = Cookies.get("num") as string;
 
   const { data } = useQuery<ProductInfo>({
-    queryKey: ["productInfo", id, 1],
-    queryFn: () => getProductDetail(id, 1),
+    queryKey: ["productInfo", id, userPk],
+    queryFn: () => getProductDetail(id, userPk),
   });
 
   const [salePrice, setSalePrice] = useState(0);
@@ -56,7 +59,7 @@ export default function ProductDetail() {
         status: 0,
       };
       setOrderInfo(sendInfo);
-      listIn(1)
+      listIn(userPk)
         .then(() => {
           router.push("/order");
         })
@@ -67,12 +70,15 @@ export default function ProductDetail() {
   };
 
   useEffect(() => {
-    if (data) {
-      const sale = data.price * (data.discount * 0.01);
-      const finPrice = data.price - sale;
-      setSalePrice(finPrice);
+    if (!Cookies.get("Authorization")) {
+      alert("로그인을 먼저 해주세요!!");
+      router.back();
+    } else {
+      if (data) {
+        const finPrice = getDiscount(data.price, data.discount);
+        setSalePrice(finPrice);
+      }
     }
-    console.log(data);
   }, [data]);
 
   return (
@@ -83,14 +89,13 @@ export default function ProductDetail() {
             <div className={styles.category}>TimeDeal &gt; {data.category}</div>
             <div className={styles.info}>
               <div className={styles.sectionOne}>
-                <div className={styles.thumbnail}>
-                  <Image
-                    src={data.thumbnailImage}
-                    alt="상품썸네일"
-                    fill
-                    sizes="auto"
-                  ></Image>
-                </div>
+                <Image src={data.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
+                {data.over && (
+                  <>
+                    <div className={styles.sold}></div>
+                    <div className={styles.soldLogo}>SOLD</div>
+                  </>
+                )}
               </div>
               <div className={styles.sectionTwo}>
                 <div className={styles.companyMini}>
@@ -113,7 +118,6 @@ export default function ProductDetail() {
                   <div>무료배송</div>
                 </div>
                 {/* button area */}
-                <TimeCount startTime={data.eventStartDate} />
                 <AmountBtn stock={data.stock} />
                 <div className={styles.line}></div>
                 <div className={styles.totalPrice}>
@@ -121,30 +125,22 @@ export default function ProductDetail() {
                   <div>{(amount * salePrice).toLocaleString("ko-KR")}</div>
                 </div>
                 <div className={styles.btnArea}>
-                  <div>dd</div>
                   <div>
-                    <EventBtn joinBuy={joinBuy} />
+                    <LikeBtn productId={data.productId} like={data.liked} likeCnt={data.likeCount} />
+                    <div className={styles.alert}>좋아요 누르고 오픈 알람받아요~</div>
+                  </div>
+                  <div>
+                    <EventBtn joinBuy={joinBuy} over={data.over} startTime={data.eventStartDate} />
                   </div>
                 </div>
               </div>
             </div>
             <div className={styles.detailArea}>
               <div className={styles.detailTitle}>Details</div>
-              <div
-                className={
-                  viewMore
-                    ? `${styles.detailPhotoView}`
-                    : `${styles.detailPhoto}`
-                }
-              >
+              <div className={viewMore ? `${styles.detailPhotoView}` : `${styles.detailPhoto}`}>
                 {data.details.map((image, index) => (
                   <div className={styles.wrapper} key={index}>
-                    <Image
-                      src={image.imageUrl}
-                      alt="상품썸네일"
-                      fill
-                      sizes="auto"
-                    ></Image>
+                    <Image src={image.imageUrl} alt="상품썸네일" layout="responsive" width={100} height={100} objectFit="contain"></Image>
                   </div>
                 ))}
               </div>
@@ -175,15 +171,17 @@ export default function ProductDetail() {
                 <div className={styles.sellerItemArea}>
                   <div className={styles.sellerItem}>
                     <div>회사명</div>
+                    <div>사업자번호</div>
+                    <div>대표명</div>
                     <div>대표번호</div>
                     <div>대표이메일</div>
-                    <div>사업자번호</div>
                   </div>
                   <div className={styles.sellerItem}>
-                    <div>{data.companyName}</div>
-                    <div>{data.companyPhone}</div>
-                    <div>{data.companyEmail}</div>
-                    <div>{data.businessNumber}</div>
+                    <div>{data.companyName.length != 0 ? data.companyName : " "}</div>
+                    <div>{data.businessNumber != 0 ? data.businessNumber : ""}</div>
+                    <div>{data.ceoName.length != 0 ? data.ceoName : " "}</div>
+                    <div>{data.ceoPhone.length != 0 ? data.ceoPhone : " "}</div>
+                    <div>{data.ceoEmail.length != 0 ? data.ceoEmail : " "}</div>
                   </div>
                 </div>
               </div>

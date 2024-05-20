@@ -42,42 +42,21 @@ export default function Search() {
     <div className={styles.container}>
       <div className={styles.searchTitle}>Search</div>
       <div className={styles.searchInput}>
-        <input type="text" ref={searchRef} onKeyDown={searchKeyWord} />
+        <input type="text" ref={searchRef} onKeyDown={searchKeyWord} placeholder="상품명을 검색해보세요" />
         <IoSearchOutline className={styles.icons} />
       </div>
       <div className={styles.resultArea}>
         {!showResult && (
           <>
-            <div className={styles.result}>"{result}"로 검색한 결과입니다.</div>
+            <div className={styles.result}> &quot;{result}&quot;로 검색한 결과입니다.</div>
             <div className={styles.category}>
               {CategoryItem.map((item, index) => (
-                <div
-                  onClick={() => setCategory(item.title)}
-                  key={index}
-                  className={
-                    category === item.title
-                      ? styles.selectedItem
-                      : styles.categoryItem
-                  }
-                >
+                <div onClick={() => setCategory(item.title)} key={index} className={category === item.title ? styles.selectedItem : styles.categoryItem}>
                   {item.title}
                 </div>
               ))}
             </div>
-            <div>
-              <div
-                className={over && styles.overYes}
-                onClick={() => setOver(false)}
-              >
-                종료 띱 제외
-              </div>
-              {/* <div
-                className={!over &&  styles.overYes : styles.overNo}
-                onClick={() => setOver(true)}
-              >
-                종료 띱 제외
-              </div> */}
-            </div>
+            <div></div>
             <SearchResult keyword={result} category={category} over={over} />
           </>
         )}

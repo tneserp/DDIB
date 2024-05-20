@@ -11,25 +11,18 @@ interface UserInfo {
   setUserInfo: (info: User) => void;
 }
 
-export const userStore = create(
-  persist<UserInfo>(
-    (set) => ({
-      jwt: "",
-      userPk: 9,
-      user: {
-        name: "",
-        phone: "",
-        email: "",
-        zipCode: "",
-        roadAddress: "",
-        detailAddress: "",
-      },
-      setJwt: (token) => set(() => ({ jwt: token })),
-      setUserPk: (pk) => set(() => ({ userPk: pk })),
-      setUserInfo: (info) => set(() => ({ user: info })),
-    }),
-    {
-      name: "UserStorage",
-    }
-  )
-);
+export const userStore = create<UserInfo>((set, get) => ({
+  jwt: "",
+  userPk: 0,
+  user: {
+    name: "",
+    phone: "",
+    email: "",
+    zipcode: "",
+    roadAddress: "",
+    detailAddress: "",
+  },
+  setJwt: (token) => set(() => ({ jwt: token })),
+  setUserPk: (pk) => set(() => ({ userPk: pk })),
+  setUserInfo: (info) => set(() => ({ user: info })),
+}));

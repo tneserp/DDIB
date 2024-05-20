@@ -1,26 +1,20 @@
 "use client";
 
-import {
-  ChangeEvent,
-  useState,
-  useEffect,
-  useRef,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import { ChangeEvent, useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import styles from "./addressForm.module.scss";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { orderAddressStore } from "@/app/_store/product";
 import { userStore } from "@/app/_store/user";
+import { OrderAddressInfo } from "../_types/types";
 
 interface ChildProps {
   type: string;
 }
 
 export interface RefProps {
-  saveAddress: () => boolean;
+  saveAddress: () => OrderAddressInfo | undefined;
 }
 
 const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
@@ -61,15 +55,12 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
         orderRoadAddress: addressRef.current.value,
         orderDetailAddress: addressDetailRef.current.value,
       };
-      console.log("aaaa");
-      setOrderAddressInfo(info);
-      return true;
+
+      return info;
     }
-    return false;
   }
 
-  const scriptUrl =
-    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+  const scriptUrl = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   const open = useDaumPostcodePopup(scriptUrl);
 
   const toggleHandler = () => {
@@ -99,15 +90,9 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
     } else if (rawPhone.length < 8) {
       formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(3)}`;
     } else if (rawPhone.length < 11) {
-      formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(
-        3,
-        7
-      )}-${rawPhone.slice(7)}`;
+      formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(3, 7)}-${rawPhone.slice(7)}`;
     } else {
-      formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(
-        3,
-        7
-      )}-${rawPhone.slice(7, 11)}`;
+      formattedPhone = `${rawPhone.slice(0, 3)}-${rawPhone.slice(3, 7)}-${rawPhone.slice(7, 11)}`;
     }
 
     const displayPhone = formattedPhone.length > 0 ? formattedPhone : "";
@@ -123,41 +108,21 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
   }, []);
 
   useEffect(() => {
-    console.log("렌더링된다");
-    console.log(user);
-  });
-
-  useEffect(() => {
-    if (myAddress && user) {
-      if (
-        nameRef.current &&
-        numRef.current &&
-        zipCodeRef.current &&
-        addressRef.current &&
-        addressDetailRef.current
-      ) {
+    if (myAddress) {
+      if (nameRef.current && numRef.current && zipCodeRef.current && addressRef.current && addressDetailRef.current) {
         nameRef.current.value = user.name;
         numRef.current.value = user.phone;
         if (emailRef.current) {
           emailRef.current.value = user.email;
         }
-        zipCodeRef.current.value = user.zipCode;
+        zipCodeRef.current.value = user.zipcode;
         addressRef.current.value = user.roadAddress;
         addressDetailRef.current.value = user.detailAddress;
       }
     } else {
-      if (
-        nameRef.current &&
-        numRef.current &&
-        zipCodeRef.current &&
-        addressRef.current &&
-        addressDetailRef.current
-      ) {
+      if (nameRef.current && numRef.current && zipCodeRef.current && addressRef.current && addressDetailRef.current) {
         nameRef.current.value = "";
         numRef.current.value = "";
-        if (emailRef.current) {
-          emailRef.current.value = "";
-        }
         zipCodeRef.current.value = "";
         addressRef.current.value = "";
         addressDetailRef.current.value = "";
@@ -172,11 +137,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
           <div className={styles.addressItem}>
             <div>배송지 선택</div>
             <div className={styles.addressCheck} onClick={getMyAddress}>
-              {myAddress ? (
-                <FaCheckCircle />
-              ) : (
-                <FaRegCheckCircle color="gray" />
-              )}
+              {myAddress ? <FaCheckCircle /> : <FaRegCheckCircle color="gray" />}
               <div>기본배송지</div>
             </div>
           </div>
@@ -186,18 +147,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
 
       <div className={styles.addressItem}>
         <div>{props.type === "mypage" ? "이름" : "받으시는 분"}</div>
-        <div>
-          {props.type === "order" || props.type === "mypage" ? (
-            <input
-              type="text"
-              className={styles.input}
-              ref={nameRef}
-              maxLength={5}
-            ></input>
-          ) : (
-            <div>{addressInfo.receiverName}</div>
-          )}
-        </div>
+        <div>{props.type === "order" || props.type === "mypage" ? <input type="text" className={styles.input} ref={nameRef} maxLength={5}></input> : <div>{addressInfo.receiverName}</div>}</div>
       </div>
       <div className={styles.line}></div>
       <div className={styles.addressItem}>
@@ -205,13 +155,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
         <div>
           {props.type === "order" || props.type === "mypage" ? (
             <>
-              <input
-                type="text"
-                className={styles.inputNum}
-                maxLength={13}
-                ref={numRef}
-                onChange={numberFormat}
-              ></input>
+              <input type="text" className={styles.inputNum} maxLength={13} ref={numRef} onChange={numberFormat}></input>
             </>
           ) : (
             <div>{addressInfo.receiverPhone}</div>
@@ -224,11 +168,7 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
           <div className={styles.addressItem}>
             <div>이메일</div>
             <div>
-              <input
-                type="text"
-                className={styles.inputNum}
-                ref={emailRef}
-              ></input>
+              <input type="text" className={styles.inputNum} ref={emailRef} readOnly></input>
             </div>
           </div>
           <div className={styles.line}></div>
@@ -240,26 +180,12 @@ const AddressForm = forwardRef<RefProps, ChildProps>((props, ref) => {
           {props.type === "order" || props.type === "mypage" ? (
             <>
               <div>
-                <input
-                  type="text"
-                  className={styles.input}
-                  ref={zipCodeRef}
-                  readOnly
-                ></input>
+                <input type="text" className={styles.input} ref={zipCodeRef} readOnly></input>
                 <div onClick={toggleHandler}>우편번호찾기</div>
               </div>
               <div>
-                <input
-                  type="text"
-                  className={styles.inputAddress}
-                  ref={addressRef}
-                  readOnly
-                ></input>
-                <input
-                  type="text"
-                  className={styles.inputAddress}
-                  ref={addressDetailRef}
-                ></input>
+                <input type="text" className={styles.inputAddress} ref={addressRef} readOnly></input>
+                <input type="text" className={styles.inputAddress} ref={addressDetailRef}></input>
               </div>
             </>
           ) : (

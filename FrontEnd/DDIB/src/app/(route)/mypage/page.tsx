@@ -1,8 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function MyPage() {
   const router = useRouter();
-  router.replace("/mypage/orderlist");
+
+  useEffect(() => {
+    router.replace("/mypage/orderlist");
+  }, []);
+  return null;
 }

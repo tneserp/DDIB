@@ -1,21 +1,23 @@
-.container {
-  padding: 0 10%;
+.title {
+  font-size: 5vw;
+  text-align: center;
+  margin-top: 3vw;
+  margin-bottom: 5vw;
+  font-family: "Oooh Baby";
 }
 
-.title {
-  text-align: center;
-  font-size: 2vw;
-  margin-top: 5vh;
-  margin-bottom: 10vh;
+.categoryArea {
+  padding: 0 4vh 8vh;
 }
 
 .btnArea {
-  margin-top: 5vh;
+  margin-top: 15vh;
   display: flex;
   gap: 2vw;
 }
 
 .modifyBtn {
+  cursor: pointer;
   flex: 1;
   padding: 1vh;
   text-align: center;
@@ -24,6 +26,7 @@
 }
 
 .quitBtn {
+  cursor: pointer;
   flex: 1;
   padding: 1vh;
   text-align: center;

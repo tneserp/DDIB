@@ -25,6 +25,7 @@ export default function CategoryArea() {
         {CategoryItem.map((item, index) => (
           <div onClick={() => setCategory(item.value)} key={index} className={styles.categoryItem}>
             {item.title}
+            {item.value == category && <div className={styles.underBar}></div>}
           </div>
         ))}
       </div>

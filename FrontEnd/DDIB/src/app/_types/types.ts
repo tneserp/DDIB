@@ -1,10 +1,13 @@
-export interface User {
+export interface UserModi {
   name: string;
   phone: string;
-  email: string;
-  zipCode: string;
+  zipcode: string;
   roadAddress: string;
   detailAddress: string;
+}
+
+export interface User extends UserModi {
+  email: string;
 }
 
 export interface Product {
@@ -23,11 +26,18 @@ export interface Product {
   details: Array<DetailImage>;
   likeCount: number;
   sellerId: number;
+  sellerEmail: string;
   companyName: string;
   businessNumber: number;
-  companyPhone: number;
-  companyEmail: string;
+  ceoName: string;
+  ceoEmail: string;
+  ceoPhone: string;
   over: boolean;
+}
+
+export interface TodayList {
+  todayNotOverProducts: Array<Product>;
+  todayProducts: Array<Product>;
 }
 
 export interface ProductInfo extends Product {
@@ -81,4 +91,22 @@ export interface OrderDetail extends OrderAddressInfo {
   price: number;
   totalAmount: number;
   paymentMethod: string;
+}
+
+export interface AlarmList {
+  title: string;
+  content: string;
+  generatedTime: string;
+  read: boolean;
+}
+
+export interface AlarmApply {
+  subscribeFashion: boolean;
+  subscribeBeauty: boolean;
+  subscribeFood: boolean;
+  subscribeAppliance: boolean;
+  subscribeSports: boolean;
+  subscribeLiving: boolean;
+  subscribePet: boolean;
+  subscribeTravel: boolean;
 }
