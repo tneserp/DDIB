@@ -90,8 +90,13 @@ export default function WeekItem({ checkDay }: Props) {
                           <div className={styles.name}>{item.name}</div>
                           <div className={styles.priceArea}>
                             <div>{item.price.toLocaleString("ko-KR")}</div>
-                            <div>{getDiscount(item.price, item.discount)}</div>
-                            <div>{item.discount.toLocaleString("ko-KR")}%</div>
+                            <div>
+                              {getDiscount(
+                                item.price,
+                                item.discount
+                              ).toLocaleString("ko-KR")}
+                            </div>
+                            <div>{item.discount}%</div>
                           </div>
                         </div>
                       </Link>
