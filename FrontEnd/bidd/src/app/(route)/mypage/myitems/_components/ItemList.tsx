@@ -18,7 +18,7 @@ export default function ItemList({ showDetail }: Props) {
 
   const { data } = useQuery<Product[]>({
     queryKey: ["ProductList", pk],
-    queryFn: () => getSellerProducts("11"),
+    queryFn: () => getSellerProducts(pk),
   });
 
   return (
