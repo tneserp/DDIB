@@ -22,7 +22,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function Register() {
   const router = useRouter();
-  const { start, end, thumb, details } = productCreateStore();
+  const { start, end, checkCnt, thumb, details, resetAll } = productCreateStore();
   const pk = Cookies.get("num") as string;
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -31,7 +31,8 @@ export default function Register() {
   const discountRef = useRef<HTMLInputElement>(null);
   const finalPriceRef = useRef<HTMLInputElement>(null);
 
-  const [value, setValue] = useState(new Date());
+  const [value, onChange] = useState<Value>(new Date());
+
   const [showCal, setShowCal] = useState(false);
   const [dateStr, setDateStr] = useState("");
 
@@ -42,8 +43,8 @@ export default function Register() {
       return await postCreateProuct(data);
     },
     async onSuccess(response) {
-      console.log("상품등록완료");
-
+      alert("상품등록이 완료되었습니다.");
+      resetAll();
       router.replace("/mypage");
     },
     onError(error) {
@@ -56,15 +57,12 @@ export default function Register() {
     console.log(selected);
   };
 
-  const handleDateChange = (newValue: Date) => {
-    setValue(newValue);
-    console.log(newValue);
-  };
-
   useEffect(() => {
-    const formattedDate = formatDate(value);
-    console.log(formattedDate);
-    setDateStr(formattedDate);
+    if (value instanceof Date) {
+      const formattedDate = formatDate(value);
+      console.log(formattedDate);
+      setDateStr(formattedDate);
+    }
   }, [value]);
 
   const formatDate = (date: Date) => {
@@ -108,8 +106,7 @@ export default function Register() {
       priceRef.current.value.length != 0 &&
       discountRef.current &&
       discountRef.current.value.length != 0 &&
-      start != 0 &&
-      end != 0 &&
+      checkCnt == 2 &&
       thumb &&
       details
     ) {
@@ -122,7 +119,7 @@ export default function Register() {
         price: priceRef.current.value,
         discount: discountRef.current.value,
         category: selected,
-        sellerId: 2,
+        sellerId: pk,
       };
 
       const formData = new FormData();
@@ -141,6 +138,8 @@ export default function Register() {
       createProduct.mutate(formData);
     } else {
       alert("비어있는 칸이 있습니다. 확인해주세요");
+
+      console.log(dateStr);
     }
   };
 
@@ -160,13 +159,8 @@ export default function Register() {
           <div>
             <div>카테고리</div>
 
-            <select
-              className={styles.select}
-              onChange={handleSelect}
-              value={selected}
-            >
+            <select className={styles.select} onChange={handleSelect} value={selected}>
               <option value="">카테고리를 선택해주세요</option>
-
               <option value="fashion">패션(Fashion)</option>
               <option value="beauty">뷰티(Beauty)</option>
               <option value="food">식품(Food)</option>
@@ -181,59 +175,28 @@ export default function Register() {
         <div className={styles.item}>
           <div>
             <div>가격</div>
-            <input
-              type="number"
-              min={0}
-              className={styles.input}
-              ref={priceRef}
-            />
+            <input type="number" min={0} className={styles.input} ref={priceRef} />
           </div>
           <div>
             <div>할인율</div>
-            <input
-              type="number"
-              min={0}
-              max={100}
-              className={styles.input}
-              ref={discountRef}
-              onChange={calFinPrice}
-            />
+            <input type="number" min={0} max={100} className={styles.input} ref={discountRef} onChange={calFinPrice} />
           </div>
           <div>
             <div>최종할인가</div>
-            <input
-              type="number"
-              className={styles.input}
-              readOnly
-              ref={finalPriceRef}
-            />
+            <input type="number" className={styles.input} readOnly ref={finalPriceRef} />
           </div>
         </div>
         <div className={styles.item}>
           <div>
             <div>DDIB TIME</div>
             <div>
-              <div
-                className={styles.dateArea}
-                onClick={() => setShowCal((prev) => !prev)}
-              >
-                <input
-                  type="text"
-                  className={styles.inputDate}
-                  readOnly
-                  value={dateStr}
-                />
+              <div className={styles.dateArea} onClick={() => setShowCal((prev) => !prev)}>
+                <input type="text" className={styles.inputDate} readOnly value={dateStr} />
                 <div className={styles.icons}>
                   <BsFillCalendarHeartFill />
                 </div>
               </div>
-              {showCal && (
-                <Calendar
-                  locale="ko"
-                  onChange={() => handleDateChange}
-                  value={value}
-                />
-              )}
+              {showCal && <Calendar locale="ko" onChange={onChange} value={value} />}
             </div>
             <TimeSelect date={dateStr} />
           </div>

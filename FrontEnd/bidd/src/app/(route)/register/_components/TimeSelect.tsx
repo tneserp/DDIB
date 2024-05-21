@@ -12,41 +12,40 @@ interface Props {
 }
 
 export default function TimeSelect({ date }: Props) {
-  const { start, end, setStart, setEnd } = productCreateStore();
+  const { start, end, checkCnt, setStart, setEnd, setCheckCnt } = productCreateStore();
 
   interface TimeArray {
     [index: number]: boolean;
   }
 
   const [timeObject, setTimeObject] = useState([
-    { time: "00:00", value: false, book: false },
-    { time: "01:00", value: false, book: false },
-    { time: "02:00", value: false, book: false },
-    { time: "03:00", value: false, book: false },
-    { time: "04:00", value: false, book: false },
-    { time: "05:00", value: false, book: false },
-    { time: "06:00", value: false, book: false },
-    { time: "07:00", value: false, book: false },
-    { time: "08:00", value: false, book: false },
-    { time: "09:00", value: false, book: false },
-    { time: "10:00", value: false, book: false },
-    { time: "11:00", value: false, book: false },
-    { time: "12:00", value: false, book: false },
-    { time: "13:00", value: false, book: false },
-    { time: "14:00", value: false, book: false },
-    { time: "15:00", value: false, book: false },
-    { time: "16:00", value: false, book: false },
-    { time: "17:00", value: false, book: false },
-    { time: "18:00", value: false, book: false },
-    { time: "19:00", value: false, book: false },
-    { time: "20:00", value: false, book: false },
-    { time: "21:00", value: false, book: false },
-    { time: "22:00", value: false, book: false },
-    { time: "23:00", value: false, book: false },
+    { time: "00:00", value: false },
+    { time: "01:00", value: false },
+    { time: "02:00", value: false },
+    { time: "03:00", value: false },
+    { time: "04:00", value: false },
+    { time: "05:00", value: false },
+    { time: "06:00", value: false },
+    { time: "07:00", value: false },
+    { time: "08:00", value: false },
+    { time: "09:00", value: false },
+    { time: "10:00", value: false },
+    { time: "11:00", value: false },
+    { time: "12:00", value: false },
+    { time: "13:00", value: false },
+    { time: "14:00", value: false },
+    { time: "15:00", value: false },
+    { time: "16:00", value: false },
+    { time: "17:00", value: false },
+    { time: "18:00", value: false },
+    { time: "19:00", value: false },
+    { time: "20:00", value: false },
+    { time: "21:00", value: false },
+    { time: "22:00", value: false },
+    { time: "23:00", value: false },
   ]);
 
   const [nowCheck, setNowCheck] = useState(-1);
-  const [checkCnt, setCheckCnt] = useState(0);
 
   const { data } = useQuery<TimeArray>({
     queryKey: ["timelist", date],
@@ -80,9 +79,10 @@ export default function TimeSelect({ date }: Props) {
 
   const setTime = (index: number) => {
     if (checkCnt == 0) {
-      setCheckCnt((prev) => prev + 1);
+      setCheckCnt(1);
       handleValueChange(index);
       setNowCheck(index);
+      setStart(index);
     } else if (checkCnt == 1) {
       // 두번째 클릭했을 때 사이에 true가 있는지 확인
       let min = Math.min(nowCheck, index);
@@ -90,7 +90,7 @@ export default function TimeSelect({ date }: Props) {
       const result = checkPossible(min, max);
       // 가능하면 클릭
       if (result) {
-        setCheckCnt((prev) => prev + 1);
+        setCheckCnt(2);
         handleValueChange(index);
         for (let i = min + 1; i < max; i++) {
           handleValueChange(i);
@@ -106,18 +106,24 @@ export default function TimeSelect({ date }: Props) {
   };
 
   const clear = () => {
-    for (let i = start; i < end; i++) {
-      handleValueChange(i);
+    if (checkCnt == 1) {
+      handleValueChange(start);
+      setStart(0);
+      setEnd(0);
+      setCheckCnt(0);
+      setNowCheck(-1);
+    } else if (checkCnt == 2) {
+      for (let i = start; i < end; i++) {
+        handleValueChange(i);
+      }
+      setStart(0);
+      setEnd(0);
+      setCheckCnt(0);
+      setNowCheck(-1);
     }
-    setStart(0);
-    setEnd(0);
-    setCheckCnt(0);
-    setNowCheck(-1);
   };
 
   useEffect(() => {}, [date]);
-
-  console.log(data);
 
   return (
     <>
@@ -126,24 +132,16 @@ export default function TimeSelect({ date }: Props) {
           <div>
             <div className={styles.title}>시간선택</div>
 
-            <div className={styles.info}>
-              시작시간과 끝시간을 선택해주세요. 최소 2시간
-            </div>
+            <div className={styles.info}>시작시간과 끝시간을 선택해주세요. 최소 2시간</div>
             <div className={styles.container}>
               {timeObject.map((item, index) => (
                 <div key={index} className={styles.items}>
-                  {!data[index] ? (
-                    <div
-                      className={cx(
-                        styles.possible,
-                        item.value && styles.checked
-                      )}
-                      onClick={() => setTime(index)}
-                    >
+                  {data[index] || index == 23 ? (
+                    <div className={styles.imPossible}>{item.time}</div>
+                  ) : (
+                    <div className={cx(styles.possible, item.value && styles.checked)} onClick={() => setTime(index)}>
                       {item.time}
                     </div>
-                  ) : (
-                    <div className={styles.imPossible}>{item.time}</div>
                   )}
                 </div>
               ))}

@@ -18,10 +18,7 @@ export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
   console.log(segment);
 
-  const { jwt } = userStore();
   const router = useRouter();
-
-  const [bellOn, setBellOn] = useState(false);
 
   const logOutUser = useMutation({
     mutationFn: async () => {
@@ -55,38 +52,42 @@ export default function NavMenu() {
         <li className={styles.title}>
           <Link href="/">BIDD</Link>
         </li>
+        {Cookies.get("Authorization") && (
+          <>
+            <li>
+              <Link href="/apply">
+                {segment === "apply" ? (
+                  <>
+                    <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
+                      기업신청
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.subTitle}>기업신청</div>
+                  </>
+                )}
+              </Link>
+            </li>
+            <li>
+              <Link href="/register">
+                {segment === "register" ? (
+                  <>
+                    <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
+                      상품등록
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.subTitle}>상품등록</div>
+                  </>
+                )}
+              </Link>
+            </li>
+          </>
+        )}
         <li>
-          <Link href="/apply">
-            {segment === "apply" ? (
-              <>
-                <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
-                  기업신청
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={styles.subTitle}>기업신청</div>
-              </>
-            )}
-          </Link>
-        </li>
-        <li>
-          <Link href="/paypolicy">
-            {segment === "paypolicy" ? (
-              <>
-                <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
-                  가격정책
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={styles.subTitle}>가격정책</div>
-              </>
-            )}
-          </Link>
-        </li>
-        <li>
-          <Link href="https://www.naver.com">
+          <Link href="https://ddib.kro.kr/">
             <div className={styles.subTitle} style={{ paddingRight: "1.5vw" }}>
               <div>DDIB</div>
               {/* <div className={styles.goIcon}>

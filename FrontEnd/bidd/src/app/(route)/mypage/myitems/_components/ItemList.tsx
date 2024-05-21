@@ -58,7 +58,7 @@ export default function ItemList({ showDetail }: Props) {
                     </div>
                     <div className={styles.item}>
                       <div>가격</div>
-                      <div>{item.price}</div>
+                      <div>{item.price.toLocaleString("ko-KR")}</div>
                     </div>
                     <div className={styles.item}>
                       <div>할인율</div>
