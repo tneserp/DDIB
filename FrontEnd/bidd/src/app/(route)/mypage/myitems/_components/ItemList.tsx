@@ -7,14 +7,18 @@ import { Product } from "@/app/_types/types";
 import Image from "next/image";
 import Cookies from "js-cookie";
 
-export default function ItemList() {
+interface Props {
+  showDetail: (pk: number, title: string) => void;
+}
+
+export default function ItemList({ showDetail }: Props) {
   // const { user, userPk } = userStore();
 
   const pk = Cookies.get("num") as string;
 
   const { data } = useQuery<Product[]>({
     queryKey: ["ProductList", pk],
-    queryFn: () => getSellerProducts(pk),
+    queryFn: () => getSellerProducts("11"),
   });
 
   return (
@@ -23,7 +27,11 @@ export default function ItemList() {
         <>
           {data.map((item) => {
             return (
-              <div key={item.productId} className={styles.container}>
+              <div
+                key={item.productId}
+                className={styles.container}
+                onClick={() => showDetail(item.productId, item.name)}
+              >
                 <div className={styles.timeArea}>
                   <div>DDIB TIME</div>
                   <div>-</div>
@@ -35,7 +43,12 @@ export default function ItemList() {
                 <div className={styles.product}>
                   <div>
                     <div className={styles.wrapper}>
-                      <Image src={item.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
+                      <Image
+                        src={item.thumbnailImage}
+                        alt="상품썸네일"
+                        fill
+                        sizes="auto"
+                      ></Image>
                     </div>
                   </div>
                   <div className={styles.infoArea}>

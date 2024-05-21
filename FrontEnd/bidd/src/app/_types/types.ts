@@ -62,3 +62,16 @@ export interface ProductInfo {
   category: string;
   sellerId: number;
 }
+
+export interface Detail {
+  productId: number;
+  totalSoldCount: number;
+  salesHistory: Array<history>;
+}
+
+export interface history {
+  orderId: string;
+  name: string;
+  phone: string;
+  address: string;
+}

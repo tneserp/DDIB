@@ -25,4 +25,10 @@ async function postCreateProuct(data: FormData) {
   }
 }
 
-export { getSellerProducts, getTimeInfo, postCreateProuct };
+async function getOrderDetail(pk: number) {
+  const { data } = await api.get(`/payment/sales-history/${pk}`);
+  console.log(data);
+  return data;
+}
+
+export { getSellerProducts, getTimeInfo, postCreateProuct, getOrderDetail };
