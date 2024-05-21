@@ -25,7 +25,7 @@ export default function ItemDetail({ pk, title }: Props) {
               <div>{item.orderId}</div>
               <div>{item.name}</div>
               <div>{item.phone}</div>
-              <div>{item.orderId}</div>
+              <div>{item.address}</div>
             </div>
           ))}
         </div>
