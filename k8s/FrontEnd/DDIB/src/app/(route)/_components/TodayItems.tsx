@@ -66,8 +66,15 @@ export default function TodayItems({ todayList }: Props) {
                 <Link href={`/products/${item.productId}`}>
                   <div className={styles.container}>
                     <div className={styles.wrapper}>
-                      <div className={styles.time}>{`${item.eventStartTime}`.padStart(2, "0")}:00</div>
-                      <Image src={item.thumbnailImage} alt="상품썸네일" fill sizes="auto"></Image>
+                      <div className={styles.time}>
+                        {`${item.eventStartTime}`.padStart(2, "0")}:00
+                      </div>
+                      <Image
+                        src={item.thumbnailImage}
+                        alt="상품썸네일"
+                        fill
+                        sizes="auto"
+                      ></Image>
                       {item.over ? (
                         <>
                           <div className={styles.sold}></div>
@@ -76,14 +83,20 @@ export default function TodayItems({ todayList }: Props) {
                       ) : (
                         <>
                           <div className={styles.reserve}></div>
-                          <div className={styles.reserveLogo}>{item.eventStartTime}시 오픈</div>
+                          <div className={styles.reserveLogo}>
+                            {item.eventStartTime}시 오픈
+                          </div>
                         </>
                       )}
                     </div>
                     <div className={styles.name}>{item.name}</div>
                     <div className={styles.priceArea}>
-                      <div>{item.price}</div>
-                      <div>{getDiscount(item.price, item.discount)}</div>
+                      <div>{item.price.toLocaleString("ko-KR")}</div>
+                      <div>
+                        {getDiscount(item.price, item.discount).toLocaleString(
+                          "ko-KR"
+                        )}
+                      </div>
                       <div>{item.discount}%</div>
                     </div>
                   </div>
