@@ -25,7 +25,7 @@ async function postCreateProuct(data: FormData) {
 }
 
 async function getOrderDetail(pk: number) {
-  const { data } = await api.get(`/payment/sales-history/${pk}`);
+  const { data } = await api.get(`/order/sales-history/${pk}`);
   console.log(data);
   return data;
 }
