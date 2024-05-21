@@ -66,7 +66,7 @@ export interface ProductInfo {
 export interface Detail {
   productId: number;
   totalSoldCount: number;
-  salesHistory: Array<history>;
+  salesHistoryList: Array<history>;
 }
 
 export interface history {

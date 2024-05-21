@@ -18,9 +18,9 @@ export default function ItemDetail({ pk, title }: Props) {
     <div>
       <div className={styles.title}>{title}</div>
       <div className={styles.subTitle}> 주문내역 {data?.totalSoldCount}건</div>
-      {data?.salesHistory && (
+      {data?.salesHistoryList && (
         <div>
-          {data.salesHistory.map((item, index) => (
+          {data.salesHistoryList.map((item, index) => (
             <div key={index} className={styles.list}>
               <div>{item.orderId}</div>
               <div>{item.name}</div>
