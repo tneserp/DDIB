@@ -21,12 +21,14 @@ export default function ItemDetail({ pk, title }: Props) {
       {data?.salesHistoryList && (
         <div>
           {data.salesHistoryList.map((item, index) => (
-            <div key={index} className={styles.list}>
-              <div>{item.orderId}</div>
-              <div>{item.name}</div>
-              <div>{item.phone}</div>
-              <div>{item.address}</div>
-            </div>
+            <>
+              <div key={index} className={styles.list}>
+                <div>{item.orderId}</div>
+                <div>{item.name}</div>
+                <div>{item.phone}</div>
+                <div>{item.address}</div>
+              </div>
+            </>
           ))}
         </div>
       )}
